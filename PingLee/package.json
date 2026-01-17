@@ -1,0 +1,15 @@
+{
+  "name": "mandarin-app",
+  "version": "1.0.0",
+  "description": "Mandarin learning app",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.24.7"
+  }
+}

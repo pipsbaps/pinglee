@@ -1,0 +1,111 @@
+:root {
+    --app-bg: #f7f8fa;
+    --header-bg: #ffffff;
+    --text-primary: #1c1c1e;
+    --text-secondary: #6b6b6b;
+    --border-color: #e9e9eb;
+    --chat-bg: #ffffff; 
+
+    /* Cores da Navegação */
+    --nav-bg: #ffffff;
+    --nav-active-bg: #007aff;
+    --nav-active-text: #007aff; /* Alterado para azul */
+    --nav-inactive-text: #8e8e93;
+
+    /* Cores de Destaque */
+    --hsk1-color: #44b875;
+    --hsk2-color: #31a5f5;
+    --user-bubble-bg: #007aff;
+    --send-button-bg: #007aff;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    /* Efeito Sky Glow */
+    background: radial-gradient(900px 380px at 50% -140px, rgba(0,122,255,0.10), transparent 60%),
+              var(--app-bg);
+    color: var(--text-primary);
+}
+
+/* --- Layout Principal --- */
+.mobile-layout-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh; 
+    height: 100dvh; 
+}
+
+main { 
+    flex-grow: 1; 
+    overflow-y: auto; 
+}
+
+section {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+}
+
+section.active {
+    display: flex;
+}
+
+/* --- Header --- */
+.app-header { 
+    background-color: var(--header-bg); 
+    color: var(--text-primary); 
+    /* Adicionado Safe Area no topo */
+    padding: calc(env(safe-area-inset-top) + 1rem) 1rem 1rem;
+    text-align: center; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+    z-index: 10; 
+    position: sticky;
+    top: 0;
+}
+.app-header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+
+/* --- BARRA DE NAVEGAÇÃO INFERIOR --- */
+.mobile-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    background-color: var(--nav-bg);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    padding: 8px 4px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--nav-inactive-text);
+    font-size: 11px;
+    font-weight: 500;
+    gap: 4px;
+    flex-grow: 1;
+    padding: 4px 0;
+    border-radius: 10px;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.nav-item svg {
+    fill: var(--nav-inactive-text);
+    transition: fill 0.25s;
+}
+
+/* Estilo do item ativo (Pill) */
+.nav-item.active {
+    color: var(--nav-active-bg);
+    background-color: rgba(0, 122, 255, 0.12);
+    font-weight: 700;
+}
+
+.nav-item.active svg {
+    fill: var(--nav-active-bg);
+}

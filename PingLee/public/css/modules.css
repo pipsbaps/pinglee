@@ -549,33 +549,32 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  background: #e8f3ff;
-  border: 2px solid #cfe2ff;
-  border-radius: 18px;
-  padding: 0.8rem 1.45rem;
-  min-width: 64px;
-  max-width: 160px;
-  width: auto;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  width: 68px;
+  height: 68px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #0f4ba7;
-  box-shadow: 0 10px 22px rgba(0, 122, 255, 0.24), 0 4px 10px rgba(0, 0, 0, 0.08);
-  font-weight: 700;
+  justify-content: center;
+  box-shadow: 0 10px 22px rgba(0, 122, 255, 0.16), 0 4px 10px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.12s ease,
     box-shadow 0.12s ease,
-    background 0.12s ease,
-    border-color 0.12s ease;
+    background 0.12s ease;
+}
+#role-play .mic-button.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  box-shadow: none;
 }
 #role-play .mic-button:active {
   transform: scale(0.95);
 }
 #role-play .mic-button.recording {
-  background: #f0fbff;
-  border-color: #54c9ef;
-  color: #0a5680;
+  background: transparent;
   box-shadow: 0 14px 26px rgba(84, 201, 239, 0.35), 0 6px 12px rgba(0, 0, 0, 0.12);
   animation: mic-pulse 1.1s ease-in-out infinite, ripple-once 0.6s ease-out 1;
   isolation: isolate;
@@ -625,10 +624,9 @@
 }
 .mic-icon {
   display: block;
-  width: 28px;
-  height: 28px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
-  fill: currentColor;
 }
 .recording-indicator {
   width: 10px;

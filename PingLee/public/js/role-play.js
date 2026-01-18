@@ -18,6 +18,7 @@ const RolePlay = {
     micHandlers: {},
     recordingStartedAt: 0,
     recordingTimeoutId: null,
+    micEnabled: false,
 
     init() {
         if (this.initialized) return;
@@ -38,6 +39,7 @@ const RolePlay = {
                 this.currentScenario = button.dataset.scenario;
                 this.messagesContainer.innerHTML = '';
                 this.showScenarioModal(button.dataset.scenario);
+                this.setMicEnabled(false);
                 this.start();
                 this.scrollToBottomSmooth();
             });
@@ -53,6 +55,7 @@ const RolePlay = {
                 this.messagesContainer.innerHTML = '';
                 this.currentScenario = null;
                 this.isStarting = false;
+                this.setMicEnabled(false);
                 this.toggleExitButton(false);
                 this.hideScenarioModal();
             });
@@ -65,6 +68,9 @@ const RolePlay = {
         UI.attachAudioSpeedToggle('#roleplay-audio-slow-toggle', (speed) => {
             this.audioSpeed = speed;
         });
+
+        // Começa desativado até chegar a 1.ª fala do tutor
+        this.setMicEnabled(false);
     },
 
     async start() {
@@ -89,11 +95,13 @@ const RolePlay = {
             UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, this.messagesContainer);
             this.scrollToBottomSmooth();
             this.playTutorAudio(data.chinese);
+            this.setMicEnabled(true);
         } catch (error) {
             console.error('Role-play start error:', error);
             loadingElement.remove();
             UI.addTutorMessage('Não foi possível iniciar o cenário.', null, null, null, this.messagesContainer);
             this.scrollToBottomSmooth();
+            this.setMicEnabled(true);
         } finally {
             this.isStarting = false;
         }
@@ -101,7 +109,7 @@ const RolePlay = {
 
     async handleMicPress(event) {
         event.preventDefault();
-        if (this.isRecording) return;
+        if (this.isRecording || !this.micEnabled || this.micButton?.disabled) return;
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             this.mediaRecorder = new MediaRecorder(stream);
@@ -148,14 +156,15 @@ const RolePlay = {
                 userMsgElement.classList.remove('loading');
                 this.scrollToBottomSmooth();
 
-                const chatResponse = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: sttData.transcription, scenario: this.currentScenario, mode: 'voice' }) });
-                const chatData = await chatResponse.json();
-                UI.addTutorMessage(chatData.chinese, chatData.pinyin, chatData.translation, chatData.feedback, this.messagesContainer);
-                this.scrollToBottomSmooth();
-                this.playTutorAudio(chatData.chinese);
-            } catch (error) {
-                userMsgElement.querySelector('.msg-chinese').textContent = "Erro ao processar áudio.";
-            }
+            const chatResponse = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: sttData.transcription, scenario: this.currentScenario, mode: 'voice' }) });
+            const chatData = await chatResponse.json();
+            UI.addTutorMessage(chatData.chinese, chatData.pinyin, chatData.translation, chatData.feedback, this.messagesContainer);
+            this.scrollToBottomSmooth();
+            this.playTutorAudio(chatData.chinese);
+            this.setMicEnabled(true);
+        } catch (error) {
+            userMsgElement.querySelector('.msg-chinese').textContent = "Erro ao processar áudio.";
+        }
         };
     },
 
@@ -239,5 +248,13 @@ const RolePlay = {
             taxi: { title: 'Táxi', desc: 'Peça direções e explique ao motorista para onde quer ir.' }
         };
         return map[key] || { title: 'Role-Play', desc: 'Pratique uma situação do dia a dia em Mandarim.' };
+    },
+
+    setMicEnabled(on) {
+        this.micEnabled = !!on;
+        if (this.micButton) {
+            this.micButton.disabled = !on;
+            this.micButton.classList.toggle('is-disabled', !on);
+        }
     }
 };

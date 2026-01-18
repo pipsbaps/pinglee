@@ -1466,7 +1466,7 @@ body.modal-open {
     overflow-x: auto;
   }
   .stat-card {
-    min-width: 220px;
+    min-width: 180px;
     font-size: 0.9rem;
   }
   .metric-label {

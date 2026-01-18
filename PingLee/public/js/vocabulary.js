@@ -4,7 +4,7 @@ const VocabularyData = {
             id: 'daily-life',
             name: 'Vida diária',
             icon: '🏠',
-            subCategories: [
+            radicals: [
                 {
                     id: 'greetings',
                     name: 'Saudações',
@@ -22,14 +22,8 @@ const VocabularyData = {
                 {
                     id: 'food',
                     name: 'Comida',
-                    radicals: [
-                        {
-                            id: 'rad-mouth',
-                            name: '口 (boca)',
-                            words: [
-                                { id: 'w3', character: '吃', pinyin: 'chī', meaning: 'comer', hsk: 'HSK1', type: 'Verbo', notes: '', compounds: [], example: { zh: '我想吃饭。', pinyin: 'wǒ xiǎng chī fàn', pt: 'Quero comer.' } }
-                            ]
-                        }
+                    words: [
+                        { id: 'w3', character: '吃', pinyin: 'chī', meaning: 'comer', hsk: 'HSK1', type: 'Verbo', notes: '', compounds: [], example: { zh: '我想吃饭。', pinyin: 'wǒ xiǎng chī fàn', pt: 'Quero comer.' } }
                     ]
                 }
             ]
@@ -38,7 +32,7 @@ const VocabularyData = {
             id: 'travel',
             name: 'Viagens',
             icon: '✈️',
-            subCategories: [
+            radicals: [
                 {
                     id: 'transport',
                     name: 'Transportes',
@@ -125,16 +119,18 @@ const Vocabulary = {
     buildIndex(data) {
         this.wordsIndex = [];
         this.radicalsIndex = new Map();
-        data.mainCategories.forEach(main => {
-            main.subCategories.forEach(sub => {
-                sub.radicals.forEach(rad => {
+        const traverse = (nodes, mainId, parentId = null) => {
+            if (!Array.isArray(nodes)) return;
+            nodes.forEach(node => {
+                const isRadical = Array.isArray(node.words);
+                if (isRadical) {
                     const wordIds = [];
-                    rad.words.forEach(w => {
+                    node.words.forEach(w => {
                         this.wordsIndex.push({
                             ...w,
-                            mainId: main.id,
-                            subId: sub.id,
-                            radicalId: rad.id,
+                            mainId,
+                            subId: parentId,
+                            radicalId: node.id,
                             searchBlob: [
                                 w.character,
                                 w.pinyin,
@@ -146,10 +142,13 @@ const Vocabulary = {
                         });
                         wordIds.push(w.id);
                     });
-                    this.radicalsIndex.set(rad.id, wordIds);
-                });
+                    this.radicalsIndex.set(node.id, wordIds);
+                } else if (Array.isArray(node.radicals)) {
+                    traverse(node.radicals, mainId, node.id);
+                }
             });
-        });
+        };
+        data.mainCategories.forEach(main => traverse(main.radicals, main.id, null));
     },
 
     bindEvents() {
@@ -242,8 +241,9 @@ const Vocabulary = {
         const parts = [];
         const { openMainCategoryId, openSubCategoryId, openRadicalId } = this.State;
         const main = VocabularyData.mainCategories.find(m => m.id === openMainCategoryId);
-        const sub = main?.subCategories.find(s => s.id === openSubCategoryId);
-        const rad = sub?.radicals.find(r => r.id === openRadicalId);
+        const nodes = main?.radicals || [];
+        const sub = nodes.find(s => s.id === openSubCategoryId);
+        const rad = (sub?.radicals || nodes)?.find(r => r.id === openRadicalId);
         if (main) parts.push({ label: main.name, level: 'main', id: main.id });
         if (sub) parts.push({ label: sub.name, level: 'sub', id: sub.id });
         if (rad) parts.push({ label: rad.name, level: 'rad', id: rad.id });
@@ -320,12 +320,41 @@ const Vocabulary = {
             this.renderPanel('verCategorias');
             return;
         }
+        const nodes = Array.isArray(main.radicals) ? main.radicals : [];
+        const first = nodes[0];
+        const firstIsRadical = first && Array.isArray(first.words);
+
+        if (firstIsRadical) {
+            // Categoria sem subcategorias: lista diretamente os radicais
+            const radGrid = document.createElement('div');
+            radGrid.className = 'panel-grid fade-in';
+            nodes.forEach(rad => {
+                const count = this.radicalsIndex.get(rad.id)?.length || 0;
+                const card = document.createElement('div');
+                card.className = 'panel-card rad';
+                card.innerHTML = `<div class="title">${rad.name}</div><div class="meta">${count} palavras</div>`;
+                card.addEventListener('click', () => {
+                    this.State.openSubCategoryId = null;
+                    this.State.openRadicalId = rad.id;
+                    this.applyFilters();
+                    this.renderBreadcrumb();
+                    this.renderPanel('verPalavras');
+                });
+                radGrid.appendChild(card);
+            });
+            this.el.panel.appendChild(radGrid);
+            return;
+        }
+
+        // Categoria com subcategorias: primeiro mostra subcategorias
         const subGrid = document.createElement('div');
         subGrid.className = 'panel-grid fade-in';
-        main.subCategories.forEach(sub => {
+        nodes.forEach(sub => {
+            const wordCount = (sub.radicals || sub.words || []).reduce
+                ? (sub.radicals || []).reduce((acc, r) => acc + (this.radicalsIndex.get(r.id)?.length || 0), 0)
+                : 0;
             const card = document.createElement('div');
             card.className = 'panel-card sub';
-            const wordCount = sub.radicals.reduce((acc, r) => acc + (this.radicalsIndex.get(r.id)?.length || 0), 0);
             card.innerHTML = `<div class="title">${sub.name}</div><div class="meta">${wordCount} palavras</div>`;
             card.addEventListener('click', () => {
                 this.State.openSubCategoryId = sub.id;
@@ -337,11 +366,11 @@ const Vocabulary = {
         });
         this.el.panel.appendChild(subGrid);
 
-        const sub = main.subCategories.find(s => s.id === this.State.openSubCategoryId);
+        const sub = nodes.find(s => s.id === this.State.openSubCategoryId);
         if (!sub) return;
         const radGrid = document.createElement('div');
         radGrid.className = 'panel-grid fade-in';
-        sub.radicals.forEach(rad => {
+        (sub.radicals || []).forEach(rad => {
             const count = this.radicalsIndex.get(rad.id)?.length || 0;
             const card = document.createElement('div');
             card.className = 'panel-card rad';
@@ -518,6 +547,7 @@ const Vocabulary = {
             alert('Escolhe primeiro um radical para adicionar palavras.');
             return;
         }
+        this.applyFilters();
         this.clearFeedback();
         if (id) {
             const w = this.wordsIndex.find(x => x.id === id);

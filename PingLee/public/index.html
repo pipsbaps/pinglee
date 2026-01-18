@@ -27,7 +27,7 @@
                 <div class="chat-form-container">
                     <form class="chat-form text-form">
                         <input type="text" class="message-input" placeholder="Escreva a sua mensagem..."
-                            autocomplete="off">
+                            autocomplete="off" lang="zh-Hans" inputmode="text">
                         <button type="submit" class="send-button" aria-label="Enviar" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                                 <path
@@ -85,6 +85,9 @@
                     <h2>O meu Vocabulário</h2>
                     <button class="add-word-btn" aria-label="Adicionar nova palavra">+</button>
                 </div>
+                <div class="vocab-search">
+                    <input type="search" id="vocab-search" placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off" inputmode="search">
+                </div>
                 <div class="vocab-list"></div>
             </section>
 
@@ -127,7 +130,7 @@
                 <div class="form-group form-group-inline">
                     <div class="form-group">
                         <label for="character-input">Caractere(s)</label>
-                        <input type="text" id="character-input" required>
+                        <input type="text" id="character-input" required lang="zh-Hans" inputmode="text">
                     </div>
                     <div class="form-group compact-action">
                         <label class="visually-hidden" for="ai-fill-btn">Auto</label>
@@ -136,29 +139,29 @@
                 </div>
                 <div class="form-group">
                     <label for="pinyin-input">Pinyin</label>
-                    <input type="text" id="pinyin-input" required>
+                        <input type="text" id="pinyin-input" required lang="en" inputmode="latin">
                 </div>
                 <div class="form-group">
                     <label for="translation-input">Significado</label>
-                    <input type="text" id="translation-input" required>
+                    <input type="text" id="translation-input" required lang="pt" inputmode="text">
                 </div>
                 <div class="form-group-inline">
                     <div class="form-group">
                         <label for="hsk-input">HSK</label>
-                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." />
+                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text" />
                     </div>
                     <div class="form-group">
                         <label for="pos-input">Função Gramatical</label>
-                    <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." />
+                    <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." lang="pt" inputmode="text" />
                 </div>
             </div>
                 <div class="form-group">
                     <label for="example-chinese-input">Exemplo</label>
-                    <input type="text" id="example-chinese-input">
+                    <input type="text" id="example-chinese-input" lang="zh-Hans" inputmode="text">
                 </div>
                 <div class="form-group">
                     <label for="example-translation-input">Tradução</label>
-                    <input type="text" id="example-translation-input">
+                    <input type="text" id="example-translation-input" lang="pt" inputmode="text">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="save-btn word-btn">Guardar</button>

@@ -22,10 +22,14 @@ const Vocabulary = {
     const wordForm = document.getElementById('word-form');
         const closeBtn = document.querySelector('.word-modal-close');
     const aiFillBtn = document.getElementById('ai-fill-btn');
+    const searchInput = document.getElementById('vocab-search');
 
         const [wordIdInput, characterInput, pinyinInput, translationInput, hskInput, posInput, exampleChineseInput, exampleTranslationInput] = [
             'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-input', 'pos-input', 'example-chinese-input', 'example-translation-input'
         ].map(id => document.getElementById(id));
+    let feedbackContainer = null;
+    let lastSuggestions = [];
+    let searchQuery = '';
 
 
     // --- 3. SÍNTESE DE VOZ (usa endpoint TTS da app) ---
@@ -43,12 +47,28 @@ const Vocabulary = {
         const currentlyExpanded = Array.from(vocabList.querySelectorAll('.word-card.expanded')).map(c => parseInt(c.dataset.id));
         vocabList.innerHTML = '';
 
-        if (vocabularyBank.length === 0) {
+        const term = (searchQuery || '').trim().toLowerCase();
+        const list = term
+            ? vocabularyBank.filter(w => {
+                const haystack = [
+                    w.character,
+                    w.pinyin,
+                    w.translation,
+                    w.hsk,
+                    w.partOfSpeech,
+                    w.example?.chinese,
+                    w.example?.translation
+                ].filter(Boolean).join(' ').toLowerCase();
+                return haystack.includes(term);
+            })
+            : vocabularyBank;
+
+        if (list.length === 0) {
             vocabList.innerHTML = `<p class="empty-list-msg">Ainda não tem palavras. Adicione uma!</p>`;
             return;
         }
 
-        vocabularyBank.forEach(word => {
+        list.forEach(word => {
             const wordCard = document.createElement('div');
             wordCard.className = 'word-card';
             wordCard.dataset.id = word.id;
@@ -124,6 +144,97 @@ const Vocabulary = {
         exampleTranslationInput.value = aiData.example_translation || aiData.related?.[0]?.meaning || '';
     }
 
+    function ensureFeedbackContainer() {
+        if (feedbackContainer) return feedbackContainer;
+        feedbackContainer = document.createElement('div');
+        feedbackContainer.className = 'vocab-feedback hidden';
+        vocabSection.insertBefore(feedbackContainer, vocabList);
+        return feedbackContainer;
+    }
+
+    function hideFeedback() {
+        if (!feedbackContainer) return;
+        feedbackContainer.classList.add('hidden');
+    }
+
+    function renderFeedback(message = '✓ Palavra guardada com sucesso!', suggestions = []) {
+        const container = ensureFeedbackContainer();
+        lastSuggestions = suggestions || [];
+        const hasSuggestions = lastSuggestions.length > 0;
+        const suggestionLines = hasSuggestions
+            ? lastSuggestions.map(s => `<li>• ${s.word} ${s.pinyin ? `(${s.pinyin})` : ''} - ${s.meaning || ''}</li>`).join('')
+            : '';
+        container.innerHTML = `
+            <div class="vocab-feedback-body">
+                <div class="vocab-feedback-text">
+                    <p class="feedback-title">${message}</p>
+                    ${hasSuggestions ? `<p class="feedback-sub">Palavras relacionadas que podes adicionar:</p>
+                    <ul class="feedback-list">${suggestionLines}</ul>` : ''}
+                </div>
+                <div class="feedback-actions">
+                    ${hasSuggestions ? `<button type="button" class="word-btn add-suggestions-btn">Adicionar estas</button>` : ''}
+                    <button type="button" class="word-btn ghost close-feedback-btn">Fechar</button>
+                </div>
+            </div>
+        `;
+        container.classList.remove('hidden');
+
+        const closeBtn = container.querySelector('.close-feedback-btn');
+        if (closeBtn) closeBtn.onclick = hideFeedback;
+        const addBtn = container.querySelector('.add-suggestions-btn');
+        if (addBtn) addBtn.onclick = handleAddSuggestions;
+    }
+
+    async function fetchSuggestionsFor(word) {
+        try {
+            const aiData = await lookupWordWithAI(word);
+            return aiData.related || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    async function handleAddSuggestions() {
+        if (!lastSuggestions.length) {
+            hideFeedback();
+            return;
+        }
+        const toAdd = [];
+        for (const sug of lastSuggestions) {
+            try {
+                const aiData = await lookupWordWithAI(sug.word);
+                if (!aiData) continue;
+                const suggestionWord = {
+                    character: aiData.word || sug.word,
+                    pinyin: aiData.pinyin || '',
+                    translation: Array.isArray(aiData.meaning) ? aiData.meaning.join('; ') : (aiData.meaning || sug.meaning || ''),
+                    hsk: aiData.hsk || '',
+                    partOfSpeech: aiData.pos || '',
+                    example: {
+                        chinese: aiData.example_sentence || '',
+                        translation: aiData.example_translation || ''
+                    }
+                };
+                const duplicate = vocabularyBank.find(w =>
+                    w.character.trim() === suggestionWord.character &&
+                    w.pinyin.trim().toLowerCase() === suggestionWord.pinyin.toLowerCase() &&
+                    w.translation.trim().toLowerCase() === suggestionWord.translation.toLowerCase() &&
+                    w.hsk.trim().toLowerCase() === suggestionWord.hsk.toLowerCase()
+                );
+                if (!duplicate && suggestionWord.character && suggestionWord.pinyin && suggestionWord.translation) {
+                    toAdd.push({ ...suggestionWord, id: Date.now() + Math.floor(Math.random() * 1000) });
+                }
+            } catch (err) {
+                console.error('Falha ao adicionar sugestão', err);
+            }
+        }
+        if (toAdd.length) {
+            vocabularyBank = [...toAdd, ...vocabularyBank];
+            renderVocabulary();
+        }
+        hideFeedback();
+    }
+
     async function handleAiFill() {
         const character = characterInput.value.trim();
         if (!character) { alert('Por favor, insira um caractere chinês.'); return; }
@@ -137,7 +248,7 @@ const Vocabulary = {
             alert(`Não foi possível obter uma sugestão para "${character}".`);
         } finally {
             aiFillBtn.disabled = false;
-            aiFillBtn.textContent = 'Preencher com IA';
+            aiFillBtn.textContent = 'Auto';
         }
     }
 
@@ -160,7 +271,7 @@ const Vocabulary = {
         characterInput.value = word.character;
         pinyinInput.value = word.pinyin;
         translationInput.value = word.translation;
-        hskSelect.value = word.hsk;
+        hskInput.value = word.hsk;
         posInput.value = word.partOfSpeech;
         exampleChineseInput.value = word.example?.chinese || '';
         exampleTranslationInput.value = word.example?.translation || '';
@@ -188,6 +299,18 @@ const Vocabulary = {
             alert('Os campos Caractere, Pinyin e Tradução são obrigatórios.');
             return;
         }
+        // Evita duplicações (mesmos campos-chave, ignorando exemplos e função gramatical)
+        const duplicate = vocabularyBank.find(w =>
+            w.id !== id &&
+            w.character.trim() === wordData.character &&
+            w.pinyin.trim().toLowerCase() === wordData.pinyin.toLowerCase() &&
+            w.translation.trim().toLowerCase() === wordData.translation.toLowerCase() &&
+            w.hsk.trim().toLowerCase() === wordData.hsk.toLowerCase()
+        );
+        if (duplicate) {
+            alert('Esta palavra já existe com os mesmos dados. Ajuste antes de guardar.');
+            return;
+        }
         if (id) {
             const index = vocabularyBank.findIndex(word => word.id === id);
             if (index !== -1) vocabularyBank[index] = { ...vocabularyBank[index], ...wordData, id };
@@ -196,6 +319,12 @@ const Vocabulary = {
         }
         renderVocabulary();
         closeModal();
+        renderFeedback('✓ Palavra guardada com sucesso!');
+        fetchSuggestionsFor(wordData.character).then(suggestions => {
+            if (suggestions?.length) {
+                renderFeedback('✓ Palavra guardada com sucesso!', suggestions);
+            }
+        });
     }
 
     function handleDeleteWord(id) {
@@ -218,6 +347,12 @@ const Vocabulary = {
         addWordBtn.addEventListener('click', openModalForCreate);
         closeBtn.addEventListener('click', closeModal);
         aiFillBtn.addEventListener('click', handleAiFill);
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                searchQuery = searchInput.value || '';
+                renderVocabulary();
+            });
+        }
         modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
         wordForm.addEventListener('submit', handleFormSubmit);
 

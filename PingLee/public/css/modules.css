@@ -636,6 +636,16 @@
   padding: 0;
   box-sizing: border-box;
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 .vocab-controls {
   padding: 1rem 1.5rem;
   display: flex;
@@ -663,6 +673,18 @@
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+.vocab-search {
+  padding: 0 1.5rem 0.75rem;
+}
+.vocab-search input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+}
 .vocab-list {
   flex-grow: 1;
   display: flex;
@@ -670,6 +692,49 @@
   gap: 1rem;
   overflow-y: auto;
   padding: 1rem;
+}
+.vocab-feedback {
+  margin: 1rem 1rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #eaf3ff 0%, #ffffff 80%);
+  border: 1px solid #d9e7ff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.vocab-feedback.hidden {
+  display: none;
+}
+.vocab-feedback-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.vocab-feedback-text {
+  color: var(--text-primary);
+}
+.feedback-title {
+  margin: 0;
+  font-weight: 700;
+}
+.feedback-sub {
+  margin: 0.15rem 0 0.35rem;
+  color: var(--text-secondary);
+}
+.feedback-list {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+.feedback-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.word-btn.ghost {
+  background: #ffffff;
+  border-color: #d6e4ff;
+  color: #123a74;
 }
 .empty-list-msg {
   text-align: center;

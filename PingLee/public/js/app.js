@@ -3,19 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
         navItems: document.querySelectorAll('.nav-item'),
         sections: document.querySelectorAll('main section'),
         headerTitle: document.querySelector('.header-title'),
+        moduleLoaders: {
+            chat: { path: '/js/chat.js', loaded: false, initialized: false, loading: null, initFn: () => window.TextChat?.init() },
+            'role-play': { path: '/js/role-play.js', loaded: false, initialized: false, loading: null, initFn: () => window.RolePlay?.init() },
+            vocabulary: { path: '/js/vocabulary.js', loaded: false, initialized: false, loading: null, initFn: () => window.Vocabulary?.init() },
+        },
 
         init() {
             this.setupNavigation();
             this.setupHashListener();
             this.showInitialSection();
-
-            // CORREÇÃO FINAL: As verificações `if (window.XXX)` que adicionei
-            // estavam erradas e impediam a inicialização de TODOS os módulos.
-            // A forma correta é chamar as funções `init` diretamente.
-            // Isto vai restaurar o Chat, o Vocabulário e o Role-Play.
-            TextChat.init();
-            RolePlay.init();
-            Vocabulary.init();
         },
 
         setupNavigation() {
@@ -54,11 +51,85 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.headerTitle.classList.add('hidden');
                 }
             }
+            try {
+                localStorage.setItem('activeSection', targetId);
+            } catch (_) {}
+            this.ensureModule(targetId);
         },
 
         showInitialSection() {
-            const initialSection = window.location.hash.substring(1) || 'chat';
+            const stored = localStorage.getItem('activeSection');
+            const initialSection = window.location.hash.substring(1) || stored || 'chat';
             this.showSection(initialSection);
+            document.querySelectorAll('.modal-overlay').forEach(modal => this.setupModalTrap(modal));
+        },
+
+        async ensureModule(targetId) {
+            const mod = this.moduleLoaders[targetId];
+            if (!mod) return;
+            if (mod.initialized) return;
+            if (mod.loaded) {
+                mod.initFn?.();
+                mod.initialized = true;
+                return;
+            }
+            if (!mod.loading) {
+                mod.loading = new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = mod.path;
+                    s.async = true;
+                    s.onload = () => {
+                        mod.loaded = true;
+                        try {
+                            mod.initFn?.();
+                            mod.initialized = true;
+                        } catch (e) {
+                            console.error(`Erro ao inicializar módulo ${targetId}`, e);
+                        }
+                        resolve();
+                    };
+                    s.onerror = (err) => reject(err);
+                    document.body.appendChild(s);
+                });
+            }
+            try {
+                await mod.loading;
+            } catch (err) {
+                console.error(`Falha a carregar módulo ${targetId}`, err);
+            }
+        },
+
+        setupModalTrap(modal) {
+            if (modal.dataset.trapInit === '1') return;
+            modal.dataset.trapInit = '1';
+            modal.addEventListener('keydown', (e) => {
+                if (e.key !== 'Tab') return;
+                const focusable = modal.querySelectorAll(
+                    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+                );
+                const list = Array.from(focusable).filter(el => el.offsetParent !== null);
+                if (!list.length) return;
+                const first = list[0];
+                const last = list[list.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            });
+            modal.addEventListener('transitionend', () => {
+                if (!modal.classList.contains('active')) return;
+                const firstFocusable = modal.querySelector(
+                    'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                if (firstFocusable) firstFocusable.focus();
+            });
         }
     };
 

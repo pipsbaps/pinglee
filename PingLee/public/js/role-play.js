@@ -67,7 +67,7 @@ const RolePlay = {
 
         UI.attachAudioSpeedToggle('#roleplay-audio-slow-toggle', (speed) => {
             this.audioSpeed = speed;
-        });
+        }, 'roleplay_audio_slow');
 
         // Começa desativado até chegar a 1.ª fala do tutor
         this.setMicEnabled(false);

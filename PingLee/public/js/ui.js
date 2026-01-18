@@ -163,7 +163,7 @@ const UI = {
         }
     },
 
-    attachAudioSpeedToggle(selector, onChange) {
+    attachAudioSpeedToggle(selector, onChange, storageKey = null) {
         const toggle = document.querySelector(selector);
         if (!toggle) return;
         const applyState = (on) => {
@@ -171,12 +171,16 @@ const UI = {
             if (typeof onChange === 'function') onChange(speed);
             toggle.classList.toggle('is-active', on);
             toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+            if (storageKey) {
+                localStorage.setItem(storageKey, on ? '1' : '0');
+            }
         };
         toggle.addEventListener('click', () => {
             const on = !toggle.classList.contains('is-active');
             applyState(on);
         });
-        applyState(false);
+        const saved = storageKey ? localStorage.getItem(storageKey) === '1' : false;
+        applyState(saved);
     },
 
     appendUserFeedback(userMessageEl, feedbackText) {

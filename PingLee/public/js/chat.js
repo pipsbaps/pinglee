@@ -1,4 +1,6 @@
 const TextChat = {
+    history: [],
+    STORAGE_KEY: 'chat_history_v1',
 
     init() {
         const form = document.querySelector('#chat .chat-form');
@@ -6,11 +8,15 @@ const TextChat = {
         const messagesContainer = document.querySelector('#chat .chat-messages');
         UI.attachAudioSpeedToggle('#audio-slow-toggle', (speed) => {
             UI.audioSpeed = speed;
-        });
+        }, 'chat_audio_slow');
         this.toggleSendButton(input, form?.querySelector('.send-button'));
 
-        // Inicia a conversa e adiciona sugestões
-        this.startConversation(messagesContainer, input);
+        // Restaura histórico, se existir
+        const restored = this.restoreHistory(messagesContainer);
+        if (!restored) {
+            // Inicia a conversa e adiciona sugestões
+            this.startConversation(messagesContainer, input);
+        }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -20,7 +26,7 @@ const TextChat = {
             this.clearEmptyState(messagesContainer);
 
             // 1. Adiciona a mensagem do utilizador e foca o input
-            UI.addUserMessage(message, messagesContainer);
+            this.pushUserMessage(message, messagesContainer);
             input.value = '';
             input.focus(); // Garante que o foco regressa ao input
             this.toggleSendButton(input, form.querySelector('.send-button'));
@@ -39,12 +45,12 @@ const TextChat = {
 
                 // 4. Substitui a mensagem de loading pela resposta do tutor
                 loadingElement.remove();
-                UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, messagesContainer);
+                this.pushTutorMessage(data, messagesContainer);
 
             } catch (error) {
                 console.error('Text chat error:', error);
                 loadingElement.remove();
-                UI.addTutorMessage('Desculpe, ocorreu um erro ao contactar a API.', null, null, null, messagesContainer);
+                this.pushTutorMessage({ chinese: 'Desculpe, ocorreu um erro ao contactar a API.' }, messagesContainer);
             }
         });
     },
@@ -106,5 +112,63 @@ const TextChat = {
     clearEmptyState(container) {
         const emptyEl = container.querySelector('.empty-state');
         if (emptyEl) emptyEl.remove();
+    },
+
+    pushUserMessage(text, container) {
+        UI.addUserMessage(text, container);
+        this.history.push({ role: 'user', text });
+        this.trimHistory();
+        this.persistHistory();
+    },
+
+    pushTutorMessage(data, container) {
+        UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, container);
+        this.history.push({
+            role: 'tutor',
+            chinese: data.chinese || '',
+            pinyin: data.pinyin || '',
+            translation: data.translation || '',
+            feedback: data.feedback || ''
+        });
+        this.trimHistory();
+        this.persistHistory();
+    },
+
+    trimHistory() {
+        const MAX = 50;
+        if (this.history.length > MAX) {
+            this.history = this.history.slice(this.history.length - MAX);
+        }
+    },
+
+    persistHistory() {
+        try {
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.history));
+        } catch (e) {
+            console.warn('Não foi possível guardar histórico do chat', e);
+        }
+    },
+
+    restoreHistory(container) {
+        try {
+            const raw = localStorage.getItem(this.STORAGE_KEY);
+            if (!raw) return false;
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return false;
+            this.history = [];
+            parsed.forEach(msg => {
+                if (msg.role === 'user') {
+                    UI.addUserMessage(msg.text || '', container);
+                } else if (msg.role === 'tutor') {
+                    UI.addTutorMessage(msg.chinese, msg.pinyin, msg.translation, msg.feedback, container);
+                }
+                this.history.push(msg);
+            });
+            return parsed.length > 0;
+        } catch (e) {
+            console.warn('Não foi possível restaurar histórico do chat', e);
+            this.history = [];
+            return false;
+        }
     }
 };

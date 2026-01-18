@@ -27,6 +27,7 @@
 body {
   font-family: var(--font-main);
   margin: 0;
+  overflow-x: hidden;
   /* Efeito Sky Glow */
   background:
     radial-gradient(

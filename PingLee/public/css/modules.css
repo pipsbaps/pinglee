@@ -650,7 +650,7 @@
   border: 0;
 }
 .vocab-header {
-  padding: 1rem 1.5rem 0.5rem;
+  padding: 1rem 0 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -775,7 +775,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0;
 }
 .stat-card {
   background: #fff;
@@ -804,7 +804,7 @@
   padding: 0;
 }
 .vocab-panel {
-  padding: 0.75rem 1.5rem 1.25rem;
+  padding: 0.75rem 0 1.25rem;
   overflow-y: auto;
   max-height: calc(100vh - 240px);
 }
@@ -851,14 +851,20 @@
 .subcategory-btn {
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  padding: 0.65rem 0.9rem;
+  padding: 0.9rem 1rem;
   width: 100%;
+  min-height: 92px;
   text-align: left;
   color: #0f1b2b;
   font-weight: 500;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
 }
 .category-btn small,
 .radical-btn small,
@@ -1403,6 +1409,7 @@ body.modal-open {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 .related-links .link-rel {
   border: 1px solid #dce6fa;
@@ -1415,9 +1422,39 @@ body.modal-open {
 }
 .detail-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
   margin-top: 0.35rem;
+}
+.detail-actions-left,
+.detail-actions-right {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+.icon-btn {
+  background: #ffffff;
+  border: 1px solid #d6e4ff;
+  color: #0f3b7a;
+  border-radius: 12px;
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.icon-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+}
+.icon-btn.danger {
+  color: #e96f70;
+  border-color: #f6d6d6;
+  background: #fff6f6;
+}
 }
 #word-form {
   display: flex;

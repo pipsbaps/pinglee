@@ -778,15 +778,16 @@
   max-height: 0;
   opacity: 0;
   overflow: hidden;
+  will-change: max-height;
   transition:
     max-height 0.4s ease,
     opacity 0.3s ease,
     padding-bottom 0.4s ease;
 }
 .word-card.expanded .word-card-extended {
-  max-height: 2000px;
   opacity: 1;
   padding-bottom: 1rem;
+  overflow: visible;
 }
 .extended-content-wrapper {
   padding: 0 1rem;
@@ -822,6 +823,19 @@
 .word-card-actions .word-action-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+.word-card-actions .word-action-btn svg path {
+  fill: currentColor;
+}
+.word-card-actions .edit-word-btn {
+  color: #1da8da;
+  background: #eef7ff;
+  border-color: #cfe6ff;
+}
+.word-card-actions .delete-word-btn {
+  color: #f28c8c;
+  background: #fff3f3;
+  border-color: #f8d6d6;
 }
 .word-card-actions .word-action-btn svg {
   width: 16px;
@@ -923,6 +937,24 @@ body.modal-open {
 .word-modal form textarea {
   border-radius: 14px;
 }
+.form-group-inline {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+.form-group-inline > .form-group {
+  flex: 1 1 0;
+}
+.form-group.compact-action {
+  width: auto;
+  flex: 0 0 auto;
+  margin-bottom: 0;
+  display: flex;
+  align-items: flex-end;
+}
+.word-modal .form-group label {
+  display: block;
+}
 .word-btn {
   background: #c6e1fe;
   color: #0f4ba7;
@@ -932,6 +964,8 @@ body.modal-open {
   cursor: pointer;
   font-weight: 600;
   box-shadow: 0 3px 10px rgba(0, 122, 255, 0.12);
+  min-width: 88px;
+  text-align: center;
 }
 .word-btn:hover {
   box-shadow: 0 5px 12px rgba(0, 122, 255, 0.18);
@@ -943,6 +977,9 @@ body.modal-open {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.form-actions .word-btn {
+  width: 100%;
 }
 
 /* Role-play modal */

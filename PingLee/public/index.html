@@ -124,10 +124,15 @@
             </div>
             <form id="word-form">
                 <input type="hidden" id="word-id-input">
-                <div class="form-group">
-                    <label for="character-input">Caractere(s)</label>
-                    <input type="text" id="character-input" required>
-                    <button type="button" id="ai-fill-btn" class="word-btn">Preencher</button>
+                <div class="form-group form-group-inline">
+                    <div class="form-group">
+                        <label for="character-input">Caractere(s)</label>
+                        <input type="text" id="character-input" required>
+                    </div>
+                    <div class="form-group compact-action">
+                        <label class="visually-hidden" for="ai-fill-btn">Auto</label>
+                        <button type="button" id="ai-fill-btn" class="word-btn">Auto</button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="pinyin-input">Pinyin</label>
@@ -139,32 +144,14 @@
                 </div>
                 <div class="form-group-inline">
                     <div class="form-group">
-                        <label for="hsk-select">HSK</label>
-                        <select id="hsk-select">
-                            <option>HSK1</option>
-                            <option>HSK2</option>
-                            <option>HSK3</option>
-                            <option>HSK4</option>
-                            <option>HSK5</option>
-                            <option>HSK6</option>
-                            <option>N/A</option>
-                        </select>
+                        <label for="hsk-input">HSK</label>
+                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." />
                     </div>
                     <div class="form-group">
-                        <label for="pos-select">Função Gramatical</label>
-                        <select id="pos-select">
-                            <option>Substantivo</option>
-                            <option>Verbo</option>
-                            <option>Adjetivo</option>
-                            <option>Advérbio</option>
-                            <option>Pronome</option>
-                            <option>Partícula</option>
-                            <option>Classificador</option>
-                            <option>Expressão</option>
-                            <option>Outro</option>
-                        </select>
-                    </div>
+                        <label for="pos-input">Função Gramatical</label>
+                    <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." />
                 </div>
+            </div>
                 <div class="form-group">
                     <label for="example-chinese-input">Exemplo</label>
                     <input type="text" id="example-chinese-input">

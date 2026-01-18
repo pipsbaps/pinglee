@@ -4,19 +4,29 @@ const jsonResponse = (data, status = 200, headers = {}) =>
     headers: { "content-type": "application/json", ...headers },
   });
 
-const buildPrompt = (query) => `Given the Mandarin input: "${query}".
-Return JSON with:
-- word: the character or word
+const buildPrompt = (query) => `Usa o input em mandarim: "${query}".
+Devolve APENAS JSON com as chaves:
+- word: a Palavra/caractere
 - pinyin
-- meaning: concise PT-PT gloss
-- pos: part of speech (PT)
-- hsk: HSK level or "N/A"
-- radical: radical name/meaning if applicable
-- components: component characters
-- composition: short note on structure
-- related: 3-5 common words using this char/component ("word" and PT meaning)
-- unrelated: optional 2 words that include it but with unrelated meaning
-Return ONLY JSON.`;
+- meaning: até 3 significados curtos em PT-PT (array ou string)
+- pos: função gramatical em texto livre
+- hsk: nível de HSK em texto livre
+- radical: nome/explicação do radical (se aplicável)
+- components: caracteres que compõem o radical (se aplicável)
+- composition: nota breve sobre composição/estrutura
+- related: 3-5 palavras/composições comuns com este caractere (array de {word, meaning})
+- example_sentence: frase de exemplo em caracteres
+- example_pinyin: pinyin da frase
+- example_translation: tradução PT-PT da frase
+
+Segue este prompt de referência (não devolvas texto corrido):
+Palavra
+Pinyin
+Significado (máximo 3)
+Função gramatical
+nível de hsk
+exemplo de frases (caracteres + pinyin)
+tradução da frase`;
 
 export async function onRequest(context) {
   const { request, env } = context;

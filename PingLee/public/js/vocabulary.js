@@ -23,41 +23,19 @@ const Vocabulary = {
         const closeBtn = document.querySelector('.word-modal-close');
     const aiFillBtn = document.getElementById('ai-fill-btn');
 
-        const [wordIdInput, characterInput, pinyinInput, translationInput, hskSelect, posSelect, exampleChineseInput, exampleTranslationInput] = [
-            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-select', 'pos-select', 'example-chinese-input', 'example-translation-input'
+        const [wordIdInput, characterInput, pinyinInput, translationInput, hskInput, posInput, exampleChineseInput, exampleTranslationInput] = [
+            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-input', 'pos-input', 'example-chinese-input', 'example-translation-input'
         ].map(id => document.getElementById(id));
 
 
-    // --- 3. SÍNTESE DE VOZ (TEXT-TO-SPEECH) ---
-    const synth = window.speechSynthesis;
-    let voices = [];
-
-    function loadVoices() {
-        voices = (synth.getVoices() || []).filter(voice => voice.lang.startsWith('zh'));
-        if (voices.length === 0 && synth.onvoiceschanged !== undefined) {
-            synth.onvoiceschanged = () => {
-                voices = synth.getVoices().filter(voice => voice.lang.startsWith('zh'));
-            };
-        }
-    }
-    loadVoices();
-
-    function speak(text, lang = 'zh-CN', buttonEl = null) {
-        if (!synth || !text) return;
-        if (synth.speaking) {
-            synth.cancel();
-        }
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lang;
-        const mandarinVoice = voices.find(v => v.lang === 'zh-CN') || voices.find(v => v.lang.startsWith('zh'));
-        if (mandarinVoice) utterance.voice = mandarinVoice;
-
-        utterance.onstart = () => buttonEl?.classList.add('playing');
-        utterance.onend = () => { buttonEl?.classList.remove('playing'); };
-        utterance.onerror = () => { buttonEl?.classList.remove('playing'); };
-
-        synth.speak(utterance);
+    // --- 3. SÍNTESE DE VOZ (usa endpoint TTS da app) ---
+    async function speak(text, buttonEl = null) {
+        if (!text) return;
+        if (buttonEl) buttonEl.classList.add('playing');
+        const tmpBtn = document.createElement('button');
+        UI.playAudio(tmpBtn, text, () => {
+            if (buttonEl) buttonEl.classList.remove('playing');
+        }, 0.95);
     }
 
     // --- 4. RENDERIZAÇÃO DO VOCABULÁRIO (COM NOVO DESIGN) ---
@@ -118,7 +96,7 @@ const Vocabulary = {
             if (wordCard.classList.contains('expanded') && extended) {
                 const inner = extended.querySelector('.extended-content-wrapper');
                 const height = inner ? inner.scrollHeight : extended.scrollHeight;
-                extended.style.maxHeight = `${height + 16}px`;
+                extended.style.maxHeight = `${height + 64}px`;
             }
         });
     }
@@ -138,11 +116,12 @@ const Vocabulary = {
         if (!aiData) return;
         characterInput.value = aiData.word || characterInput.value;
         pinyinInput.value = aiData.pinyin || '';
-        translationInput.value = aiData.meaning || '';
-        hskSelect.value = aiData.hsk || 'N/A';
-        posSelect.value = aiData.pos || 'Outro';
-        exampleChineseInput.value = aiData.related?.[0]?.word || '';
-        exampleTranslationInput.value = aiData.related?.[0]?.meaning || '';
+        const meaning = Array.isArray(aiData.meaning) ? aiData.meaning.join('; ') : (aiData.meaning || '');
+        translationInput.value = meaning;
+        hskInput.value = aiData.hsk || '';
+        posInput.value = aiData.pos || '';
+        exampleChineseInput.value = aiData.example_sentence || aiData.related?.[0]?.word || '';
+        exampleTranslationInput.value = aiData.example_translation || aiData.related?.[0]?.meaning || '';
     }
 
     async function handleAiFill() {
@@ -182,7 +161,7 @@ const Vocabulary = {
         pinyinInput.value = word.pinyin;
         translationInput.value = word.translation;
         hskSelect.value = word.hsk;
-        posSelect.value = word.partOfSpeech;
+        posInput.value = word.partOfSpeech;
         exampleChineseInput.value = word.example?.chinese || '';
         exampleTranslationInput.value = word.example?.translation || '';
         modalOverlay.classList.remove('hidden');
@@ -201,8 +180,8 @@ const Vocabulary = {
             character: characterInput.value.trim(),
             pinyin: pinyinInput.value.trim(),
             translation: translationInput.value.trim(),
-            hsk: hskSelect.value,
-            partOfSpeech: posSelect.value,
+            hsk: hskInput.value.trim(),
+            partOfSpeech: posInput.value.trim(),
             example: { chinese: exampleChineseInput.value.trim(), translation: exampleTranslationInput.value.trim() }
         };
         if (!wordData.character || !wordData.pinyin || !wordData.translation) {
@@ -255,7 +234,7 @@ const Vocabulary = {
 
             if (isAudioButton) {
                 event.stopPropagation();
-                speak(word.character, 'zh-CN', isAudioButton);
+                speak(word.character, isAudioButton);
                 return;
             }
             if (isEditButton) {
@@ -269,12 +248,23 @@ const Vocabulary = {
 
             // Se não for nenhum botão de ação, expande/encolhe o cartão
             if (event.target.closest('.word-card-main')){
-                 card.classList.toggle('expanded');
+                 const wasOpen = card.classList.contains('expanded');
+                 // Fecha outros
+                 vocabList.querySelectorAll('.word-card.expanded').forEach(other => {
+                    if (other !== card) {
+                        other.classList.remove('expanded');
+                        const ext = other.querySelector('.word-card-extended');
+                        if (ext) ext.style.maxHeight = '0px';
+                    }
+                 });
+                 card.classList.toggle('expanded', !wasOpen);
                  const extended = card.querySelector('.word-card-extended');
                  if (card.classList.contains('expanded') && extended) {
                     const inner = extended.querySelector('.extended-content-wrapper');
                     const height = inner ? inner.scrollHeight : extended.scrollHeight;
-                    extended.style.maxHeight = `${height + 16}px`;
+                    requestAnimationFrame(() => {
+                        extended.style.maxHeight = `${height + 64}px`;
+                    });
                  } else if (extended) {
                     extended.style.maxHeight = '0px';
                  }

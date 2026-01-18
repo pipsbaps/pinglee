@@ -163,7 +163,12 @@ const Vocabulary = {
         feedbackContainer.classList.add('hidden');
     }
 
-    function renderFeedback(message = '✓ Palavra guardada com sucesso!', suggestions = [], loadingSuggestions = false) {
+    function renderFeedback(
+        message = '✓ Palavra guardada com sucesso!',
+        suggestions = [],
+        loadingSuggestions = false,
+        addingSuggestions = false
+    ) {
         const container = ensureFeedbackContainer();
         lastSuggestions = suggestions || [];
         const hasSuggestions = lastSuggestions.length > 0;
@@ -175,12 +180,13 @@ const Vocabulary = {
                 <div class="vocab-feedback-text">
                     <p class="feedback-title">${message}</p>
                     ${loadingSuggestions ? `<p class="feedback-sub">A obter palavras relacionadas...</p>` : ''}
+                    ${addingSuggestions ? `<p class="feedback-sub">A adicionar palavras relacionadas...</p>` : ''}
                     ${hasSuggestions ? `<p class="feedback-sub">Palavras relacionadas que podes adicionar:</p>
                     <ul class="feedback-list">${suggestionLines}</ul>` : ''}
                 </div>
                 <div class="feedback-actions">
-                    ${hasSuggestions ? `<button type="button" class="word-btn add-suggestions-btn">Adicionar estas</button>` : ''}
-                    <button type="button" class="word-btn ghost close-feedback-btn">Fechar</button>
+                    ${hasSuggestions ? `<button type="button" class="word-btn add-suggestions-btn"${addingSuggestions ? ' disabled' : ''}>${addingSuggestions ? 'A adicionar...' : 'Adicionar estas'}</button>` : ''}
+                    <button type="button" class="word-btn ghost close-feedback-btn"${addingSuggestions ? ' disabled' : ''}>Fechar</button>
                 </div>
             </div>
         `;
@@ -204,7 +210,7 @@ const Vocabulary = {
     async function handleAddSuggestions() {
         const container = ensureFeedbackContainer();
         const addBtn = container.querySelector('.add-suggestions-btn');
-        if (addBtn) addBtn.disabled = true;
+        renderFeedback('✓ Palavra guardada com sucesso!', lastSuggestions, false, true);
         if (!lastSuggestions.length) {
             hideFeedback();
             return;
@@ -243,8 +249,7 @@ const Vocabulary = {
             vocabularyBank = [...toAdd, ...vocabularyBank];
             renderVocabulary();
         }
-        hideFeedback();
-        if (addBtn) addBtn.disabled = false;
+        renderFeedback('✓ Palavra guardada com sucesso!', lastSuggestions, false, false);
     }
 
     async function handleAiFill() {
@@ -350,12 +355,12 @@ const Vocabulary = {
         }
         renderVocabulary();
         closeModal();
-        renderFeedback('✓ Palavra guardada com sucesso!', [], true);
+        renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
         fetchSuggestionsFor(wordData.character).then(suggestions => {
             if (suggestions?.length) {
-                renderFeedback('✓ Palavra guardada com sucesso!', suggestions);
+                renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, false);
             } else {
-                renderFeedback('✓ Palavra guardada com sucesso!', [], false);
+                renderFeedback('✓ Palavra guardada com sucesso!', [], false, false);
             }
         }).finally(() => {
             if (saveBtn) {

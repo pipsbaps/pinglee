@@ -675,6 +675,7 @@
 }
 .vocab-search {
   padding: 0 1.5rem 0.75rem;
+  margin-bottom: 0.35rem;
 }
 .vocab-search input {
   width: 100%;
@@ -1039,6 +1040,9 @@ body.modal-open {
   flex: 1 1 0;
   min-width: 0;
 }
+.form-row.triple .form-group {
+  flex: 1 1 28%;
+}
 .form-group.compact-action {
   width: auto;
   flex: 0 0 auto;
@@ -1046,9 +1050,13 @@ body.modal-open {
   display: flex;
   align-items: flex-end;
 }
+.form-group.compact-action .word-btn {
+  min-width: 64px;
+  padding: 0.55rem 0.8rem;
+}
 .notes-group textarea {
   width: 100%;
-  min-height: 100px;
+  min-height: 64px;
   resize: vertical;
 }
 .word-modal .form-group label {

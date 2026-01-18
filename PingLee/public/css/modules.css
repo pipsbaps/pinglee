@@ -888,6 +888,7 @@ body.modal-open {
 }
 .role-modal-header > div:first-child {
   flex: 1;
+  min-height: 0;
 }
 .role-modal-title {
   margin: 0;

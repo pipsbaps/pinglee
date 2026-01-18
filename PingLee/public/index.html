@@ -58,28 +58,28 @@
                         </button>
                     </div>
                 </div>
-                <div class="role-play-chat-container">
-                    <button class="role-play-exit" aria-label="Fechar role-play">×</button>
-                    <div class="chat-messages"></div>
-                    <div class="role-play-controls">
-                        <button type="button" class="mic-button" aria-label="Gravar Áudio">
-                            <svg class="mic-icon" xmlns="http://www.w3.org/2000/svg" height="24"
-                                viewBox="0 -960 960 960" width="24" aria-hidden="true">
-                                <path
-                                    d="M480-400q-50 0-85-35t-35-85v-240q0-50 35-85t85-35q50 0 85 35t35 85v240q0 50-35 85t-85 35Zm0-320Z M280-520v120q0 83 58.5 141.5T480-200q83 0 141.5-58.5T680-400v-120h-80v120q0 50-35 85t-85 35q-50 0-85-35t-35-85v-120h-80Z M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
-                            </svg>
-                            <div class="recording-indicator hidden"></div>
-                        </button>
-                    </div>
-                </div>
-                <!-- Modal de confirmação do cenário -->
+                <!-- Modal de Role-Play (interação decorre aqui) -->
                 <div id="role-play-modal" class="modal-overlay hidden">
                     <div class="modal-content role-modal">
-                        <h3 class="role-modal-title"></h3>
-                        <p class="role-modal-desc"></p>
-                        <div class="modal-actions">
-                            <button type="button" class="cancel-btn role-modal-cancel">Cancelar</button>
-                            <button type="button" class="save-btn role-modal-start">Começar</button>
+                        <div class="role-modal-header">
+                            <div>
+                                <h3 class="role-modal-title"></h3>
+                                <p class="role-modal-desc"></p>
+                            </div>
+                            <button class="role-modal-close" aria-label="Fechar role-play">×</button>
+                        </div>
+                        <div class="role-modal-body">
+                            <div class="chat-messages role-modal-messages"></div>
+                            <div class="role-play-controls modal-controls">
+                                <button type="button" class="mic-button" aria-label="Gravar Áudio">
+                                    <svg class="mic-icon" xmlns="http://www.w3.org/2000/svg" height="24"
+                                        viewBox="0 -960 960 960" width="24" aria-hidden="true">
+                                        <path
+                                            d="M480-400q-50 0-85-35t-35-85v-240q0-50 35-85t85-35q50 0 85 35t35 85v240q0 50-35 85t-85 35Zm0-320Z M280-520v120q0 83 58.5 141.5T480-200q83 0 141.5-58.5T680-400v-120h-80v120q0 50-35 85t-85 35q-50 0-85-35t-35-85v-120h-80Z M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                                    </svg>
+                                    <div class="recording-indicator hidden"></div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

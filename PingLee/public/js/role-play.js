@@ -9,56 +9,43 @@ const RolePlay = {
     scenarioModalDesc: null,
     scenarioModalStartBtn: null,
     scenarioModalCancelBtn: null,
+    modalCloseBtn: null,
+    micButton: null,
 
     init() {
         const scenarioButtons = document.querySelectorAll('.scenario-button');
-        this.exitButton = document.querySelector('.role-play-exit');
-        this.messagesContainer = document.querySelector('#role-play .chat-messages');
+        this.messagesContainer = document.querySelector('#role-play-modal .chat-messages');
         this.scenarioModal = document.querySelector('#role-play-modal');
         this.scenarioModalTitle = document.querySelector('.role-modal-title');
         this.scenarioModalDesc = document.querySelector('.role-modal-desc');
-        this.scenarioModalStartBtn = document.querySelector('.role-modal-start');
-        this.scenarioModalCancelBtn = document.querySelector('.role-modal-cancel');
-
-        if (this.exitButton) {
-            this.exitButton.classList.add('hidden'); // Só mostra após escolher cenário
-        }
+        this.modalCloseBtn = document.querySelector('.role-modal-close');
+        this.micButton = document.querySelector('#role-play-modal .mic-button');
+        this.exitButton = this.modalCloseBtn; // reutiliza a lógica do botão de fechar
 
         scenarioButtons.forEach(button => {
             button.addEventListener('click', () => {
                 this.currentScenario = button.dataset.scenario;
+                this.messagesContainer.innerHTML = '';
                 this.showScenarioModal(button.dataset.scenario);
+                this.start();
             });
         });
 
         if (this.exitButton) {
+            this.exitButton.classList.add('hidden');
             this.exitButton.addEventListener('click', () => {
                 this.messagesContainer.innerHTML = '';
                 this.currentScenario = null;
                 this.toggleExitButton(false);
+                this.hideScenarioModal();
             });
         }
 
-        const micButton = document.querySelector('#role-play .mic-button');
-        if (micButton) {
-            micButton.addEventListener('mousedown', this.handleMicPress.bind(this));
-            micButton.addEventListener('mouseup', this.handleMicRelease.bind(this));
-            micButton.addEventListener('touchstart', this.handleMicPress.bind(this), { passive: true });
-            micButton.addEventListener('touchend', this.handleMicRelease.bind(this));
-        }
-
-        if (this.scenarioModalStartBtn) {
-            this.scenarioModalStartBtn.addEventListener('click', () => {
-                this.hideScenarioModal();
-                this.messagesContainer.innerHTML = '';
-                this.start();
-            });
-        }
-        if (this.scenarioModalCancelBtn) {
-            this.scenarioModalCancelBtn.addEventListener('click', () => {
-                this.currentScenario = null;
-                this.hideScenarioModal();
-            });
+        if (this.micButton) {
+            this.micButton.addEventListener('mousedown', this.handleMicPress.bind(this));
+            this.micButton.addEventListener('mouseup', this.handleMicRelease.bind(this));
+            this.micButton.addEventListener('touchstart', this.handleMicPress.bind(this), { passive: true });
+            this.micButton.addEventListener('touchend', this.handleMicRelease.bind(this));
         }
     },
 
@@ -131,8 +118,8 @@ const RolePlay = {
 
     setRecordingState(isRecording) {
         this.isRecording = isRecording;
-        const micBtn = document.querySelector('#role-play .mic-button');
-        const indicator = document.querySelector('#role-play .recording-indicator');
+        const micBtn = this.micButton;
+        const indicator = document.querySelector('#role-play-modal .recording-indicator');
         if (micBtn) micBtn.classList.toggle('recording', isRecording);
         if (indicator) indicator.classList.toggle('hidden', !isRecording);
     },
@@ -160,7 +147,7 @@ const RolePlay = {
     hideScenarioModal() {
         if (!this.scenarioModal) return;
         this.scenarioModal.classList.remove('active');
-        this.scenarioModal.classList.add('hidden');
+        setTimeout(() => this.scenarioModal.classList.add('hidden'), 180);
     },
 
     getScenarioMeta(key) {

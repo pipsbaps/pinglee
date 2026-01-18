@@ -146,18 +146,14 @@ const Vocabulary = {
 
   renderCategories() {
     const categories = Object.keys(VOCABULARY_DATA.categories);
-    
-    const html = categories.map(cat => {
+    this.panelEl.innerHTML = categories.map(cat => {
       const count = this.getWordsInCategory(cat).length;
-      return `<button class="category-btn" data-category="${cat}">${cat}<br><small>${count} palavras</small></button>`;
+      const slug = this.slugify(cat);
+      return `<button class="category-btn cat-${slug}" data-category="${cat}">${cat}<br><small>${count} palavras</small></button>`;
     }).join('');
 
-    this.panelEl.innerHTML = html;
-
     this.panelEl.querySelectorAll('.category-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        this.goToCategory(e.currentTarget.dataset.category);
-      });
+      btn.addEventListener('click', (e) => this.goToCategory(e.currentTarget.dataset.category));
     });
   },
 
@@ -194,7 +190,8 @@ const Vocabulary = {
 
     const html = radicals.map(({ key, data }) => {
       const count = data.characters ? data.characters.length : 0;
-      return `<button class="radical-btn" data-radical="${key}">${key}<br><small>${count} palavras</small></button>`;
+      const slug = this.slugify(this.state.selectedCategory);
+      return `<button class="radical-btn cat-${slug}" data-radical="${key}">${key}<br><small>${count} palavras</small></button>`;
     }).join('');
 
     this.panelEl.innerHTML = html;
@@ -260,6 +257,15 @@ const Vocabulary = {
       }
     });
     return radicals;
+  },
+
+  slugify(text) {
+    return text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   },
 
   applyFilters(words) {

@@ -848,6 +848,50 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
+.category-btn,
+.radical-btn,
+.subcategory-btn {
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  width: 100%;
+  text-align: left;
+  color: #0f1b2b;
+  font-weight: 700;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+.cat-pessoas-e-corpo { background: linear-gradient(135deg, #6fa8e0, #8cc3f2); }
+.cat-pessoas-e-corpo.sub { background: linear-gradient(135deg, #87bcef, #a5d1fa); }
+.cat-pessoas-e-corpo.rad { background: linear-gradient(135deg, #a7d2f6, #c6e4fb); }
+
+.cat-mao-e-garras { background: linear-gradient(135deg, #67b3c4, #83cad7); }
+.cat-mao-e-garras.sub { background: linear-gradient(135deg, #7bc4d4, #9ad7e2); }
+.cat-mao-e-garras.rad { background: linear-gradient(135deg, #9fd8e4, #c1e9ef); }
+
+.cat-lugares-e-edificios { background: linear-gradient(135deg, #74b29d, #8ec7b4); }
+.cat-lugares-e-edificios.sub { background: linear-gradient(135deg, #8ac3b1, #a8d7c7); }
+.cat-lugares-e-edificios.rad { background: linear-gradient(135deg, #a7d7c5, #c6e8da); }
+
+.cat-localizacao-e-movimento { background: linear-gradient(135deg, #86c18a, #9ed49c); }
+.cat-localizacao-e-movimento.sub { background: linear-gradient(135deg, #9cd2a0, #b6e1b6); }
+.cat-localizacao-e-movimento.rad { background: linear-gradient(135deg, #b7e1b8, #d3f0d2); }
+
+.cat-accoes-e-elementos { background: linear-gradient(135deg, #c7b473, #d8c58a); }
+.cat-accoes-e-elementos.sub { background: linear-gradient(135deg, #d7c48a, #e6d6a3); }
+.cat-accoes-e-elementos.rad { background: linear-gradient(135deg, #e6d6a5, #f2e6c0); }
+
+.cat-natureza { background: linear-gradient(135deg, #f4c35a, #f7d27d); }
+.cat-natureza.sub { background: linear-gradient(135deg, #f7d17c, #f9dd9a); }
+.cat-natureza.rad { background: linear-gradient(135deg, #f9dea0, #fbe8b9); }
+
+.cat-objectos { background: linear-gradient(135deg, #e58b86, #f0a5a2); }
+.cat-objectos.sub { background: linear-gradient(135deg, #f0a7a3, #f6bcb9); }
+.cat-objectos.rad { background: linear-gradient(135deg, #f6bebc, #f9d2d0); }
+
+.cat-oralidade { background: linear-gradient(135deg, #f180a3, #f59abd); }
+.cat-oralidade.sub { background: linear-gradient(135deg, #f59cc0, #f8b4d0); }
+.cat-oralidade.rad { background: linear-gradient(135deg, #f8b6d2, #fbd0e2); }
 .fade-in {
   animation: fadeIn 0.25s ease;
 }

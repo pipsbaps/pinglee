@@ -657,12 +657,27 @@
   border-bottom: 1px solid var(--border-color);
   background-color: var(--header-bg);
 }
+.breadcrumb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
 .breadcrumb {
   display: flex;
   gap: 0.35rem;
   flex-wrap: wrap;
   font-size: 0.95rem;
   color: var(--text-secondary);
+}
+.back-root-btn {
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 .breadcrumb button {
   border: none;
@@ -674,6 +689,21 @@
 .breadcrumb .sep {
   color: #9aa2b1;
 }
+.breadcrumb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.back-root-btn {
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-primary);
+}
 .vocab-summary {
   display: flex;
   gap: 1rem;
@@ -683,10 +713,16 @@
   background: #f6f9ff;
   border: 1px solid #e1e9ff;
   border-radius: 12px;
-  padding: 0.6rem 0.9rem;
+  padding: 0.5rem 0.7rem;
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   min-width: 110px;
+  gap: 0.5rem;
+  align-items: center;
+}
+.metric-icon {
+  width: 26px;
+  height: 26px;
 }
 .metric-label {
   color: var(--text-secondary);
@@ -696,6 +732,23 @@
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--text-primary);
+}
+.metric-icon {
+  width: 26px;
+  height: 26px;
+}
+.add-word-btn {
+  background-color: #1da8da;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  line-height: 38px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 .vocab-filters {
   display: grid;
@@ -717,6 +770,19 @@
 }
 .vocab-filters select.is-active::after {
   content: attr(data-count);
+}
+.add-word-btn {
+  background-color: #1da8da;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  line-height: 38px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 .vocab-stats {
   display: grid;
@@ -1400,6 +1466,33 @@ body.modal-open {
   .role-modal-messages {
     max-height: none;
     padding: 0.75rem 0.9rem 1.25rem;
+  }
+  .vocab-stats {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+  }
+  .stat-card {
+    min-width: 220px;
+    font-size: 0.9rem;
+  }
+  .metric-label {
+    font-size: 0.8rem;
+  }
+  .metric-value {
+    font-size: 1rem;
+  }
+  .vocab-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .vocab-filters input {
+    grid-column: 1 / -1;
+  }
+  .vocab-filters select:nth-of-type(1) {
+    grid-column: 1 / 2;
+  }
+  .vocab-filters select:nth-of-type(2) {
+    grid-column: 2 / 3;
   }
 }
 /* --- Fim: Estilos Restaurados --- */

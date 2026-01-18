@@ -1,6 +1,6 @@
 /* --- Início: Módulo de Chat (Estilos Novos e Corrigidos) --- */
 #chat {
-    padding: 1rem 1rem 0.5rem;
+    padding: 1rem 1rem calc(var(--chat-form-height) + var(--nav-height) + 10px);
     gap: 0.5rem;
     background: transparent;
     display: flex;
@@ -38,8 +38,8 @@
     font-family: "SF Pro Rounded", "Segoe UI Rounded", "Nunito", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     flex: 1 1 auto;
     padding: 0.5rem 1rem 1rem;
-    margin-bottom: calc(var(--chat-form-height) + 12px);
-    max-height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 16px);
+    margin-bottom: 0;
+    height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 130px);
     scroll-padding-bottom: 1.5rem;
     overflow-y: auto;
     background-color: transparent;
@@ -77,14 +77,16 @@
 }
 
 .msg-chinese { font-size: 0.98rem; font-weight: 500; line-height: 1.45; letter-spacing: 0.01em; }
+.msg-chinese { font-family: var(--font-chinese); font-weight: 600; font-size: 1.2rem; }
 .msg-pinyin, .msg-translation, .msg-feedback {
+    font-family: var(--font-main);
     font-size: 0.95rem;
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid #e6e6e6;
 }
-.msg-pinyin { color: #7f8590; }
-.msg-translation { color: #4f5563; }
+.msg-pinyin { color: rgba(0,0,0,0.6); font-style: italic; }
+.msg-translation { color: #4f5563; font-size: 0.95rem; }
 .msg-feedback { font-style: italic; }
 .hidden { display: none; }
 
@@ -134,6 +136,14 @@
 .action-btn.is-error { background-color: #ffe0e0; color: #c02020; }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+@keyframes thinking {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+.thinking-indicator {
+    animation: thinking 1.4s ease-in-out infinite;
+}
 
 .empty-state {
     display: flex;
@@ -230,11 +240,10 @@
 .send-button svg { fill: currentColor; }
 
 @media (max-width: 720px) {
-    #chat { padding: 0.4rem 0.4rem 3.75rem; }
+    #chat { padding: 0.4rem 0.4rem calc(var(--chat-form-height) + var(--nav-height) + 6px); }
     .chat-messages {
         padding: 0.4rem 0.6rem 0.75rem;
-        margin-bottom: calc(var(--chat-form-height) + 10px);
-        max-height: calc(100dvh - var(--chat-form-height) - var(--nav-height));
+        height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 100px);
         scroll-padding-bottom: 1.25rem;
     }
     .msg-chinese { font-size: 0.95rem; }
@@ -334,7 +343,7 @@
 .role-modal {
     width: 92%;
     max-width: 440px;
-    max-height: 85vh;
+    max-height: 90vh;
     padding: 1.25rem 1.25rem 1rem;
     background: linear-gradient(180deg, rgba(198, 225, 254, 0.9) 0%, rgba(255, 255, 255, 0.96) 65%);
     display: flex;

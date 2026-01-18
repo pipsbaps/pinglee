@@ -5,11 +5,13 @@
     --text-secondary: #6b6b6b;
     --border-color: #e9e9eb;
     --chat-bg: #ffffff; 
+    --font-main: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    --font-chinese: 'PingFang SC', 'Noto Sans SC', sans-serif;
 
     /* Cores da Navegação */
     --nav-bg: #ffffff;
     --nav-active-bg: #007aff;
-    --nav-active-text: #007aff; /* Alterado para azul */
+    --nav-active-text: #007aff; /* Alterado para azul */;
     --nav-inactive-text: #8e8e93;
     --nav-height: 78px;
     --chat-form-height: 74px;
@@ -23,11 +25,10 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-main);
     margin: 0;
     /* Efeito Sky Glow */
-    background: radial-gradient(900px 380px at 50% -140px, rgba(0,122,255,0.10), transparent 60%),
-              var(--app-bg);
+    background: radial-gradient(900px 380px at 50% -140px, rgba(0,122,255,0.10), transparent 60%), var(--app-bg);
     color: var(--text-primary);
 }
 

@@ -34,7 +34,7 @@ const UI = {
             <div class="message-body">
                 <div class="author">PingLee</div>
                 <div class="bubble">
-                    <div class="msg-chinese">${isLoading ? '...' : chinese}</div>
+                    <div class="msg-chinese ${isLoading ? 'thinking-indicator' : ''}">${isLoading ? '...' : chinese}</div>
                     ${pinyin ? `<div class="msg-pinyin hidden">${pinyin}</div>` : ''}
                     ${translation ? `<div class="msg-translation hidden">${translation}</div>` : ''}
                     ${feedback ? `<div class="msg-feedback hidden">${feedback}</div>` : ''}
@@ -120,7 +120,7 @@ const UI = {
         return false;
     },
 
-    playAudio(button, text) {
+    playAudio(button, text, onAudioInstance) {
         if (button.classList.contains('is-pending')) return;
 
         button.classList.add('is-pending');
@@ -137,7 +137,11 @@ const UI = {
         })
         .then(blob => {
             const audioURL = URL.createObjectURL(blob);
-            new Audio(audioURL).play();
+            const audio = new Audio(audioURL);
+            audio.play();
+            if (typeof onAudioInstance === 'function') {
+                onAudioInstance(audio);
+            }
             button.classList.remove('is-pending');
         })
         .catch(error => {

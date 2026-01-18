@@ -41,6 +41,10 @@ const RolePlay = {
         if (this.exitButton) {
             this.exitButton.classList.add('hidden');
             this.exitButton.addEventListener('click', () => {
+                if (this.currentAudio) {
+                    this.currentAudio.pause();
+                    this.currentAudio = null;
+                }
                 this.messagesContainer.innerHTML = '';
                 this.currentScenario = null;
                 this.isStarting = false;
@@ -140,8 +144,15 @@ const RolePlay = {
 
     playTutorAudio(text) {
         if (!text) return;
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio = null;
+        }
+        // Use UI.playAudio para TTS mas guarda referência do Audio
         const tempBtn = document.createElement('button');
-        UI.playAudio(tempBtn, text);
+        UI.playAudio(tempBtn, text, (audioInstance) => {
+            this.currentAudio = audioInstance;
+        });
     },
 
     toggleExitButton(show) {

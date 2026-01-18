@@ -1,0 +1,8 @@
+{
+  "name": "pinglee-functions",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "openai": "^4.24.7"
+  }
+}

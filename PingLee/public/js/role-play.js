@@ -1,9 +1,11 @@
 const RolePlay = {
+    initialized: false,
     currentScenario: null,
     mediaRecorder: null,
     audioChunks: [],
     isRecording: false,
     isStarting: false,
+    startSeq: 0,
     exitButton: null,
     scenarioModal: null,
     scenarioModalTitle: null,
@@ -14,6 +16,9 @@ const RolePlay = {
     micButton: null,
 
     init() {
+        if (this.initialized) return;
+        this.initialized = true;
+
         const scenarioButtons = document.querySelectorAll('.scenario-button');
         this.messagesContainer = document.querySelector('#role-play-modal .chat-messages');
         this.scenarioModal = document.querySelector('#role-play-modal');
@@ -25,6 +30,7 @@ const RolePlay = {
 
         scenarioButtons.forEach(button => {
             button.addEventListener('click', () => {
+                if (this.isStarting) return; // evita duplos
                 this.currentScenario = button.dataset.scenario;
                 this.messagesContainer.innerHTML = '';
                 this.showScenarioModal(button.dataset.scenario);
@@ -54,6 +60,8 @@ const RolePlay = {
     async start() {
         if (!this.currentScenario || this.isStarting) return;
         this.isStarting = true;
+        const seq = ++this.startSeq;
+        this.activeStartSeq = seq;
         this.toggleExitButton(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
@@ -65,6 +73,7 @@ const RolePlay = {
                 body: JSON.stringify({ message: '##START_SCENARIO##', scenario: this.currentScenario, mode: 'voice' })
             });
             const data = await response.json();
+            if (this.activeStartSeq !== seq) return;
             loadingElement.remove();
             UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, this.messagesContainer);
             this.playTutorAudio(data.chinese);

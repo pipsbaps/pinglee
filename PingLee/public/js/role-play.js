@@ -3,24 +3,39 @@ const RolePlay = {
     mediaRecorder: null,
     audioChunks: [],
     isRecording: false,
+    exitButton: null,
+    scenarioModal: null,
+    scenarioModalTitle: null,
+    scenarioModalDesc: null,
+    scenarioModalStartBtn: null,
+    scenarioModalCancelBtn: null,
 
     init() {
         const scenarioButtons = document.querySelectorAll('.scenario-button');
-        const exitButton = document.querySelector('.role-play-exit');
+        this.exitButton = document.querySelector('.role-play-exit');
         this.messagesContainer = document.querySelector('#role-play .chat-messages');
+        this.scenarioModal = document.querySelector('#role-play-modal');
+        this.scenarioModalTitle = document.querySelector('.role-modal-title');
+        this.scenarioModalDesc = document.querySelector('.role-modal-desc');
+        this.scenarioModalStartBtn = document.querySelector('.role-modal-start');
+        this.scenarioModalCancelBtn = document.querySelector('.role-modal-cancel');
+
+        if (this.exitButton) {
+            this.exitButton.classList.add('hidden'); // Só mostra após escolher cenário
+        }
 
         scenarioButtons.forEach(button => {
             button.addEventListener('click', () => {
                 this.currentScenario = button.dataset.scenario;
-                this.messagesContainer.innerHTML = '';
-                this.start();
+                this.showScenarioModal(button.dataset.scenario);
             });
         });
 
-        if (exitButton) {
-            exitButton.addEventListener('click', () => {
+        if (this.exitButton) {
+            this.exitButton.addEventListener('click', () => {
                 this.messagesContainer.innerHTML = '';
                 this.currentScenario = null;
+                this.toggleExitButton(false);
             });
         }
 
@@ -31,10 +46,25 @@ const RolePlay = {
             micButton.addEventListener('touchstart', this.handleMicPress.bind(this), { passive: true });
             micButton.addEventListener('touchend', this.handleMicRelease.bind(this));
         }
+
+        if (this.scenarioModalStartBtn) {
+            this.scenarioModalStartBtn.addEventListener('click', () => {
+                this.hideScenarioModal();
+                this.messagesContainer.innerHTML = '';
+                this.start();
+            });
+        }
+        if (this.scenarioModalCancelBtn) {
+            this.scenarioModalCancelBtn.addEventListener('click', () => {
+                this.currentScenario = null;
+                this.hideScenarioModal();
+            });
+        }
     },
 
     async start() {
         if (!this.currentScenario) return;
+        this.toggleExitButton(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
         try {
@@ -111,5 +141,35 @@ const RolePlay = {
         if (!text) return;
         const tempBtn = document.createElement('button');
         UI.playAudio(tempBtn, text);
+    },
+
+    toggleExitButton(show) {
+        if (!this.exitButton) return;
+        this.exitButton.classList.toggle('hidden', !show);
+    },
+
+    showScenarioModal(scenarioKey) {
+        if (!this.scenarioModal) return;
+        const scenarioMeta = this.getScenarioMeta(scenarioKey);
+        if (this.scenarioModalTitle) this.scenarioModalTitle.textContent = scenarioMeta.title;
+        if (this.scenarioModalDesc) this.scenarioModalDesc.textContent = scenarioMeta.desc;
+        this.scenarioModal.classList.remove('hidden');
+        requestAnimationFrame(() => this.scenarioModal.classList.add('active'));
+    },
+
+    hideScenarioModal() {
+        if (!this.scenarioModal) return;
+        this.scenarioModal.classList.remove('active');
+        this.scenarioModal.classList.add('hidden');
+    },
+
+    getScenarioMeta(key) {
+        const map = {
+            restaurant: { title: 'No Restaurante', desc: 'Pratique pedidos de comida e interações com o empregado.' },
+            shopping: { title: 'Fazer Compras', desc: 'Simule uma ida às compras e peça tamanhos ou preços.' },
+            introductions: { title: 'Apresentações', desc: 'Conheça novas pessoas e fale sobre si de forma simples.' },
+            taxi: { title: 'Táxi', desc: 'Peça direções e explique ao motorista para onde quer ir.' }
+        };
+        return map[key] || { title: 'Role-Play', desc: 'Pratique uma situação do dia a dia em Mandarim.' };
     }
 };

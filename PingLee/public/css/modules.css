@@ -37,8 +37,10 @@
 .chat-messages {
     font-family: "SF Pro Rounded", "Segoe UI Rounded", "Nunito", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     flex: 1 1 auto;
-    padding: 0.5rem 1rem calc(var(--chat-bottom-gap) + env(safe-area-inset-bottom));
-    scroll-padding-bottom: calc(var(--chat-bottom-gap) + env(safe-area-inset-bottom));
+    padding: 0.5rem 1rem 1rem;
+    margin-bottom: calc(var(--chat-form-height) + 12px);
+    max-height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 16px);
+    scroll-padding-bottom: 1.5rem;
     overflow-y: auto;
     background-color: transparent;
     display: flex;
@@ -91,8 +93,8 @@
 .message-tutor { flex-direction: row; align-items: flex-start; gap: 8px; }
 .message-tutor .message-body { display: flex; flex-direction: column; align-items: flex-start; }
 .message-tutor .avatar {
-    width: 36px;
-    height: 36px;
+    width: clamp(32px, 5vw, 44px);
+    height: clamp(32px, 5vw, 44px);
     border-radius: 50%;
     overflow: hidden;
     background: #e8f3ff;
@@ -119,7 +121,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 0.83rem;
     font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
@@ -228,8 +230,10 @@
 @media (max-width: 720px) {
     #chat { padding: 0.4rem 0.4rem 3.75rem; }
     .chat-messages {
-        padding: 0.4rem 0.6rem calc(7.5rem + env(safe-area-inset-bottom));
-        scroll-padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+        padding: 0.4rem 0.6rem 0.75rem;
+        margin-bottom: calc(var(--chat-form-height) + 10px);
+        max-height: calc(100dvh - var(--chat-form-height) - var(--nav-height));
+        scroll-padding-bottom: 1.25rem;
     }
     .msg-chinese { font-size: 0.95rem; }
     .msg-pinyin, .msg-translation, .msg-feedback { font-size: 0.9rem; }
@@ -325,7 +329,12 @@
 #word-form { display: flex; flex-direction: column; gap: 1rem; }
 
 /* Role-play modal */
-.role-modal { width: 92%; max-width: 440px; padding: 1.25rem 1.25rem 1rem; }
+.role-modal {
+    width: 92%;
+    max-width: 440px;
+    padding: 1.25rem 1.25rem 1rem;
+    background: linear-gradient(180deg, rgba(198, 225, 254, 0.9) 0%, rgba(255, 255, 255, 0.96) 65%);
+}
 .role-modal-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
 .role-modal-title { margin: 0; font-size: 1.25rem; }
 .role-modal-desc { margin: 0.2rem 0 0; color: var(--text-secondary); line-height: 1.5; }
@@ -334,6 +343,20 @@
 .role-modal-body { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 0.75rem; }
 .role-modal-messages { height: min(60vh, 440px); overflow-y: auto; padding: 0.4rem 0.6rem 0.75rem; }
 .modal-controls { position: static; padding: 0; }
+
+@media (max-width: 720px) {
+    .role-modal {
+        width: 95%;
+        max-width: none;
+        padding: 1.4rem 1.25rem 1.1rem;
+        border-radius: 18px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+    .role-modal-messages {
+        height: min(65vh, 520px);
+        padding: 0.5rem 0.75rem 1rem;
+    }
+}
 /* --- Fim: Estilos Restaurados --- */
 .icon-speaker { display: block; }
 #role-play .chat-form-container {

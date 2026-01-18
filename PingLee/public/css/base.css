@@ -11,6 +11,8 @@
     --nav-active-bg: #007aff;
     --nav-active-text: #007aff; /* Alterado para azul */
     --nav-inactive-text: #8e8e93;
+    --nav-height: 78px;
+    --chat-form-height: 74px;
     --chat-bottom-gap: clamp(9rem, 18vh, 14rem);
 
     /* Cores de Destaque */
@@ -41,7 +43,7 @@ body {
 main { 
     flex-grow: 1; 
     overflow: hidden;
-    padding: 0 16px;
+    padding: 0 16px calc(var(--nav-height) + env(safe-area-inset-bottom));
     box-sizing: border-box;
 }
 

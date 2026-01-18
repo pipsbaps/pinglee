@@ -1,27 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
+const Vocabulary = {
+    init() {
+        // --- 1. DADOS ---
+        let vocabularyBank = [
+            { id: 1, character: '你好', pinyin: 'nǐ hǎo', translation: 'Olá', hsk: 'HSK1', partOfSpeech: 'Expressão', example: { chinese: '你好，你叫什么名字？', translation: 'Olá, qual é o seu nome?' }, related: [] },
+            { id: 2, character: '上', pinyin: 'shàng', translation: 'Cima, subir', hsk: 'HSK1', partOfSpeech: 'Verbo', example: { chinese: '请上车。', translation: 'Por favor, suba no carro.' }, related: [] },
+            { id: 3, character: '学习', pinyin: 'xué xí', translation: 'Estudar', hsk: 'HSK2', partOfSpeech: 'Verbo', example: { chinese: '我喜欢学习汉语。', translation: 'Eu gosto de estudar mandarim.' }, related: [] }
+        ];
 
-    // --- 1. DADOS ---
-    let vocabularyBank = [
-        { id: 1, character: '你好', pinyin: 'nǐ hǎo', translation: 'Olá', hsk: 'HSK1', partOfSpeech: 'Expressão', example: { chinese: '你好，你叫什么名字？', translation: 'Olá, qual é o seu nome?' }, related: [] },
-        { id: 2, character: '上', pinyin: 'shàng', translation: 'Cima, subir', hsk: 'HSK1', partOfSpeech: 'Verbo', example: { chinese: '请上车。', translation: 'Por favor, suba no carro.' }, related: [] },
-        { id: 3, character: '学习', pinyin: 'xué xí', translation: 'Estudar', hsk: 'HSK2', partOfSpeech: 'Verbo', example: { chinese: '我喜欢学习汉语。', translation: 'Eu gosto de estudar mandarim.' }, related: [] }
-    ];
+        // --- 2. ELEMENTOS DO DOM ---
+        const vocabSection = document.getElementById('vocabulary');
+        if (!vocabSection) return;
 
-    // --- 2. ELEMENTOS DO DOM ---
-    const vocabSection = document.getElementById('vocabulary');
-    if (!vocabSection) return;
+        const vocabList = vocabSection.querySelector('.vocab-list');
+        const addWordBtn = vocabSection.querySelector('.add-word-btn');
+        const modalOverlay = document.getElementById('word-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const wordForm = document.getElementById('word-form');
+        const cancelBtn = wordForm.querySelector('.cancel-btn');
+        const aiFillBtn = document.getElementById('ai-fill-btn');
 
-    const vocabList = vocabSection.querySelector('.vocab-list');
-    const addWordBtn = vocabSection.querySelector('.add-word-btn');
-    const modalOverlay = document.getElementById('word-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const wordForm = document.getElementById('word-form');
-    const cancelBtn = wordForm.querySelector('.cancel-btn');
-    const aiFillBtn = document.getElementById('ai-fill-btn');
-
-    const [wordIdInput, characterInput, pinyinInput, translationInput, hskSelect, posSelect, exampleChineseInput, exampleTranslationInput] = [
-        'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-select', 'pos-select', 'example-chinese-input', 'example-translation-input'
-    ].map(id => document.getElementById(id));
+        const [wordIdInput, characterInput, pinyinInput, translationInput, hskSelect, posSelect, exampleChineseInput, exampleTranslationInput] = [
+            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-select', 'pos-select', 'example-chinese-input', 'example-translation-input'
+        ].map(id => document.getElementById(id));
 
 
     // --- 3. SÍNTESE DE VOZ (TEXT-TO-SPEECH) ---
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 7. INICIALIZAÇÃO E EVENT LISTENERS ---
-    function init() {
+    function bootstrap() {
         if (vocabSection.classList.contains('active')) renderVocabulary();
         const observer = new MutationObserver(mutations => {
             if (mutations.some(m => m.attributeName === 'class' && vocabSection.classList.contains('active'))) {
@@ -277,9 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    init();
-
-});
+        bootstrap();
+    }
+};
 
 // Exporta para lazy load
-window.Vocabulary = window.Vocabulary || {};
+window.Vocabulary = Vocabulary;

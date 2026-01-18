@@ -1,5 +1,3 @@
-import OpenAI from "openai";
-
 const scenarios = {
   restaurant: { name: "At the Restaurant", prompt: "You are a friendly restaurant waiter in Beijing. Start by welcoming the user." },
   shopping: { name: "Shopping for Clothes", prompt: "You are a helpful shop assistant in Shanghai. Start by asking if the user needs help." },
@@ -54,6 +52,29 @@ const getTextSystemPrompt = () => `You are PingLee, an AI Mandarin tutor and con
       'feedback': short Portuguese feedback about the user's previous message (max 2 lines).
     - Do NOT include any other keys.`;
 
+const callOpenAIChat = async (env, messages) => {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "gpt-4-turbo",
+      messages,
+      response_format: { type: "json_object" },
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`OpenAI chat error: ${response.status} ${text}`);
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content;
+};
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -70,7 +91,6 @@ export async function onRequest(context) {
     return jsonResponse({ error: "Server missing OPENAI_API_KEY" }, 500);
   }
 
-  const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
   const { message, mode = "text", scenario: scenarioKey } = body;
 
   let currentHistory;
@@ -102,13 +122,7 @@ export async function onRequest(context) {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4-turbo",
-      messages: currentHistory,
-      response_format: { type: "json_object" },
-    });
-
-    const responseContent = completion.choices[0].message.content;
+    const responseContent = await callOpenAIChat(env, currentHistory);
     currentHistory.push({ role: "assistant", content: responseContent });
 
     if (currentHistory.length > 15) {

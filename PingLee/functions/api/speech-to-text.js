@@ -1,5 +1,3 @@
-import OpenAI from "openai";
-
 const jsonResponse = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), {
     status,
@@ -35,17 +33,29 @@ export async function onRequest(context) {
   }
 
   try {
-    const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
     const bytes = base64ToUint8Array(audioBase64);
     const file = new File([bytes], `recording-${Date.now()}.webm`, { type: "audio/webm" });
 
-    const transcription = await openai.audio.transcriptions.create({
-      file,
-      model: "whisper-1",
-      language: "zh",
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("model", "whisper-1");
+    formData.append("language", "zh");
+
+    const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+      },
+      body: formData,
     });
 
-    return jsonResponse({ transcription: transcription.text });
+    if (!response.ok) {
+      const textErr = await response.text();
+      throw new Error(`OpenAI STT error: ${response.status} ${textErr}`);
+    }
+
+    const data = await response.json();
+    return jsonResponse({ transcription: data.text });
   } catch (error) {
     console.error("Error with speech-to-text API (Cloudflare):", error);
     return jsonResponse({ error: "Error processing your audio" }, 500);

@@ -1,5 +1,3 @@
-import OpenAI from "openai";
-
 const jsonResponse = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), {
     status,
@@ -25,15 +23,26 @@ export async function onRequest(context) {
   }
 
   try {
-    const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
-    const mp3 = await openai.audio.speech.create({
-      model: "tts-1",
-      voice: "nova",
-      input: text,
-      response_format: "mp3",
+    const response = await fetch("https://api.openai.com/v1/audio/speech", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "tts-1",
+        voice: "nova",
+        input: text,
+        response_format: "mp3",
+      }),
     });
 
-    const audioBuffer = await mp3.arrayBuffer();
+    if (!response.ok) {
+      const textErr = await response.text();
+      throw new Error(`OpenAI TTS error: ${response.status} ${textErr}`);
+    }
+
+    const audioBuffer = await response.arrayBuffer();
     return new Response(audioBuffer, {
       status: 200,
       headers: { "Content-Type": "audio/mpeg" },

@@ -1,13 +1,12 @@
 /* --- Início: Módulo de Chat (Estilos Novos e Corrigidos) --- */
 #chat {
-    padding: 1rem 1rem calc(var(--chat-form-height) + var(--nav-height) + 10px);
-    gap: 0.5rem;
-    background: transparent;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-    min-height: 100dvh;
+    height: 100dvh;
     box-sizing: border-box;
+    padding: 1rem 1rem calc(var(--chat-form-height) + var(--nav-height) + 16px);
+    gap: 0.5rem;
+    background: transparent;
 }
 
 .chat-toolbar {
@@ -36,18 +35,16 @@
 
 .chat-messages {
     font-family: "SF Pro Rounded", "Segoe UI Rounded", "Nunito", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    flex: 1 1 auto;
-    padding: 0.5rem 1rem 1rem;
-    margin-bottom: 0;
-    height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 130px);
-    scroll-padding-bottom: 1.5rem;
+    flex: 1 1 0;
+    min-height: 0;
     overflow-y: auto;
+    padding: 0.5rem 1rem 1rem;
+    scroll-padding-bottom: calc(var(--chat-form-height) + var(--nav-height) + 16px);
     background-color: transparent;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
     scroll-behavior: smooth;
-    min-height: 0;
 }
 
 .message {
@@ -57,7 +54,7 @@
     margin-bottom: 8px;
     min-width: 60%;
 }
-.message:last-child { margin-bottom: 28px; }
+.message:last-child { margin-bottom: calc(var(--chat-form-height) + 20px); }
 
 .message .author {
     font-size: 0.85rem;
@@ -186,15 +183,16 @@
 }
 
 #chat.active .chat-form-container {
-    padding: 0.5rem 0.25rem 0.25rem;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
     position: fixed;
     left: 16px;
     right: 16px;
     bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
     z-index: 5;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem 0.25rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 40%, #fff 100%);
+    min-height: var(--chat-form-height);
 }
 .chat-form { display: flex; width: 100%; gap: 10px; align-items: center; }
 .chat-form { min-height: var(--chat-form-height); }
@@ -240,12 +238,13 @@
 .send-button svg { fill: currentColor; }
 
 @media (max-width: 720px) {
-    #chat { padding: 0.4rem 0.4rem calc(var(--chat-form-height) + var(--nav-height) + 6px); }
+    #chat { padding: 0.4rem 0.4rem calc(var(--chat-form-height) + var(--nav-height) + 12px); }
     .chat-messages {
-        padding: 0.4rem 0.6rem 0.75rem;
-        height: calc(100dvh - var(--chat-form-height) - var(--nav-height) - 100px);
-        scroll-padding-bottom: 1.25rem;
+        padding: 0.4rem 0.6rem 0.9rem;
+        scroll-padding-bottom: calc(var(--chat-form-height) + var(--nav-height) + 12px);
+        min-height: 0;
     }
+    .message:last-child { margin-bottom: calc(var(--chat-form-height) + 16px); }
     .msg-chinese { font-size: 0.95rem; }
     .msg-pinyin, .msg-translation, .msg-feedback { font-size: 0.9rem; }
 

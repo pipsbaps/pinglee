@@ -1,5 +1,9 @@
 const Vocabulary = {
+    _initialized: false,
+
     init() {
+        if (this._initialized) return;
+        this._initialized = true;
         // --- 1. DADOS ---
         let vocabularyBank = [
             { id: 1, character: '你好', pinyin: 'nǐ hǎo', translation: 'Olá', hsk: 'HSK1', partOfSpeech: 'Expressão', example: { chinese: '你好，你叫什么名字？', translation: 'Olá, qual é o seu nome?' }, related: [] },
@@ -283,3 +287,10 @@ const Vocabulary = {
 
 // Exporta para lazy load
 window.Vocabulary = Vocabulary;
+
+// Auto-init se o script for carregado após DOM pronto (fallback)
+if (document.readyState !== 'loading') {
+    window.Vocabulary.init();
+} else {
+    document.addEventListener('DOMContentLoaded', () => window.Vocabulary.init(), { once: true });
+}

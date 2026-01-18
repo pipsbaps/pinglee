@@ -36,6 +36,7 @@ const RolePlay = {
                 this.messagesContainer.innerHTML = '';
                 this.showScenarioModal(button.dataset.scenario);
                 this.start();
+                this.scrollToBottomSmooth();
             });
         });
 
@@ -74,6 +75,7 @@ const RolePlay = {
         this.toggleExitButton(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
+        this.scrollToBottomSmooth();
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
@@ -85,11 +87,13 @@ const RolePlay = {
             if (this.activeStartSeq !== seq) return;
             loadingElement.remove();
             UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, this.messagesContainer);
+            this.scrollToBottomSmooth();
             this.playTutorAudio(data.chinese);
         } catch (error) {
             console.error('Role-play start error:', error);
             loadingElement.remove();
             UI.addTutorMessage('Não foi possível iniciar o cenário.', null, null, null, this.messagesContainer);
+            this.scrollToBottomSmooth();
         } finally {
             this.isStarting = false;
         }
@@ -122,16 +126,19 @@ const RolePlay = {
         reader.onloadend = async () => {
             const base64Audio = reader.result;
             const userMsgElement = UI.addUserMessage('...', this.messagesContainer, true);
+            this.scrollToBottomSmooth();
 
             try {
                 const sttResponse = await fetch('/api/speech-to-text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ audioBase64: base64Audio }) });
                 const sttData = await sttResponse.json();
                 userMsgElement.querySelector('.msg-chinese').textContent = sttData.transcription;
                 userMsgElement.classList.remove('loading');
+                this.scrollToBottomSmooth();
 
                 const chatResponse = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: sttData.transcription, scenario: this.currentScenario, mode: 'voice' }) });
                 const chatData = await chatResponse.json();
                 UI.addTutorMessage(chatData.chinese, chatData.pinyin, chatData.translation, chatData.feedback, this.messagesContainer);
+                this.scrollToBottomSmooth();
                 this.playTutorAudio(chatData.chinese);
             } catch (error) {
                 userMsgElement.querySelector('.msg-chinese').textContent = "Erro ao processar áudio.";
@@ -158,6 +165,11 @@ const RolePlay = {
         UI.playAudio(tempBtn, text, (audioInstance) => {
             this.currentAudio = audioInstance;
         }, this.audioSpeed);
+    },
+
+    scrollToBottomSmooth() {
+        if (!this.messagesContainer) return;
+        this.messagesContainer.scrollTo({ top: this.messagesContainer.scrollHeight, behavior: 'smooth' });
     },
 
     toggleExitButton(show) {

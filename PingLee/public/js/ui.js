@@ -1,4 +1,5 @@
 const UI = {
+    audioSpeed: 1,
 
     // --- 1. FUNÇÕES DE CRIAÇÃO DE MENSAGENS ---
 
@@ -128,7 +129,7 @@ const UI = {
         fetch('/api/text-to-speech', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: text })
+            body: JSON.stringify({ text: text, speed: this.audioSpeed })
         })
         .then(res => {
             if (!res.ok) throw new Error('Failed to fetch audio');
@@ -150,5 +151,19 @@ const UI = {
         if (container) {
             container.scrollTop = container.scrollHeight;
         }
+    },
+
+    attachAudioSpeedToggle() {
+        const toggle = document.querySelector('#audio-slow-toggle');
+        if (!toggle) return;
+        const applyState = (on) => {
+            this.audioSpeed = on ? 0.85 : 1;
+            toggle.classList.toggle('is-active', on);
+        };
+        toggle.addEventListener('click', () => {
+            const on = !toggle.classList.contains('is-active');
+            applyState(on);
+        });
+        applyState(false);
     }
 };

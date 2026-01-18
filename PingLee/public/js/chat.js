@@ -4,6 +4,7 @@ const TextChat = {
         const form = document.querySelector('#chat .chat-form');
         const input = document.querySelector('#chat .message-input');
         const messagesContainer = document.querySelector('#chat .chat-messages');
+        UI.attachAudioSpeedToggle();
         this.toggleSendButton(input, form?.querySelector('.send-button'));
 
         // Inicia a conversa e adiciona sugestões

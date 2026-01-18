@@ -13,6 +13,8 @@ export async function onRequest(context) {
 
   const body = await request.json().catch(() => null);
   const text = body?.text;
+  const speedInput = Number(body?.speed);
+  const speed = Number.isFinite(speedInput) ? Math.min(1.5, Math.max(0.5, speedInput)) : 1;
 
   if (!text) {
     return jsonResponse({ error: "Text to synthesize is required." }, 400);
@@ -34,6 +36,7 @@ export async function onRequest(context) {
         voice: "nova",
         input: text,
         response_format: "mp3",
+        speed,
       }),
     });
 

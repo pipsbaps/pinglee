@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.setupNavigation();
             this.setupHashListener();
             this.showInitialSection();
+            // Preload vocabulário para evitar atraso na primeira abertura
+            this.ensureModule('vocabulary');
         },
 
         setupNavigation() {

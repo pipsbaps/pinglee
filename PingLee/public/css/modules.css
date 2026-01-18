@@ -749,20 +749,30 @@
   border-color: #e8e8e8;
 }
 .word-card .audio-btn {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
+  background: #f5f7fb;
+  border: 1px solid #dfe4ef;
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #a0a0a0;
+  color: #0f4ba7;
   margin-left: auto;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.word-card .audio-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+.word-card .audio-btn svg {
+  width: 18px;
+  height: 18px;
 }
 .word-card .audio-btn svg path {
-  fill: var(--user-bubble-bg);
+  fill: currentColor;
 }
 .word-card-extended {
   max-height: 0;
@@ -793,6 +803,30 @@
   gap: 0.5rem;
   padding-top: 1rem;
   border-top: 1px dashed var(--border-color);
+}
+.word-card-actions .word-action-btn {
+  background: #f5f7fb;
+  border: 1px solid #dfe4ef;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #0f4ba7;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.word-card-actions .word-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+.word-card-actions .word-action-btn svg {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
 
 .modal-overlay {
@@ -848,6 +882,40 @@ body.modal-open {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   transform: scale(0.95);
   transition: transform 0.3s ease;
+}
+
+/* Word modal styling */
+.word-modal {
+  background: linear-gradient(180deg, rgba(232, 243, 255, 0.96) 0%, #ffffff 70%);
+  border-radius: 22px;
+  max-width: 520px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+.word-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.word-modal-close {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.word-modal-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.word-modal-close:focus-visible {
+  outline: 2px solid #54c9ef;
+  outline-offset: 2px;
 }
 .modal-overlay.active .modal-content {
   transform: scale(1);

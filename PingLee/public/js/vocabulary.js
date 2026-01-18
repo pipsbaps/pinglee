@@ -15,13 +15,13 @@ const Vocabulary = {
         const vocabSection = document.getElementById('vocabulary');
         if (!vocabSection) return;
 
-        const vocabList = vocabSection.querySelector('.vocab-list');
-        const addWordBtn = vocabSection.querySelector('.add-word-btn');
-        const modalOverlay = document.getElementById('word-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const wordForm = document.getElementById('word-form');
-        const cancelBtn = wordForm.querySelector('.cancel-btn');
-        const aiFillBtn = document.getElementById('ai-fill-btn');
+    const vocabList = vocabSection.querySelector('.vocab-list');
+    const addWordBtn = vocabSection.querySelector('.add-word-btn');
+    const modalOverlay = document.getElementById('word-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const wordForm = document.getElementById('word-form');
+        const closeBtn = document.querySelector('.word-modal-close');
+    const aiFillBtn = document.getElementById('ai-fill-btn');
 
         const [wordIdInput, characterInput, pinyinInput, translationInput, hskSelect, posSelect, exampleChineseInput, exampleTranslationInput] = [
             'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-select', 'pos-select', 'example-chinese-input', 'example-translation-input'
@@ -91,9 +91,9 @@ const Vocabulary = {
                             <span class="tag pos">${word.partOfSpeech}</span>
                         </div>
                     </div>
-                    <button class="word-action-btn audio-btn" aria-label="Ouvir Caractere">
-                        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
-                    </button>
+                            <button class="word-action-btn audio-btn" aria-label="Ouvir Caractere">
+                                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
+                            </button>
                 </div>
                 <div class="word-card-extended">
                     <div class="extended-content-wrapper">
@@ -104,16 +104,22 @@ const Vocabulary = {
                         </div>` : ''}
                         <div class="word-card-actions">
                             <button class="word-action-btn edit-word-btn" aria-label="Editar Palavra">
-                                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Edit
+                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                             </button>
                             <button class="word-action-btn delete-word-btn" aria-label="Apagar Palavra">
-                                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> Delete
+                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
             `;
             vocabList.appendChild(wordCard);
+            const extended = wordCard.querySelector('.word-card-extended');
+            if (wordCard.classList.contains('expanded') && extended) {
+                const inner = extended.querySelector('.extended-content-wrapper');
+                const height = inner ? inner.scrollHeight : extended.scrollHeight;
+                extended.style.maxHeight = `${height + 16}px`;
+            }
         });
     }
 
@@ -244,7 +250,7 @@ const Vocabulary = {
         observer.observe(vocabSection, { attributes: true });
 
         addWordBtn.addEventListener('click', openModalForCreate);
-        cancelBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('click', closeModal);
         aiFillBtn.addEventListener('click', handleAiFill);
         modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
         wordForm.addEventListener('submit', handleFormSubmit);
@@ -277,6 +283,14 @@ const Vocabulary = {
             // Se não for nenhum botão de ação, expande/encolhe o cartão
             if (event.target.closest('.word-card-main')){
                  card.classList.toggle('expanded');
+                 const extended = card.querySelector('.word-card-extended');
+                 if (card.classList.contains('expanded') && extended) {
+                    const inner = extended.querySelector('.extended-content-wrapper');
+                    const height = inner ? inner.scrollHeight : extended.scrollHeight;
+                    extended.style.maxHeight = `${height + 16}px`;
+                 } else if (extended) {
+                    extended.style.maxHeight = '0px';
+                 }
             }
         });
     }

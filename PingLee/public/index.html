@@ -117,8 +117,11 @@
 
     <!-- Modal de Adicionar/Editar Palavra -->
     <div id="word-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3 id="modal-title">Adicionar Nova Palavra</h3>
+        <div class="modal-content word-modal">
+            <div class="word-modal-header">
+                <h3 id="modal-title">Adicionar Nova Palavra</h3>
+                <button type="button" class="word-modal-close" aria-label="Fechar">×</button>
+            </div>
             <form id="word-form">
                 <input type="hidden" id="word-id-input">
                 <div class="form-group">
@@ -171,7 +174,6 @@
                     <input type="text" id="example-translation-input">
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="cancel-btn">Cancelar</button>
                     <button type="submit" class="save-btn">Guardar</button>
                 </div>
             </form>

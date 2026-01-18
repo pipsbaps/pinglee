@@ -16,6 +16,8 @@ const RolePlay = {
     micButton: null,
     audioSpeed: 1,
     micHandlers: {},
+    recordingStartedAt: 0,
+    recordingTimeoutId: null,
 
     init() {
         if (this.initialized) return;
@@ -108,6 +110,8 @@ const RolePlay = {
             this.audioChunks = [];
             this.mediaRecorder.start();
             this.setRecordingState(true);
+            this.recordingStartedAt = Date.now();
+            this.startRecordingTimeout();
         } catch (error) { alert("Não foi possível aceder ao microfone."); }
     },
 
@@ -119,10 +123,17 @@ const RolePlay = {
             // ignore stop errors
         }
         this.setRecordingState(false);
+        this.clearRecordingTimeout();
     },
 
     async handleRecordingStop() {
+        this.clearRecordingTimeout();
         const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
+        // Evita enviar áudio vazio ou demasiado curto
+        const durationMs = Date.now() - this.recordingStartedAt;
+        if (audioBlob.size < 500 || durationMs < 400) {
+            return;
+        }
         const reader = new FileReader();
         reader.readAsDataURL(audioBlob);
         reader.onloadend = async () => {
@@ -184,6 +195,20 @@ const RolePlay = {
         this.micButton.addEventListener('pointerleave', release);
         this.micButton.addEventListener('pointercancel', release);
         this.micButton.addEventListener('contextmenu', (e) => e.preventDefault());
+    },
+
+    startRecordingTimeout() {
+        this.clearRecordingTimeout();
+        this.recordingTimeoutId = setTimeout(() => {
+            this.handleMicRelease();
+        }, 15000); // 15s segurança
+    },
+
+    clearRecordingTimeout() {
+        if (this.recordingTimeoutId) {
+            clearTimeout(this.recordingTimeoutId);
+            this.recordingTimeoutId = null;
+        }
     },
 
     toggleExitButton(show) {

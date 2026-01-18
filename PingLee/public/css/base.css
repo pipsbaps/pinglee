@@ -55,9 +55,14 @@ section.active {
     display: flex;
 }
 
+/* Fallback: se o hash mudar (ex. navegação móvel), mostrar a seção alvo mesmo sem JS */
+section:target {
+    display: flex;
+}
+
 /* --- Header --- */
 .app-header { 
-    background: linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.78) 45%, rgba(255,255,255,0.94) 100%), url('/images/pingleeheader.png');
+    background: url('/images/pingleeheader.png');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;

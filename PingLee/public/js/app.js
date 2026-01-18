@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         init() {
             this.setupNavigation();
+            this.setupHashListener();
             this.showInitialSection();
 
             // CORREÇÃO FINAL: As verificações `if (window.XXX)` que adicionei
@@ -25,6 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.hash = targetId;
                     this.showSection(targetId);
                 });
+            });
+        },
+
+        setupHashListener() {
+            window.addEventListener('hashchange', () => {
+                const targetId = window.location.hash.substring(1);
+                if (targetId) this.showSection(targetId);
             });
         },
 

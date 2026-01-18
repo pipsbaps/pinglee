@@ -44,8 +44,18 @@ const UI = {
 
         // Adiciona ações apenas se não for uma mensagem de loading
         if (!isLoading) {
-            const actionsContainer = this.createActions(messageEl, chinese, pinyin, translation, feedback);
+            const actionsContainer = this.createActions(messageEl, chinese, pinyin, translation, null);
             messageEl.querySelector('.message-body')?.appendChild(actionsContainer);
+
+            // Botão de feedback vai junto da última mensagem do utilizador
+            if (feedback) {
+                const feedbackEl = messageEl.querySelector('.msg-feedback');
+                const userMessages = container.querySelectorAll('.message-user');
+                const lastUser = userMessages[userMessages.length - 1];
+                if (lastUser && feedbackEl) {
+                    this.attachFeedbackToggle(lastUser, feedbackEl);
+                }
+            }
         }
 
         // Remove a mensagem de loading anterior, se houver
@@ -120,7 +130,7 @@ const UI = {
         return false;
     },
 
-    playAudio(button, text, onAudioInstance) {
+    playAudio(button, text, onAudioInstance, speed = 1) {
         if (button.classList.contains('is-pending')) return;
 
         button.classList.add('is-pending');
@@ -129,7 +139,7 @@ const UI = {
         fetch('/api/text-to-speech', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: text, speed: this.audioSpeed })
+            body: JSON.stringify({ text: text, speed: speed })
         })
         .then(res => {
             if (!res.ok) throw new Error('Failed to fetch audio');
@@ -157,17 +167,44 @@ const UI = {
         }
     },
 
-    attachAudioSpeedToggle() {
-        const toggle = document.querySelector('#audio-slow-toggle');
+    attachAudioSpeedToggle(selector, onChange) {
+        const toggle = document.querySelector(selector);
         if (!toggle) return;
         const applyState = (on) => {
-            this.audioSpeed = on ? 0.85 : 1;
+            const speed = on ? 0.85 : 1;
+            if (typeof onChange === 'function') onChange(speed);
             toggle.classList.toggle('is-active', on);
+            toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
         };
         toggle.addEventListener('click', () => {
             const on = !toggle.classList.contains('is-active');
             applyState(on);
         });
         applyState(false);
+    },
+
+    attachFeedbackToggle(userMessageEl, feedbackEl) {
+        // Cria container de ações se ainda não existir
+        let actions = userMessageEl.querySelector('.actions-container');
+        if (!actions) {
+            actions = document.createElement('div');
+            actions.className = 'actions-container';
+            userMessageEl.appendChild(actions);
+        }
+        // Se já existir um botão de feedback neste user, reutiliza
+        let btn = actions.querySelector('.feedback-btn');
+        if (!btn) {
+            btn = this.createActionButton('feedback-btn', '💡', () => {
+                const isVisible = !feedbackEl.classList.toggle('hidden');
+                btn.classList.toggle('is-active', isVisible);
+            });
+            actions.appendChild(btn);
+        } else {
+            // Atualiza handler para este feedback
+            btn.onclick = () => {
+                const isVisible = !feedbackEl.classList.toggle('hidden');
+                btn.classList.toggle('is-active', isVisible);
+            };
+        }
     }
 };

@@ -14,6 +14,7 @@ const RolePlay = {
     scenarioModalCancelBtn: null,
     modalCloseBtn: null,
     micButton: null,
+    audioSpeed: 1,
 
     init() {
         if (this.initialized) return;
@@ -59,6 +60,10 @@ const RolePlay = {
             this.micButton.addEventListener('touchstart', this.handleMicPress.bind(this), { passive: true });
             this.micButton.addEventListener('touchend', this.handleMicRelease.bind(this));
         }
+
+        UI.attachAudioSpeedToggle('#roleplay-audio-slow-toggle', (speed) => {
+            this.audioSpeed = speed;
+        });
     },
 
     async start() {
@@ -152,7 +157,7 @@ const RolePlay = {
         const tempBtn = document.createElement('button');
         UI.playAudio(tempBtn, text, (audioInstance) => {
             this.currentAudio = audioInstance;
-        });
+        }, this.audioSpeed);
     },
 
     toggleExitButton(show) {

@@ -643,13 +643,15 @@
   align-items: center;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--header-bg);
+  width: 100%;
+  box-sizing: border-box;
 }
 .vocab-controls h2 {
   font-size: 1.5rem;
   margin: 0;
 }
 .add-word-btn {
-  background-color: var(--send-button-bg);
+  background-color: #1da8da;
   color: white;
   border: none;
   border-radius: 50%;
@@ -749,23 +751,21 @@
   border-color: #e8e8e8;
 }
 .word-card .audio-btn {
-  background: #f5f7fb;
-  border: 1px solid #dfe4ef;
+  background: transparent;
+  border: none;
   border-radius: 12px;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #0f4ba7;
+  color: #1da8da;
   margin-left: auto;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease;
 }
 .word-card .audio-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
 }
 .word-card .audio-btn svg {
   width: 18px;
@@ -784,7 +784,7 @@
     padding-bottom 0.4s ease;
 }
 .word-card.expanded .word-card-extended {
-  max-height: 300px;
+  max-height: 2000px;
   opacity: 1;
   padding-bottom: 1rem;
 }
@@ -891,6 +891,7 @@ body.modal-open {
   max-width: 520px;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
   padding: 1.25rem 1.25rem 1.5rem;
+  overflow: hidden;
 }
 .word-modal-header {
   display: flex;
@@ -916,6 +917,24 @@ body.modal-open {
 .word-modal-close:focus-visible {
   outline: 2px solid #54c9ef;
   outline-offset: 2px;
+}
+.word-modal form input,
+.word-modal form select,
+.word-modal form textarea {
+  border-radius: 14px;
+}
+.word-btn {
+  background: #c6e1fe;
+  color: #0f4ba7;
+  border: 1px solid #adcff6;
+  border-radius: 14px;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0, 122, 255, 0.12);
+}
+.word-btn:hover {
+  box-shadow: 0 5px 12px rgba(0, 122, 255, 0.18);
 }
 .modal-overlay.active .modal-content {
   transform: scale(1);

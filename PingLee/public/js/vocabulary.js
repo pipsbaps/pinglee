@@ -123,33 +123,26 @@ const Vocabulary = {
         });
     }
 
-    // --- 5. LIGAÇÃO À API DE IA (SIMULADA) ---
+    // --- 5. LIGAÇÃO À API DE IA ---
     async function lookupWordWithAI(character) {
-        console.warn("A usar dados de IA simulados.");
-        const simulatedResponses = {
-            '好': `1. PINYIN: hǎo\n2. TRADUÇÃO: Bom, bem, ok\n3. NÍVEL HSK: HSK1\n4. FUNÇÃO GRAMATICAL: Adjetivo\n5. EXEMPLO: 你好吗？ (nǐ hǎo ma?) - Como estás?`,
-            '爱': `1. PINYIN: ài\n2. TRADUÇÃO: Amor, amar\n3. NÍVEL HSK: HSK1\n4. FUNÇÃO GRAMATICAL: Verbo\n5. EXEMPLO: 我爱你。 (wǒ ài nǐ) - Eu amo-te.`
-        };
-        await new Promise(resolve => setTimeout(resolve, 800)); // Simula latência
-        return simulatedResponses[character] || Promise.reject("Palavra não encontrada.");
+        const resp = await fetch('/api/vocab-fill', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: character })
+        });
+        if (!resp.ok) throw new Error('Falha ao obter sugestão');
+        return resp.json();
     }
 
-    function parseAIResponse(text) {
-        const data = {};
-        const lines = text.trim().split(/\r?\n/).map(line => line.substring(line.indexOf('.') + 1).trim());
-        data.pinyin = lines[0] || '';
-        data.translation = lines[1] || '';
-        data.hsk = (lines[2] || 'N/A').replace('Não classificado', 'N/A');
-        data.partOfSpeech = lines[3] || 'Outro';
-        const exampleMatch = (lines[4] || '').match(/(.*?)\((.*?)\)\s*-\s*(.*)/);
-        if (exampleMatch) {
-            data.exampleChinese = exampleMatch[1].trim();
-            data.exampleTranslation = exampleMatch[3].trim();
-        } else {
-            data.exampleChinese = lines[4] || '';
-            data.exampleTranslation = '';
-        }
-        return data;
+    function applyAIData(aiData) {
+        if (!aiData) return;
+        characterInput.value = aiData.word || characterInput.value;
+        pinyinInput.value = aiData.pinyin || '';
+        translationInput.value = aiData.meaning || '';
+        hskSelect.value = aiData.hsk || 'N/A';
+        posSelect.value = aiData.pos || 'Outro';
+        exampleChineseInput.value = aiData.related?.[0]?.word || '';
+        exampleTranslationInput.value = aiData.related?.[0]?.meaning || '';
     }
 
     async function handleAiFill() {
@@ -159,13 +152,7 @@ const Vocabulary = {
         aiFillBtn.textContent = 'A pesquisar...';
         try {
             const aiResponse = await lookupWordWithAI(character);
-            const parsedData = parseAIResponse(aiResponse);
-            pinyinInput.value = parsedData.pinyin || '';
-            translationInput.value = parsedData.translation || '';
-            hskSelect.value = parsedData.hsk || 'N/A';
-            posSelect.value = parsedData.partOfSpeech || 'Outro';
-            exampleChineseInput.value = parsedData.exampleChinese || '';
-            exampleTranslationInput.value = parsedData.exampleTranslation || '';
+            applyAIData(aiResponse);
         } catch (error) {
             console.error(error);
             alert(`Não foi possível obter uma sugestão para "${character}".`);

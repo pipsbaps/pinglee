@@ -1,466 +1,445 @@
+const VocabularyData = {
+    mainCategories: [
+        {
+            id: 'daily-life',
+            name: 'Vida diária',
+            icon: '🏠',
+            subCategories: [
+                {
+                    id: 'greetings',
+                    name: 'Saudações',
+                    radicals: [
+                        {
+                            id: 'rad-people',
+                            name: '亻 (pessoa)',
+                            words: [
+                                { id: 'w1', character: '你好', pinyin: 'nǐ hǎo', meaning: 'olá', hsk: 'HSK1', type: 'Expressão', notes: 'Saudação padrão', compounds: ['w2'], example: { zh: '你好！', pinyin: 'nǐ hǎo', pt: 'Olá!' } },
+                                { id: 'w2', character: '您', pinyin: 'nín', meaning: 'você (formal)', hsk: 'HSK2', type: 'Pronome', notes: '', compounds: [], example: { zh: '您好！', pinyin: 'nín hǎo', pt: 'Olá (formal)!' } }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'food',
+                    name: 'Comida',
+                    radicals: [
+                        {
+                            id: 'rad-mouth',
+                            name: '口 (boca)',
+                            words: [
+                                { id: 'w3', character: '吃', pinyin: 'chī', meaning: 'comer', hsk: 'HSK1', type: 'Verbo', notes: '', compounds: [], example: { zh: '我想吃饭。', pinyin: 'wǒ xiǎng chī fàn', pt: 'Quero comer.' } }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'travel',
+            name: 'Viagens',
+            icon: '✈️',
+            subCategories: [
+                {
+                    id: 'transport',
+                    name: 'Transportes',
+                    radicals: [
+                        {
+                            id: 'rad-car',
+                            name: '车 (veículo)',
+                            words: [
+                                { id: 'w4', character: '出租车', pinyin: 'chūzūchē', meaning: 'táxi', hsk: 'HSK2', type: 'Substantivo', notes: '', compounds: [], example: { zh: '我们坐出租车。', pinyin: 'wǒmen zuò chūzūchē', pt: 'Vamos de táxi.' } }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
 const Vocabulary = {
     _initialized: false,
+    wordsIndex: [],
+    radicalsIndex: new Map(),
+    stats: { searched: {}, used: {}, wrong: {} },
+    State: {
+        searchTerm: '',
+        filterHSK: '',
+        filterPOS: '',
+        openMainCategoryId: null,
+        openSubCategoryId: null,
+        openRadicalId: null,
+        panelMode: 'verCategorias',
+        visibleWords: []
+    },
 
     init() {
         if (this._initialized) return;
         this._initialized = true;
-        // --- 1. DADOS ---
-        let vocabularyBank = [
-            { id: 1, character: '你好', pinyin: 'nǐ hǎo', translation: 'Olá', hsk: 'HSK1', partOfSpeech: 'Expressão', example: { chinese: '你好，你叫什么名字？', translation: 'Olá, qual é o seu nome?' }, related: [] },
-            { id: 2, character: '上', pinyin: 'shàng', translation: 'Cima, subir', hsk: 'HSK1', partOfSpeech: 'Verbo', example: { chinese: '请上车。', translation: 'Por favor, suba no carro.' }, related: [] },
-            { id: 3, character: '学习', pinyin: 'xué xí', translation: 'Estudar', hsk: 'HSK2', partOfSpeech: 'Verbo', example: { chinese: '我喜欢学习汉语。', translation: 'Eu gosto de estudar mandarim.' }, related: [] }
-        ];
 
-        // --- 2. ELEMENTOS DO DOM ---
-        const vocabSection = document.getElementById('vocabulary');
-        if (!vocabSection) return;
-
-    const vocabList = vocabSection.querySelector('.vocab-list');
-    const addWordBtn = vocabSection.querySelector('.add-word-btn');
-    const modalOverlay = document.getElementById('word-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const wordForm = document.getElementById('word-form');
-        const closeBtn = document.querySelector('.word-modal-close');
-    const aiFillBtn = document.getElementById('ai-fill-btn');
-    const searchInput = document.getElementById('vocab-search');
-    const saveBtn = wordForm?.querySelector('.save-btn');
-
-        const [wordIdInput, characterInput, pinyinInput, translationInput, hskInput, posInput, exampleChineseInput, exampleTranslationInput, notesInput] = [
-            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-input', 'pos-input', 'example-chinese-input', 'example-translation-input', 'notes-input'
-        ].map(id => document.getElementById(id));
-    let feedbackContainer = null;
-    let lastSuggestions = [];
-    let searchQuery = '';
-    let isSaving = false;
-
-
-    // --- 3. SÍNTESE DE VOZ (usa endpoint TTS da app) ---
-    async function speak(text, buttonEl = null) {
-        if (!text) return;
-        if (buttonEl) buttonEl.classList.add('playing');
-        const tmpBtn = document.createElement('button');
-        UI.playAudio(tmpBtn, text, () => {
-            if (buttonEl) buttonEl.classList.remove('playing');
-        }, 0.95);
-    }
-
-    // --- 4. RENDERIZAÇÃO DO VOCABULÁRIO (COM NOVO DESIGN) ---
-    function renderVocabulary() {
-        const currentlyExpanded = Array.from(vocabList.querySelectorAll('.word-card.expanded')).map(c => parseInt(c.dataset.id));
-        vocabList.innerHTML = '';
-
-        const term = (searchQuery || '').trim().toLowerCase();
-        const list = term
-            ? vocabularyBank.filter(w => {
-                const haystack = [
-                    w.character,
-                    w.pinyin,
-                    w.translation,
-                    w.hsk,
-                    w.partOfSpeech,
-                    w.example?.chinese,
-                    w.example?.translation
-                ].filter(Boolean).join(' ').toLowerCase();
-                return haystack.includes(term);
-            })
-            : vocabularyBank;
-
-        if (list.length === 0) {
-            const msg = term
-                ? `Nenhum resultado para "${term}".`
-                : 'Ainda não tem palavras. Adicione uma!';
-            vocabList.innerHTML = `<p class="empty-list-msg">${msg}</p>`;
-            return;
-        }
-
-        list.forEach(word => {
-            const wordCard = document.createElement('div');
-            wordCard.className = 'word-card';
-            wordCard.dataset.id = word.id;
-            wordCard.dataset.hsk = word.hsk; // Para a barra de cor
-            if (currentlyExpanded.includes(word.id)) {
-                wordCard.classList.add('expanded');
-            }
-
-            // Nova estrutura HTML para o cartão
-            wordCard.innerHTML = `
-                <div class="word-card-main">
-                    <span class="character">${word.character}</span>
-                    <div class="info-stack">
-                        <span class="pinyin">${word.pinyin}</span>
-                        <span class="translation">${word.translation}</span>
-                        <div class="tags">
-                            <span class="tag hsk">${word.hsk}</span>
-                            <span class="tag pos">${word.partOfSpeech}</span>
-                        </div>
-                    </div>
-                            <button class="word-action-btn audio-btn" aria-label="Ouvir Caractere">
-                                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
-                            </button>
-                </div>
-                <div class="word-card-extended">
-                    <div class="extended-content-wrapper">
-                        ${word.example && word.example.chinese ? `
-                        <div class="example-container">
-                            <p class="example-chinese">Frase: ${word.example.chinese}</p>
-                            <p class="example-translation">Trad.: ${word.example.translation}</p>
-                        </div>` : ''}
-                        ${word.notes ? `<div class="notes-block"><p class="notes-label">Notas</p><p class="notes-text">${word.notes}</p></div>` : ''}
-                        <div class="word-card-actions">
-                            <button class="word-action-btn edit-word-btn" aria-label="Editar Palavra">
-                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            </button>
-                            <button class="word-action-btn delete-word-btn" aria-label="Apagar Palavra">
-                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            vocabList.appendChild(wordCard);
-            const extended = wordCard.querySelector('.word-card-extended');
-            if (wordCard.classList.contains('expanded') && extended) {
-                const inner = extended.querySelector('.extended-content-wrapper');
-                const height = inner ? inner.scrollHeight : extended.scrollHeight;
-                extended.style.maxHeight = `${height + 64}px`;
-            }
-        });
-    }
-
-    // --- 5. LIGAÇÃO À API DE IA ---
-    async function lookupWordWithAI(character) {
-        const resp = await fetch('/api/vocab-fill', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: character })
-        });
-        if (!resp.ok) throw new Error('Falha ao obter sugestão');
-        return resp.json();
-    }
-
-    function applyAIData(aiData) {
-        if (!aiData) return;
-        characterInput.value = aiData.word || characterInput.value;
-        pinyinInput.value = aiData.pinyin || '';
-        const meaning = Array.isArray(aiData.meaning) ? aiData.meaning.join('; ') : (aiData.meaning || '');
-        translationInput.value = meaning;
-        hskInput.value = aiData.hsk || '';
-        posInput.value = aiData.pos || '';
-        exampleChineseInput.value = aiData.example_sentence || aiData.related?.[0]?.word || '';
-        exampleTranslationInput.value = aiData.example_translation || aiData.related?.[0]?.meaning || '';
-    }
-
-    function ensureFeedbackContainer() {
-        if (feedbackContainer) return feedbackContainer;
-        feedbackContainer = document.createElement('div');
-        feedbackContainer.className = 'vocab-feedback hidden';
-        vocabSection.insertBefore(feedbackContainer, vocabList);
-        return feedbackContainer;
-    }
-
-    function hideFeedback() {
-        if (!feedbackContainer) return;
-        feedbackContainer.classList.add('hidden');
-    }
-
-    function renderFeedback(
-        message = '✓ Palavra guardada com sucesso!',
-        suggestions = [],
-        loadingSuggestions = false,
-        addingSuggestions = false
-    ) {
-        const container = ensureFeedbackContainer();
-        lastSuggestions = suggestions || [];
-        const hasSuggestions = lastSuggestions.length > 0;
-        const suggestionLines = hasSuggestions
-            ? lastSuggestions.map(s => `<li>• ${s.word} ${s.pinyin ? `(${s.pinyin})` : ''} - ${s.meaning || ''}</li>`).join('')
-            : '';
-        container.innerHTML = `
-            <div class="vocab-feedback-body">
-                <div class="vocab-feedback-text">
-                    <p class="feedback-title">${message}</p>
-                    ${loadingSuggestions ? `<p class="feedback-sub">A obter palavras relacionadas...</p>` : ''}
-                    ${addingSuggestions ? `<p class="feedback-sub">A adicionar palavras relacionadas...</p>` : ''}
-                    ${hasSuggestions ? `<p class="feedback-sub">Palavras relacionadas que podes adicionar:</p>
-                    <ul class="feedback-list">${suggestionLines}</ul>` : ''}
-                </div>
-                <div class="feedback-actions">
-                    ${hasSuggestions ? `<button type="button" class="word-btn add-suggestions-btn"${addingSuggestions ? ' disabled' : ''}>${addingSuggestions ? 'A adicionar...' : 'Adicionar estas'}</button>` : ''}
-                    <button type="button" class="word-btn ghost close-feedback-btn"${addingSuggestions ? ' disabled' : ''}>Fechar</button>
-                </div>
-            </div>
-        `;
-        container.classList.remove('hidden');
-
-        const closeBtn = container.querySelector('.close-feedback-btn');
-        if (closeBtn) closeBtn.onclick = hideFeedback;
-        const addBtn = container.querySelector('.add-suggestions-btn');
-        if (addBtn) addBtn.onclick = handleAddSuggestions;
-    }
-
-    async function fetchSuggestionsFor(word) {
-        try {
-            const aiData = await lookupWordWithAI(word);
-            return aiData.related || [];
-        } catch (e) {
-            return [];
-        }
-    }
-
-    async function handleAddSuggestions() {
-        const container = ensureFeedbackContainer();
-        const addBtn = container.querySelector('.add-suggestions-btn');
-        renderFeedback('✓ Palavra guardada com sucesso!', lastSuggestions, false, true);
-        if (!lastSuggestions.length) {
-            hideFeedback();
-            return;
-        }
-        const toAdd = [];
-        for (const sug of lastSuggestions) {
-            try {
-                const aiData = await lookupWordWithAI(sug.word);
-                if (!aiData) continue;
-                const suggestionWord = {
-                    character: aiData.word || sug.word,
-                    pinyin: aiData.pinyin || '',
-                    translation: Array.isArray(aiData.meaning) ? aiData.meaning.join('; ') : (aiData.meaning || sug.meaning || ''),
-                    hsk: aiData.hsk || '',
-                    partOfSpeech: aiData.pos || '',
-                    example: {
-                        chinese: aiData.example_sentence || '',
-                        translation: aiData.example_translation || ''
-                    },
-                    notes: ''
-                };
-                const duplicate = vocabularyBank.find(w =>
-                    w.character.trim() === suggestionWord.character &&
-                    w.pinyin.trim().toLowerCase() === suggestionWord.pinyin.toLowerCase() &&
-                    w.translation.trim().toLowerCase() === suggestionWord.translation.toLowerCase() &&
-                    w.hsk.trim().toLowerCase() === suggestionWord.hsk.toLowerCase()
-                );
-                if (!duplicate && suggestionWord.character && suggestionWord.pinyin && suggestionWord.translation) {
-                    toAdd.push({ ...suggestionWord, id: Date.now() + Math.floor(Math.random() * 1000) });
-                }
-            } catch (err) {
-                console.error('Falha ao adicionar sugestão', err);
-            }
-        }
-        if (toAdd.length) {
-            vocabularyBank = [...toAdd, ...vocabularyBank];
-            renderVocabulary();
-        }
-        renderFeedback('✓ Palavra guardada com sucesso!', lastSuggestions, false, false);
-    }
-
-    async function handleAiFill() {
-        const character = characterInput.value.trim();
-        if (!character) { alert('Por favor, insira um caractere chinês.'); return; }
-        aiFillBtn.disabled = true;
-        aiFillBtn.textContent = 'A pesquisar...';
-        try {
-            const aiResponse = await lookupWordWithAI(character);
-            applyAIData(aiResponse);
-        } catch (error) {
-            console.error(error);
-            alert(`Não foi possível obter uma sugestão para "${character}".`);
-        } finally {
-            aiFillBtn.disabled = false;
-            aiFillBtn.textContent = 'Auto';
-        }
-    }
-
-    // --- 6. LÓGICA DO MODAL (ADICIONAR/EDITAR) ---
-    function openModalForCreate() {
-        wordForm.reset();
-        wordIdInput.value = '';
-        modalTitle.textContent = 'Adicionar Nova Palavra';
-        aiFillBtn.style.display = 'block';
-        notesInput.value = '';
-        modalOverlay.classList.remove('hidden');
-        setTimeout(() => modalOverlay.classList.add('active'), 10);
-        characterInput.focus();
-    }
-
-    function openModalForEdit(word) {
-        wordForm.reset();
-        modalTitle.textContent = 'Editar Palavra';
-        aiFillBtn.style.display = 'none';
-        wordIdInput.value = word.id;
-        characterInput.value = word.character;
-        pinyinInput.value = word.pinyin;
-        translationInput.value = word.translation;
-        hskInput.value = word.hsk;
-        posInput.value = word.partOfSpeech;
-        exampleChineseInput.value = word.example?.chinese || '';
-        exampleTranslationInput.value = word.example?.translation || '';
-        notesInput.value = word.notes || '';
-        modalOverlay.classList.remove('hidden');
-        setTimeout(() => modalOverlay.classList.add('active'), 10);
-    }
-
-    function closeModal() {
-        modalOverlay.classList.remove('active');
-        setTimeout(() => modalOverlay.classList.add('hidden'), 300);
-    }
-
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        if (isSaving) return;
-        isSaving = true;
-        if (saveBtn) {
-            saveBtn.disabled = true;
-            saveBtn.textContent = 'A guardar...';
-        }
-        const id = parseInt(wordIdInput.value);
-        const wordData = {
-            character: characterInput.value.trim(),
-            pinyin: pinyinInput.value.trim(),
-            translation: translationInput.value.trim(),
-            hsk: hskInput.value.trim(),
-            partOfSpeech: posInput.value.trim(),
-            example: { chinese: exampleChineseInput.value.trim(), translation: exampleTranslationInput.value.trim() },
-            notes: notesInput.value.trim()
+        this.el = {
+            section: document.getElementById('vocabulary'),
+            breadcrumb: document.getElementById('vocab-breadcrumb'),
+            stats: document.getElementById('vocab-stats'),
+            panel: document.getElementById('vocab-panel'),
+            search: document.getElementById('vocab-search'),
+            filterHSK: document.getElementById('vocab-filter-hsk'),
+            filterPOS: document.getElementById('vocab-filter-pos'),
+            metricTotal: document.getElementById('metric-total'),
+            metricTrain: document.getElementById('metric-train'),
+            modalOverlay: document.getElementById('word-modal'),
+            modalTitle: document.getElementById('modal-title'),
+            modalBody: document.getElementById('word-modal-body'),
+            modalClose: document.querySelector('.word-modal-close')
         };
-        if (!wordData.character || !wordData.pinyin || !wordData.translation) {
-            alert('Os campos Caractere, Pinyin e Tradução são obrigatórios.');
-            if (saveBtn) {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Guardar';
-            }
-            isSaving = false;
-            return;
-        }
-        // Evita duplicações (mesmos campos-chave, ignorando exemplos e função gramatical)
-        const duplicate = vocabularyBank.find(w =>
-            w.id !== id &&
-            w.character.trim() === wordData.character &&
-            w.pinyin.trim().toLowerCase() === wordData.pinyin.toLowerCase() &&
-            w.translation.trim().toLowerCase() === wordData.translation.toLowerCase() &&
-            w.hsk.trim().toLowerCase() === wordData.hsk.toLowerCase()
-        );
-        if (duplicate) {
-            alert('Esta palavra já existe com os mesmos dados. Ajuste antes de guardar.');
-            if (saveBtn) {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Guardar';
-            }
-            isSaving = false;
-            return;
-        }
-        if (id) {
-            const index = vocabularyBank.findIndex(word => word.id === id);
-            if (index !== -1) vocabularyBank[index] = { ...vocabularyBank[index], ...wordData, id };
-        } else {
-            vocabularyBank.unshift({ ...wordData, id: Date.now() });
-        }
-        renderVocabulary();
-        closeModal();
-        renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
-        fetchSuggestionsFor(wordData.character).then(suggestions => {
-            if (suggestions?.length) {
-                renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, false);
-            } else {
-                renderFeedback('✓ Palavra guardada com sucesso!', [], false, false);
-            }
-        }).finally(() => {
-            if (saveBtn) {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Guardar';
-            }
-            isSaving = false;
+        if (!this.el.section) return;
+
+        this.buildIndex(VocabularyData);
+        this.loadStats();
+        this.applyFilters();
+        this.renderAll();
+        this.bindEvents();
+    },
+
+    buildIndex(data) {
+        this.wordsIndex = [];
+        this.radicalsIndex = new Map();
+        data.mainCategories.forEach(main => {
+            main.subCategories.forEach(sub => {
+                sub.radicals.forEach(rad => {
+                    const wordIds = [];
+                    rad.words.forEach(w => {
+                        this.wordsIndex.push({
+                            ...w,
+                            mainId: main.id,
+                            subId: sub.id,
+                            radicalId: rad.id,
+                            searchBlob: [
+                                w.character,
+                                w.pinyin,
+                                w.meaning,
+                                w.hsk,
+                                w.type,
+                                w.notes
+                            ].filter(Boolean).join(' ').toLowerCase()
+                        });
+                        wordIds.push(w.id);
+                    });
+                    this.radicalsIndex.set(rad.id, wordIds);
+                });
+            });
         });
-    }
+    },
 
-    function handleDeleteWord(id) {
-        if (confirm('Tem a certeza de que quer apagar esta palavra?')) {
-            vocabularyBank = vocabularyBank.filter(word => word.id !== id);
-            renderVocabulary();
-        }
-    }
-
-    // --- 7. INICIALIZAÇÃO E EVENT LISTENERS ---
-    function bootstrap() {
-        if (vocabSection.classList.contains('active')) renderVocabulary();
-        const observer = new MutationObserver(mutations => {
-            if (mutations.some(m => m.attributeName === 'class' && vocabSection.classList.contains('active'))) {
-                renderVocabulary();
-            }
-        });
-        observer.observe(vocabSection, { attributes: true });
-
-        addWordBtn.addEventListener('click', openModalForCreate);
-        closeBtn.addEventListener('click', closeModal);
-        aiFillBtn.addEventListener('click', handleAiFill);
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                searchQuery = searchInput.value || '';
-                renderVocabulary();
+    bindEvents() {
+        if (this.el.search) {
+            this.el.search.addEventListener('input', () => {
+                this.State.searchTerm = this.el.search.value.trim();
+                this.applyFilters();
+                this.renderPanel('verPalavras');
+                this.trackSearch(this.State.searchTerm, this.State.visibleWords.map(w => w.id));
             });
         }
-        modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-        wordForm.addEventListener('submit', handleFormSubmit);
+        if (this.el.filterHSK) {
+            this.el.filterHSK.addEventListener('change', () => {
+                this.State.filterHSK = this.el.filterHSK.value;
+                this.applyFilters();
+                this.renderPanel('verPalavras');
+            });
+        }
+        if (this.el.filterPOS) {
+            this.el.filterPOS.addEventListener('change', () => {
+                this.State.filterPOS = this.el.filterPOS.value;
+                this.applyFilters();
+                this.renderPanel('verPalavras');
+            });
+        }
+        if (this.el.modalOverlay) {
+            this.el.modalOverlay.addEventListener('click', e => {
+                if (e.target === this.el.modalOverlay) this.closeModal();
+            });
+        }
+        if (this.el.modalClose) {
+            this.el.modalClose.addEventListener('click', () => this.closeModal());
+        }
+    },
 
-        vocabList.addEventListener('click', (event) => {
-            const card = event.target.closest('.word-card');
-            if (!card) return;
-
-            const wordId = parseInt(card.dataset.id);
-            const word = vocabularyBank.find(w => w.id === wordId);
-            
-            const isAudioButton = event.target.closest('.audio-btn');
-            const isEditButton = event.target.closest('.edit-word-btn');
-            const isDeleteButton = event.target.closest('.delete-word-btn');
-
-            if (isAudioButton) {
-                event.stopPropagation();
-                speak(word.character, isAudioButton);
-                return;
-            }
-            if (isEditButton) {
-                if (word) openModalForEdit(word);
-                return;
-            }
-            if (isDeleteButton) {
-                handleDeleteWord(wordId);
-                return;
-            }
-
-            // Se não for nenhum botão de ação, expande/encolhe o cartão
-            if (event.target.closest('.word-card-main')){
-                 const wasOpen = card.classList.contains('expanded');
-                 // Fecha outros
-                 vocabList.querySelectorAll('.word-card.expanded').forEach(other => {
-                    if (other !== card) {
-                        other.classList.remove('expanded');
-                        const ext = other.querySelector('.word-card-extended');
-                        if (ext) ext.style.maxHeight = '0px';
-                    }
-                 });
-                 card.classList.toggle('expanded', !wasOpen);
-                 const extended = card.querySelector('.word-card-extended');
-                 if (card.classList.contains('expanded') && extended) {
-                    const inner = extended.querySelector('.extended-content-wrapper');
-                    const height = inner ? inner.scrollHeight : extended.scrollHeight;
-                    requestAnimationFrame(() => {
-                        extended.style.maxHeight = `${height + 64}px`;
-                    });
-                 } else if (extended) {
-                    extended.style.maxHeight = '0px';
-                 }
-            }
+    applyFilters() {
+        const term = (this.State.searchTerm || '').toLowerCase();
+        this.State.visibleWords = this.wordsIndex.filter(w => {
+            if (term && !w.searchBlob.includes(term)) return false;
+            if (this.State.filterHSK && w.hsk !== this.State.filterHSK) return false;
+            if (this.State.filterPOS && w.type !== this.State.filterPOS) return false;
+            if (this.State.openRadicalId && w.radicalId !== this.State.openRadicalId) return false;
+            return true;
         });
-    }
+        this.renderHeaderSummary();
+        this.renderStats();
+    },
 
-        bootstrap();
+    renderAll() {
+        this.renderBreadcrumb();
+        this.renderPanel(this.State.panelMode);
+        this.renderStats();
+        this.renderHeaderSummary();
+    },
+
+    renderBreadcrumb() {
+        const parts = [];
+        const { openMainCategoryId, openSubCategoryId, openRadicalId } = this.State;
+        const main = VocabularyData.mainCategories.find(m => m.id === openMainCategoryId);
+        const sub = main?.subCategories.find(s => s.id === openSubCategoryId);
+        const rad = sub?.radicals.find(r => r.id === openRadicalId);
+        if (main) parts.push({ label: main.name, level: 'main', id: main.id });
+        if (sub) parts.push({ label: sub.name, level: 'sub', id: sub.id });
+        if (rad) parts.push({ label: rad.name, level: 'rad', id: rad.id });
+
+        const frag = document.createDocumentFragment();
+        if (!parts.length) {
+            const span = document.createElement('span');
+            span.textContent = 'Categorias';
+            frag.appendChild(span);
+        } else {
+            parts.forEach((p, idx) => {
+                const btn = document.createElement('button');
+                btn.textContent = p.label;
+                btn.addEventListener('click', () => {
+                    if (p.level === 'main') {
+                        this.State.openMainCategoryId = p.id;
+                        this.State.openSubCategoryId = null;
+                        this.State.openRadicalId = null;
+                        this.renderPanel('verRadicais');
+                    } else if (p.level === 'sub') {
+                        this.State.openSubCategoryId = p.id;
+                        this.State.openRadicalId = null;
+                        this.renderPanel('verRadicais');
+                    } else if (p.level === 'rad') {
+                        this.State.openRadicalId = p.id;
+                        this.renderPanel('verPalavras');
+                    }
+                    this.applyFilters();
+                    this.renderBreadcrumb();
+                });
+                frag.appendChild(btn);
+                if (idx < parts.length - 1) {
+                    const sep = document.createElement('span');
+                    sep.className = 'sep';
+                    sep.textContent = '>';
+                    frag.appendChild(sep);
+                }
+            });
+        }
+        this.el.breadcrumb.innerHTML = '';
+        this.el.breadcrumb.appendChild(frag);
+    },
+
+    renderPanel(mode) {
+        this.State.panelMode = mode;
+        this.el.panel.innerHTML = '';
+        if (mode === 'verCategorias') {
+            this.renderCategorias();
+        } else if (mode === 'verRadicais') {
+            this.renderRadicais();
+        } else {
+            this.renderPalavras();
+        }
+    },
+
+    renderCategorias() {
+        const grid = document.createElement('div');
+        grid.className = 'panel-grid';
+        VocabularyData.mainCategories.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'panel-card';
+            card.innerHTML = `<div class="title">${cat.icon || ''} ${cat.name}</div><div class="meta">${cat.subCategories.length} subcategorias</div>`;
+            card.addEventListener('click', () => {
+                this.State.openMainCategoryId = cat.id;
+                this.State.openSubCategoryId = null;
+                this.State.openRadicalId = null;
+                this.renderBreadcrumb();
+                this.renderPanel('verRadicais');
+            });
+            grid.appendChild(card);
+        });
+        this.el.panel.appendChild(grid);
+    },
+
+    renderRadicais() {
+        const main = VocabularyData.mainCategories.find(m => m.id === this.State.openMainCategoryId);
+        if (!main) {
+            this.renderPanel('verCategorias');
+            return;
+        }
+        const subGrid = document.createElement('div');
+        subGrid.className = 'panel-grid';
+        main.subCategories.forEach(sub => {
+            const card = document.createElement('div');
+            card.className = 'panel-card';
+            card.innerHTML = `<div class="title">${sub.name}</div><div class="meta">${sub.radicals.length} radicais</div>`;
+            card.addEventListener('click', () => {
+                this.State.openSubCategoryId = sub.id;
+                this.State.openRadicalId = null;
+                this.renderBreadcrumb();
+                this.renderRadicais();
+            });
+            subGrid.appendChild(card);
+        });
+        this.el.panel.appendChild(subGrid);
+
+        const sub = main.subCategories.find(s => s.id === this.State.openSubCategoryId);
+        if (!sub) return;
+        const radGrid = document.createElement('div');
+        radGrid.className = 'panel-grid';
+        sub.radicals.forEach(rad => {
+            const count = this.radicalsIndex.get(rad.id)?.length || 0;
+            const card = document.createElement('div');
+            card.className = 'panel-card';
+            card.innerHTML = `<div class="title">${rad.name}</div><div class="meta">${count} palavras</div>`;
+            card.addEventListener('click', () => {
+                this.State.openRadicalId = rad.id;
+                this.applyFilters();
+                this.renderBreadcrumb();
+                this.renderPanel('verPalavras');
+            });
+            radGrid.appendChild(card);
+        });
+        this.el.panel.appendChild(radGrid);
+    },
+
+    renderPalavras() {
+        const list = document.createElement('div');
+        list.className = 'vocab-list';
+        if (!this.State.visibleWords.length) {
+            const p = document.createElement('p');
+            p.className = 'empty-list-msg';
+            p.textContent = 'Nenhuma palavra encontrada.';
+            list.appendChild(p);
+        } else {
+            this.State.visibleWords.forEach(w => {
+                const card = document.createElement('div');
+                card.className = 'panel-card';
+                card.innerHTML = `
+                    <div class="title">${w.character} • ${w.pinyin}</div>
+                    <div class="meta">${w.meaning}</div>
+                    <div class="meta">HSK: ${w.hsk || '—'} | Função: ${w.type || '—'}</div>
+                `;
+                card.addEventListener('click', () => this.openWord(w.id));
+                list.appendChild(card);
+            });
+        }
+        this.el.panel.appendChild(list);
+    },
+
+    renderStats() {
+        const top = (map) => Object.entries(map || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const searched = top(this.stats.searched);
+        const used = top(this.stats.used);
+        const wrong = top(this.stats.wrong);
+        this.el.stats.innerHTML = '';
+        const blocks = [
+            { title: 'Mais pesquisadas', data: searched },
+            { title: 'Mais usadas', data: used },
+            { title: 'Mais erradas', data: wrong }
+        ];
+        blocks.forEach(block => {
+            const card = document.createElement('div');
+            card.className = 'stat-card';
+            card.innerHTML = `<h4>${block.title}</h4>`;
+            const ul = document.createElement('ul');
+            if (!block.data.length) {
+                const li = document.createElement('li');
+                li.textContent = '—';
+                ul.appendChild(li);
+            } else {
+                block.data.forEach(([id, count]) => {
+                    const word = this.wordsIndex.find(w => w.id === id);
+                    if (!word) return;
+                    const li = document.createElement('li');
+                    const btn = document.createElement('button');
+                    btn.textContent = `${word.character} ${word.pinyin ? `(${word.pinyin})` : ''} • ${count}`;
+                    btn.addEventListener('click', () => this.openWord(word.id));
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+                });
+            }
+            card.appendChild(ul);
+            this.el.stats.appendChild(card);
+        });
+    },
+
+    renderHeaderSummary() {
+        if (this.el.metricTotal) this.el.metricTotal.textContent = this.wordsIndex.length;
+        const trainList = Object.entries(this.stats.wrong || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        if (this.el.metricTrain) this.el.metricTrain.textContent = trainList.length;
+    },
+
+    openWord(id) {
+        const word = this.wordsIndex.find(w => w.id === id);
+        if (!word || !this.el.modalBody) return;
+        this.el.modalTitle.textContent = word.character;
+        const relatedLinks = (word.compounds || []).map(cid => {
+            const rel = this.wordsIndex.find(w => w.id === cid);
+            return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.character} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
+        }).join('');
+        this.el.modalBody.innerHTML = `
+            <p><strong>Pinyin:</strong> ${word.pinyin || '—'}</p>
+            <p><strong>Significado:</strong> ${word.meaning || '—'}</p>
+            <p><strong>HSK:</strong> ${word.hsk || '—'} | <strong>Função:</strong> ${word.type || '—'}</p>
+            ${word.notes ? `<p><strong>Notas:</strong> ${word.notes}</p>` : ''}
+            ${word.example ? `<div><strong>Exemplo:</strong><div>${word.example.zh || ''}</div><div>${word.example.pinyin || ''}</div><div>${word.example.pt || ''}</div></div>` : ''}
+            ${relatedLinks ? `<div class="related-links"><strong>Relacionadas:</strong> ${relatedLinks}</div>` : ''}
+        `;
+        this.el.modalBody.querySelectorAll('.link-rel').forEach(btn => {
+            btn.addEventListener('click', () => this.openWord(btn.dataset.id));
+        });
+        this.el.modalOverlay.classList.remove('hidden');
+        requestAnimationFrame(() => this.el.modalOverlay.classList.add('active'));
+    },
+
+    closeModal() {
+        if (!this.el.modalOverlay) return;
+        this.el.modalOverlay.classList.remove('active');
+        setTimeout(() => this.el.modalOverlay.classList.add('hidden'), 200);
+    },
+
+    trackSearch(term, ids) {
+        if (!term || !ids.length) return;
+        ids.forEach(id => {
+            this.stats.searched[id] = (this.stats.searched[id] || 0) + 1;
+        });
+        this.saveStats();
+        this.renderStats();
+    },
+    trackUsed(id) {
+        if (!id) return;
+        this.stats.used[id] = (this.stats.used[id] || 0) + 1;
+        this.saveStats();
+        this.renderStats();
+    },
+    trackWrong(id) {
+        if (!id) return;
+        this.stats.wrong[id] = (this.stats.wrong[id] || 0) + 1;
+        this.saveStats();
+        this.renderStats();
+    },
+
+    saveStats() {
+        try {
+            localStorage.setItem('vocab_stats_v1', JSON.stringify(this.stats));
+        } catch (_) {}
+    },
+    loadStats() {
+        try {
+            const raw = localStorage.getItem('vocab_stats_v1');
+            if (raw) this.stats = { searched: {}, used: {}, wrong: {}, ...JSON.parse(raw) };
+        } catch (_) {}
     }
 };
 
-// Exporta para lazy load
 window.Vocabulary = Vocabulary;
 
-// Auto-init se o script for carregado após DOM pronto (fallback)
 if (document.readyState !== 'loading') {
-    window.Vocabulary.init();
+    Vocabulary.init();
 } else {
-    document.addEventListener('DOMContentLoaded', () => window.Vocabulary.init(), { once: true });
+    document.addEventListener('DOMContentLoaded', () => Vocabulary.init(), { once: true });
 }

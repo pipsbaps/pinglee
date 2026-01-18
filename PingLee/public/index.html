@@ -81,14 +81,45 @@
 
             <!-- Módulo de Vocabulário -->
             <section id="vocabulary">
-                <div class="vocab-controls">
-                    <h2>O meu Vocabulário</h2>
-                    <button class="add-word-btn" aria-label="Adicionar nova palavra">+</button>
+                <div class="vocab-header">
+                    <div class="breadcrumb" id="vocab-breadcrumb"></div>
+                    <div class="vocab-summary">
+                        <div class="metric">
+                            <span class="metric-label">Total</span>
+                            <span class="metric-value" id="metric-total">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">A treinar</span>
+                            <span class="metric-value" id="metric-train">0</span>
+                        </div>
+                    </div>
+                    <div class="vocab-filters">
+                        <input type="search" id="vocab-search" placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off" inputmode="search">
+                        <select id="vocab-filter-hsk">
+                            <option value="">HSK (todos)</option>
+                            <option value="HSK1">HSK1</option>
+                            <option value="HSK2">HSK2</option>
+                            <option value="HSK3">HSK3</option>
+                            <option value="HSK4">HSK4</option>
+                            <option value="HSK5">HSK5</option>
+                            <option value="HSK6">HSK6</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                        <select id="vocab-filter-pos">
+                            <option value="">Função (todas)</option>
+                            <option value="Substantivo">Substantivo</option>
+                            <option value="Verbo">Verbo</option>
+                            <option value="Adjetivo">Adjetivo</option>
+                            <option value="Advérbio">Advérbio</option>
+                            <option value="Expressão">Expressão</option>
+                            <option value="Partícula">Partícula</option>
+                            <option value="Classificador">Classificador</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="vocab-search">
-                    <input type="search" id="vocab-search" placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off" inputmode="search">
-                </div>
-                <div class="vocab-list"></div>
+                <div class="vocab-stats" id="vocab-stats"></div>
+                <div class="vocab-panel" id="vocab-panel"></div>
             </section>
 
             <!-- Módulo de Aulas -->
@@ -118,61 +149,14 @@
         </nav>
     </div>
 
-    <!-- Modal de Adicionar/Editar Palavra -->
+    <!-- Modal de Detalhe de Palavra -->
     <div id="word-modal" class="modal-overlay hidden">
         <div class="modal-content word-modal">
             <div class="word-modal-header">
-                <h3 id="modal-title">Adicionar Nova Palavra</h3>
+                <h3 id="modal-title">Detalhe</h3>
                 <button type="button" class="word-modal-close" aria-label="Fechar">×</button>
             </div>
-            <form id="word-form">
-                <input type="hidden" id="word-id-input">
-                <div class="form-row triple">
-                    <div class="form-group">
-                        <label for="character-input">Caractere(s)</label>
-                        <input type="text" id="character-input" required lang="zh-Hans" inputmode="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="pinyin-input">Pinyin</label>
-                        <input type="text" id="pinyin-input" required lang="en" inputmode="latin">
-                    </div>
-                    <div class="form-group compact-action">
-                        <label class="visually-hidden" for="ai-fill-btn">Auto</label>
-                        <button type="button" id="ai-fill-btn" class="word-btn">Auto</button>
-                    </div>
-                </div>
-                <div class="form-row triple">
-                    <div class="form-group">
-                        <label for="translation-input">Significado</label>
-                        <input type="text" id="translation-input" required lang="pt" inputmode="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="hsk-input">HSK</label>
-                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="pos-input">Função</label>
-                        <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." lang="pt" inputmode="text" />
-                    </div>
-                </div>
-                <div class="form-row double">
-                    <div class="form-group">
-                        <label for="example-chinese-input">Exemplo</label>
-                        <input type="text" id="example-chinese-input" lang="zh-Hans" inputmode="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="example-translation-input">Tradução</label>
-                        <input type="text" id="example-translation-input" lang="pt" inputmode="text">
-                    </div>
-                </div>
-                <div class="form-group notes-group">
-                    <label for="notes-input" class="visually-hidden">Notas</label>
-                    <textarea id="notes-input" rows="2" placeholder="Notas"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="save-btn word-btn">Guardar</button>
-                </div>
-            </form>
+            <div id="word-modal-body"></div>
         </div>
     </div>
 

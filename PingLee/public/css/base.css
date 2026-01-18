@@ -1,138 +1,167 @@
 :root {
-    --app-bg: #f7f8fa;
-    --header-bg: #ffffff;
-    --text-primary: #1c1c1e;
-    --text-secondary: #6b6b6b;
-    --border-color: #e9e9eb;
-    --chat-bg: #ffffff; 
-    --font-main: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-    --font-chinese: 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --app-bg: #f7f8fa;
+  --header-bg: #ffffff;
+  --text-primary: #1c1c1e;
+  --text-secondary: #6b6b6b;
+  --border-color: #e9e9eb;
+  --chat-bg: #ffffff;
+  --font-main: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-chinese: "PingFang SC", "Noto Sans SC", sans-serif;
 
-    /* Cores da Navegação */
-    --nav-bg: #ffffff;
-    --nav-active-bg: #007aff;
-    --nav-active-text: #007aff; /* Alterado para azul */;
-    --nav-inactive-text: #8e8e93;
-    --nav-height: 78px;
-    --chat-form-height: 74px;
-    --chat-bottom-gap: clamp(9rem, 18vh, 14rem);
+  /* Cores da Navegação */
+  --nav-bg: #ffffff;
+  --nav-active-bg: #007aff;
+  --nav-active-text: #007aff; /* Alterado para azul */
+  --nav-inactive-text: #8e8e93;
+  --nav-height: 78px;
+  --chat-form-height: 74px;
+  --chat-bottom-gap: clamp(9rem, 18vh, 14rem);
 
-    /* Cores de Destaque */
-    --hsk1-color: #44b875;
-    --hsk2-color: #31a5f5;
-    --user-bubble-bg: #007aff;
-    --send-button-bg: #007aff;
+  /* Cores de Destaque */
+  --hsk1-color: #44b875;
+  --hsk2-color: #31a5f5;
+  --user-bubble-bg: #007aff;
+  --send-button-bg: #007aff;
 }
 
 body {
-    font-family: var(--font-main);
-    margin: 0;
-    /* Efeito Sky Glow */
-    background: radial-gradient(900px 380px at 50% -140px, rgba(0,122,255,0.10), transparent 60%), var(--app-bg);
-    color: var(--text-primary);
+  font-family: var(--font-main);
+  margin: 0;
+  /* Efeito Sky Glow */
+  background:
+    radial-gradient(
+      900px 380px at 50% -140px,
+      rgba(0, 122, 255, 0.1),
+      transparent 60%
+    ),
+    var(--app-bg);
+  color: var(--text-primary);
 }
 
 /* --- Layout Principal --- */
-.mobile-layout-wrapper { 
-    display: flex; 
-    flex-direction: column; 
-    height: 100vh; 
-    height: 100dvh; 
-    box-sizing: border-box;
+.mobile-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
 }
 
-main { 
-    flex-grow: 1; 
-    overflow: hidden;
-    padding: 0 16px calc(var(--nav-height) + env(safe-area-inset-bottom));
-    box-sizing: border-box;
+main {
+  flex-grow: 1;
+  overflow: hidden;
+  padding: 0 16px calc(var(--nav-height) + env(safe-area-inset-bottom));
+  box-sizing: border-box;
 }
 
 section {
-    display: none;
-    flex-direction: column;
-    height: 100%;
+  display: none;
+  flex-direction: column;
+  height: 100%;
 }
 
 section.active {
-    display: flex;
+  display: flex;
 }
 
 /* Fallback: se o hash mudar (ex. navegação móvel), mostrar a seção alvo mesmo sem JS */
 section:target {
-    display: flex;
+  display: flex;
 }
 
 /* --- Header --- */
-.app-header { 
-    background: url('/images/pingleeheader.png');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    color: var(--text-primary); 
-    padding: calc(env(safe-area-inset-top) + 1rem) 1rem 1.25rem;
-    text-align: center; 
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
-    z-index: 10; 
-    position: sticky;
-    top: 0;
-    min-height: 120px;
+.app-header {
+  background: url("/images/pingleeheader.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  color: var(--text-primary);
+  padding: calc(env(safe-area-inset-top) + 1rem) 1rem 1.25rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  min-height: 120px;
 }
-.app-header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+.app-header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
 
 @media (max-width: 720px) {
-    .app-header {
-        padding: calc(env(safe-area-inset-top) + 0.65rem) 0.8rem 0.85rem;
-        min-height: 96px;
-    }
+  .app-header {
+    padding: calc(env(safe-area-inset-top) + 0.65rem) 0.8rem 0.85rem;
+    min-height: 96px;
+  }
 }
 
 /* --- BARRA DE NAVEGAÇÃO INFERIOR --- */
 .mobile-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    display: flex;
-    background-color: var(--nav-bg);
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-    padding: 8px 4px;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom));
-    z-index: 100;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: var(--nav-bg);
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  padding: 8px 4px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  z-index: 100;
 }
 
 .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--nav-inactive-text);
-    font-size: 11px;
-    font-weight: 500;
-    gap: 4px;
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 4px 0;
-    border-radius: 10px;
-    transition: background-color 0.25s, color 0.25s;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--nav-inactive-text);
+  font-size: 11px;
+  font-weight: 500;
+  gap: 4px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 4px 0;
+  border-radius: 10px;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+  text-align: center;
 }
 
 .nav-item img {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
-    transition: transform 0.2s;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: transform 0.2s;
 }
 
 /* Estilo do item ativo (Pill) */
 .nav-item.active {
-    color: var(--nav-active-bg);
-    background-color: rgba(0, 122, 255, 0.12);
-    font-weight: 700;
+  color: var(--nav-active-bg);
+  background-color: rgba(0, 122, 255, 0.12);
+  font-weight: 700;
 }
-.nav-item.active img { transform: translateY(-1px); }
+.nav-item.active img {
+  transform: translateY(-1px);
+}
 
 .nav-item.active svg {
-    fill: var(--nav-active-bg);
+  fill: var(--nav-active-bg);
+}
+
+/* Estados de Hover/Focus para Desktop */
+@media (hover: hover) {
+  .nav-item:hover {
+    background-color: rgba(0, 122, 255, 0.08);
+    color: var(--nav-active-bg);
+  }
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid var(--nav-active-bg);
+  outline-offset: 2px;
 }

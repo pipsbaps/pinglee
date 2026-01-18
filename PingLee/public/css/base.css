@@ -57,7 +57,7 @@ section.active {
 
 /* --- Header --- */
 .app-header { 
-    background: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.82) 50%, rgba(255,255,255,0.95) 100%), url('/images/app%20header.png');
+    background: linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.78) 45%, rgba(255,255,255,0.94) 100%), url('/images/pingleeheader.png');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;

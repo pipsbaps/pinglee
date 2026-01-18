@@ -148,7 +148,7 @@
 .message-tutor {
   flex-direction: row;
   align-items: flex-start;
-  gap: 8px;
+  gap: clamp(10px, 2.5vw, 14px);
 }
 .message-tutor .message-body {
   display: flex;
@@ -156,15 +156,18 @@
   align-items: flex-start;
 }
 .message-tutor .avatar {
-  width: clamp(32px, 5vw, 44px);
-  height: clamp(32px, 5vw, 44px);
+  width: clamp(40px, 8vw, 56px);
+  height: clamp(40px, 8vw, 56px);
   border-radius: 50%;
   overflow: hidden;
-  background: #e8f3ff;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #e8f3ff 0%, #d4e8ff 100%);
+  border: 2px solid rgba(0, 122, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 10px rgba(0, 122, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .message-tutor .avatar img {
   width: 100%;
@@ -448,6 +451,26 @@
   #role-play .scenario-list {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-tutor .avatar {
+    width: clamp(42px, 12vw, 52px);
+    height: clamp(42px, 12vw, 52px);
+  }
+}
+
+@media (min-width: 721px) {
+  .message-tutor .avatar {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (hover: hover) {
+  .message-tutor .avatar:hover {
+    transform: scale(1.08);
   }
 }
 /* --- Fim: Módulo de Chat --- */

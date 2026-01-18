@@ -37,7 +37,8 @@
 .chat-messages {
     font-family: "SF Pro Rounded", "Segoe UI Rounded", "Nunito", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     flex: 1 1 auto;
-    padding: 0.5rem 1rem calc(12rem + env(safe-area-inset-bottom));
+    padding: 0.5rem 1rem calc(var(--chat-bottom-gap) + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(var(--chat-bottom-gap) + env(safe-area-inset-bottom));
     overflow-y: auto;
     background-color: transparent;
     display: flex;
@@ -226,6 +227,10 @@
 
 @media (max-width: 720px) {
     #chat { padding: 0.4rem 0.4rem 3.75rem; }
+    .chat-messages {
+        padding: 0.4rem 0.6rem calc(7.5rem + env(safe-area-inset-bottom));
+        scroll-padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+    }
     .msg-chinese { font-size: 0.95rem; }
     .msg-pinyin, .msg-translation, .msg-feedback { font-size: 0.9rem; }
 }

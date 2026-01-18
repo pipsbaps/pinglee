@@ -11,6 +11,7 @@
     --nav-active-bg: #007aff;
     --nav-active-text: #007aff; /* Alterado para azul */
     --nav-inactive-text: #8e8e93;
+    --chat-bottom-gap: clamp(9rem, 18vh, 14rem);
 
     /* Cores de Destaque */
     --hsk1-color: #44b875;
@@ -107,9 +108,11 @@ section.active {
     transition: background-color 0.25s, color 0.25s;
 }
 
-.nav-item svg {
-    fill: var(--nav-inactive-text);
-    transition: fill 0.25s;
+.nav-item img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    transition: transform 0.2s;
 }
 
 /* Estilo do item ativo (Pill) */
@@ -118,6 +121,7 @@ section.active {
     background-color: rgba(0, 122, 255, 0.12);
     font-weight: 700;
 }
+.nav-item.active img { transform: translateY(-1px); }
 
 .nav-item.active svg {
     fill: var(--nav-active-bg);

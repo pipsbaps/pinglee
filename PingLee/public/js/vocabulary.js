@@ -23,13 +23,15 @@ const Vocabulary = {
         const closeBtn = document.querySelector('.word-modal-close');
     const aiFillBtn = document.getElementById('ai-fill-btn');
     const searchInput = document.getElementById('vocab-search');
+    const saveBtn = wordForm?.querySelector('.save-btn');
 
-        const [wordIdInput, characterInput, pinyinInput, translationInput, hskInput, posInput, exampleChineseInput, exampleTranslationInput] = [
-            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-input', 'pos-input', 'example-chinese-input', 'example-translation-input'
+        const [wordIdInput, characterInput, pinyinInput, translationInput, hskInput, posInput, exampleChineseInput, exampleTranslationInput, notesInput] = [
+            'word-id-input', 'character-input', 'pinyin-input', 'translation-input', 'hsk-input', 'pos-input', 'example-chinese-input', 'example-translation-input', 'notes-input'
         ].map(id => document.getElementById(id));
     let feedbackContainer = null;
     let lastSuggestions = [];
     let searchQuery = '';
+    let isSaving = false;
 
 
     // --- 3. SÍNTESE DE VOZ (usa endpoint TTS da app) ---
@@ -64,7 +66,10 @@ const Vocabulary = {
             : vocabularyBank;
 
         if (list.length === 0) {
-            vocabList.innerHTML = `<p class="empty-list-msg">Ainda não tem palavras. Adicione uma!</p>`;
+            const msg = term
+                ? `Nenhum resultado para "${term}".`
+                : 'Ainda não tem palavras. Adicione uma!';
+            vocabList.innerHTML = `<p class="empty-list-msg">${msg}</p>`;
             return;
         }
 
@@ -100,6 +105,7 @@ const Vocabulary = {
                             <p class="example-chinese">Frase: ${word.example.chinese}</p>
                             <p class="example-translation">Trad.: ${word.example.translation}</p>
                         </div>` : ''}
+                        ${word.notes ? `<div class="notes-block"><p class="notes-label">Notas</p><p class="notes-text">${word.notes}</p></div>` : ''}
                         <div class="word-card-actions">
                             <button class="word-action-btn edit-word-btn" aria-label="Editar Palavra">
                                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -157,7 +163,7 @@ const Vocabulary = {
         feedbackContainer.classList.add('hidden');
     }
 
-    function renderFeedback(message = '✓ Palavra guardada com sucesso!', suggestions = []) {
+    function renderFeedback(message = '✓ Palavra guardada com sucesso!', suggestions = [], loadingSuggestions = false) {
         const container = ensureFeedbackContainer();
         lastSuggestions = suggestions || [];
         const hasSuggestions = lastSuggestions.length > 0;
@@ -168,6 +174,7 @@ const Vocabulary = {
             <div class="vocab-feedback-body">
                 <div class="vocab-feedback-text">
                     <p class="feedback-title">${message}</p>
+                    ${loadingSuggestions ? `<p class="feedback-sub">A obter palavras relacionadas...</p>` : ''}
                     ${hasSuggestions ? `<p class="feedback-sub">Palavras relacionadas que podes adicionar:</p>
                     <ul class="feedback-list">${suggestionLines}</ul>` : ''}
                 </div>
@@ -195,6 +202,9 @@ const Vocabulary = {
     }
 
     async function handleAddSuggestions() {
+        const container = ensureFeedbackContainer();
+        const addBtn = container.querySelector('.add-suggestions-btn');
+        if (addBtn) addBtn.disabled = true;
         if (!lastSuggestions.length) {
             hideFeedback();
             return;
@@ -213,7 +223,8 @@ const Vocabulary = {
                     example: {
                         chinese: aiData.example_sentence || '',
                         translation: aiData.example_translation || ''
-                    }
+                    },
+                    notes: ''
                 };
                 const duplicate = vocabularyBank.find(w =>
                     w.character.trim() === suggestionWord.character &&
@@ -233,6 +244,7 @@ const Vocabulary = {
             renderVocabulary();
         }
         hideFeedback();
+        if (addBtn) addBtn.disabled = false;
     }
 
     async function handleAiFill() {
@@ -258,6 +270,7 @@ const Vocabulary = {
         wordIdInput.value = '';
         modalTitle.textContent = 'Adicionar Nova Palavra';
         aiFillBtn.style.display = 'block';
+        notesInput.value = '';
         modalOverlay.classList.remove('hidden');
         setTimeout(() => modalOverlay.classList.add('active'), 10);
         characterInput.focus();
@@ -275,6 +288,7 @@ const Vocabulary = {
         posInput.value = word.partOfSpeech;
         exampleChineseInput.value = word.example?.chinese || '';
         exampleTranslationInput.value = word.example?.translation || '';
+        notesInput.value = word.notes || '';
         modalOverlay.classList.remove('hidden');
         setTimeout(() => modalOverlay.classList.add('active'), 10);
     }
@@ -286,6 +300,12 @@ const Vocabulary = {
 
     function handleFormSubmit(event) {
         event.preventDefault();
+        if (isSaving) return;
+        isSaving = true;
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'A guardar...';
+        }
         const id = parseInt(wordIdInput.value);
         const wordData = {
             character: characterInput.value.trim(),
@@ -293,10 +313,16 @@ const Vocabulary = {
             translation: translationInput.value.trim(),
             hsk: hskInput.value.trim(),
             partOfSpeech: posInput.value.trim(),
-            example: { chinese: exampleChineseInput.value.trim(), translation: exampleTranslationInput.value.trim() }
+            example: { chinese: exampleChineseInput.value.trim(), translation: exampleTranslationInput.value.trim() },
+            notes: notesInput.value.trim()
         };
         if (!wordData.character || !wordData.pinyin || !wordData.translation) {
             alert('Os campos Caractere, Pinyin e Tradução são obrigatórios.');
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Guardar';
+            }
+            isSaving = false;
             return;
         }
         // Evita duplicações (mesmos campos-chave, ignorando exemplos e função gramatical)
@@ -309,6 +335,11 @@ const Vocabulary = {
         );
         if (duplicate) {
             alert('Esta palavra já existe com os mesmos dados. Ajuste antes de guardar.');
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Guardar';
+            }
+            isSaving = false;
             return;
         }
         if (id) {
@@ -319,11 +350,19 @@ const Vocabulary = {
         }
         renderVocabulary();
         closeModal();
-        renderFeedback('✓ Palavra guardada com sucesso!');
+        renderFeedback('✓ Palavra guardada com sucesso!', [], true);
         fetchSuggestionsFor(wordData.character).then(suggestions => {
             if (suggestions?.length) {
                 renderFeedback('✓ Palavra guardada com sucesso!', suggestions);
+            } else {
+                renderFeedback('✓ Palavra guardada com sucesso!', [], false);
             }
+        }).finally(() => {
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Guardar';
+            }
+            isSaving = false;
         });
     }
 

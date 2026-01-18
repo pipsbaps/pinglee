@@ -1,5 +1,6 @@
 const Vocabulary = {
   initialized: false,
+  modalStack: [],
   
   state: {
     currentView: 'categories',
@@ -46,6 +47,9 @@ const Vocabulary = {
     this.wordForm = document.getElementById('word-form');
     this.aiFillBtn = document.getElementById('ai-fill-btn');
     this.feedbackBox = document.getElementById('vocab-feedback');
+    this.detailOverlay = document.getElementById('word-modal');
+    this.detailBody = document.getElementById('word-modal-body');
+    this.detailClose = this.detailOverlay?.querySelector('.word-modal-close') || null;
     this.formFields = {
       id: document.getElementById('word-id-input'),
       character: document.getElementById('character-input'),
@@ -87,6 +91,8 @@ const Vocabulary = {
     if (backHome) {
       backHome.addEventListener('click', () => this.goToCategories());
     }
+
+    if (this.detailClose) this.detailClose.addEventListener('click', () => this.closeDetailModal());
 
     if (this.addBtn) this.addBtn.addEventListener('click', () => this.openFormModal());
     if (this.formClose) this.formClose.addEventListener('click', () => this.closeFormModal());
@@ -147,10 +153,10 @@ const Vocabulary = {
   },
 
   render() {
-    if (!this.panelEl) return;
+   if (!this.panelEl) return;
 
-    this.renderBreadcrumb();
-    this.renderMetrics();
+   this.renderBreadcrumb();
+   this.renderMetrics();
 
     switch (this.state.currentView) {
       case 'categories': this.renderCategories(); break;
@@ -198,6 +204,7 @@ const Vocabulary = {
   },
 
   renderCategories() {
+    this.setPanelLayout('grid');
     const categories = Object.keys(VOCABULARY_DATA.categories);
     this.panelEl.innerHTML = categories.map(cat => {
       const count = this.getWordsInCategory(cat).length;
@@ -211,12 +218,14 @@ const Vocabulary = {
   },
 
   renderSubcategories() {
+    this.setPanelLayout('grid');
     const categoryData = VOCABULARY_DATA.categories[this.state.selectedCategory];
     const subs = Array.isArray(categoryData.radicals) ? categoryData.radicals : [];
 
     const html = subs.map(sub => {
-      const count = this.getRadicalsInSubcategory(sub).length;
-      return `<button class="subcategory-btn" data-sub="${sub}">${sub}<br><small>${count} radicais</small></button>`;
+      const words = this.getWordsInSubcategory(sub);
+      const count = words.length;
+      return `<button class="subcategory-btn" data-sub="${sub}">${sub}<br><small>${count} palavras</small></button>`;
     }).join('');
 
     this.panelEl.innerHTML = html;
@@ -229,6 +238,7 @@ const Vocabulary = {
   },
 
   renderRadicals() {
+    this.setPanelLayout('grid');
     let radicals;
 
     if (this.state.selectedSubcategory) {
@@ -257,6 +267,7 @@ const Vocabulary = {
   },
 
   renderWords() {
+    this.setPanelLayout('list');
     const radicalData = VOCABULARY_DATA.radicals[this.state.selectedRadical];
     let words = radicalData.characters || [];
 
@@ -267,20 +278,78 @@ const Vocabulary = {
       return;
     }
 
-   const html = words.map(w => `
-      <div class="word-card">
-        <div class="word-top">
-          <div class="word-title"><strong>${w.char}</strong> • <span class="word-py">${w.pinyin}</span></div>
-          <div class="word-meaning">${w.meaning}</div>
-        </div>
+    const html = words.map(w => `
+      <div class="word-card" data-id="${w.id}">
+        <div class="word-title"><span class="word-char">${w.char}</span><span class="word-sep"> • </span><span class="word-py">${w.pinyin}</span></div>
+        <div class="word-meaning">${w.meaning}</div>
         <div class="word-tags">
-          ${w.hsk ? `<span class="tag-pill">${w.hsk}</span>` : ''}
-          ${w.type ? `<span class="tag-pill subtle">${Array.isArray(w.type) ? w.type.join(', ') : w.type}</span>` : ''}
+          ${w.hsk ? `<span class="tag tag-hsk">${w.hsk}</span>` : ''}
+          ${w.type ? `<span class="tag tag-pos">${Array.isArray(w.type) ? w.type.join(', ') : w.type}</span>` : ''}
         </div>
       </div>
     `).join('');
 
     this.panelEl.innerHTML = html;
+    this.panelEl.querySelectorAll('.word-card').forEach(card => {
+      card.addEventListener('click', () => this.openWord(card.dataset.id));
+    });
+    this.updateFilterState(words.length);
+  },
+
+  openWord(id) {
+    const found = this.findWordById(id);
+    const word = found?.word;
+    const body = this.detailBody;
+    const overlay = this.detailOverlay;
+    if (!word || !body || !overlay) return;
+    const titleEl = overlay.querySelector('#modal-title');
+    if (titleEl) titleEl.textContent = word.char;
+    if (this.modalStack[this.modalStack.length - 1] !== id) this.modalStack.push(id);
+    const relatedLinks = (word.compounds || []).map(cid => {
+      const rel = this.findWordById(cid)?.word;
+      return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.char} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
+    }).join('');
+    body.innerHTML = `
+      <div class="word-detail">
+        <h4 class="detail-heading">${word.char}</h4>
+        <div class="detail-main">
+          <div class="detail-char">${word.char}</div>
+          <div class="detail-pinyin">${word.pinyin || '—'}</div>
+        </div>
+        <div class="detail-meaning">${word.meaning || '—'}</div>
+        <div class="word-tags">
+          ${word.hsk ? `<span class="tag tag-hsk">${word.hsk}</span>` : ''}
+          ${word.type ? `<span class="tag tag-pos">${Array.isArray(word.type) ? word.type.join(', ') : word.type}</span>` : ''}
+        </div>
+        ${word.notes?.length ? `<p class="word-notes">${word.notes.join(' ')}</p>` : ''}
+        ${word.example ? `<div class="detail-example"><div>${word.example.zh || ''}</div><div class="detail-example-py">${word.example.pinyin || ''}</div><div class="detail-example-pt">${word.example.pt || ''}</div></div>` : ''}
+        ${relatedLinks ? `<div class="related-links">${relatedLinks}</div>` : ''}
+        <div class="detail-actions">
+          <button class="word-btn ghost detail-back" ${this.modalStack.length <= 1 ? 'disabled' : ''}>Voltar</button>
+          <button class="word-btn detail-edit">Editar</button>
+        </div>
+      </div>
+    `;
+    body.querySelectorAll('.link-rel').forEach(btn => {
+      btn.addEventListener('click', () => this.openWord(btn.dataset.id));
+    });
+    const backBtn = body.querySelector('.detail-back');
+    if (backBtn) backBtn.addEventListener('click', () => {
+      this.modalStack.pop();
+      const prev = this.modalStack.pop();
+      if (prev) this.openWord(prev);
+    });
+    const editBtn = body.querySelector('.detail-edit');
+    if (editBtn) editBtn.addEventListener('click', () => this.openFormModal(id));
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => overlay.classList.add('active'));
+  },
+
+  closeDetailModal() {
+    if (!this.detailOverlay) return;
+    this.detailOverlay.classList.remove('active');
+    setTimeout(() => this.detailOverlay.classList.add('hidden'), 150);
+    this.modalStack = [];
   },
 
   getAllWords() {
@@ -303,6 +372,11 @@ const Vocabulary = {
     return words;
   },
 
+  getWordsInSubcategory(sub) {
+    const radicals = this.getRadicalsInSubcategory(sub);
+    return radicals.flatMap(r => r.data?.characters || []);
+  },
+
   getRadicalsInSubcategory(sub) {
     const radicals = [];
     Object.entries(VOCABULARY_DATA.radicals).forEach(([key, data]) => {
@@ -311,6 +385,25 @@ const Vocabulary = {
       }
     });
     return radicals;
+  },
+
+  setPanelLayout(mode) {
+    if (!this.panelEl) return;
+    this.panelEl.classList.toggle('grid-2', mode === 'grid');
+    this.panelEl.classList.toggle('list', mode === 'list');
+  },
+
+  updateFilterState(count = 0) {
+    if (this.filterHSKSelect) {
+      const active = !!this.state.filterHSK;
+      this.filterHSKSelect.classList.toggle('is-active', active);
+      this.filterHSKSelect.dataset.count = active ? count : '';
+    }
+    if (this.filterPOSSelect) {
+      const active = !!this.state.filterPOS;
+      this.filterPOSSelect.classList.toggle('is-active', active);
+      this.filterPOSSelect.dataset.count = active ? count : '';
+    }
   },
 
   slugify(text) {

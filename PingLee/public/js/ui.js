@@ -37,7 +37,6 @@ const UI = {
                     <div class="msg-chinese ${isLoading ? 'thinking-indicator' : ''}">${isLoading ? '...' : chinese}</div>
                     ${pinyin ? `<div class="msg-pinyin hidden">${pinyin}</div>` : ''}
                     ${translation ? `<div class="msg-translation hidden">${translation}</div>` : ''}
-                    ${feedback ? `<div class="msg-feedback hidden">${feedback}</div>` : ''}
                 </div>
             </div>
         `;
@@ -46,16 +45,6 @@ const UI = {
         if (!isLoading) {
             const actionsContainer = this.createActions(messageEl, chinese, pinyin, translation, null);
             messageEl.querySelector('.message-body')?.appendChild(actionsContainer);
-
-            // Botão de feedback vai junto da última mensagem do utilizador
-            if (feedback) {
-                const feedbackEl = messageEl.querySelector('.msg-feedback');
-                const userMessages = container.querySelectorAll('.message-user');
-                const lastUser = userMessages[userMessages.length - 1];
-                if (lastUser && feedbackEl) {
-                    this.attachFeedbackToggle(lastUser, feedbackEl);
-                }
-            }
         }
 
         // Remove a mensagem de loading anterior, se houver
@@ -65,6 +54,13 @@ const UI = {
         }
 
         container.appendChild(messageEl);
+        // Feedback passa para a última mensagem do utilizador
+        if (!isLoading && feedback) {
+            const userMessages = container.querySelectorAll('.message-user');
+            const lastUser = userMessages[userMessages.length - 1];
+            if (lastUser) this.appendUserFeedback(lastUser, feedback);
+        }
+
         this.scrollToBottom(container);
         return messageEl;
     },
@@ -183,28 +179,18 @@ const UI = {
         applyState(false);
     },
 
-    attachFeedbackToggle(userMessageEl, feedbackEl) {
-        // Cria container de ações se ainda não existir
-        let actions = userMessageEl.querySelector('.actions-container');
-        if (!actions) {
-            actions = document.createElement('div');
-            actions.className = 'actions-container';
-            userMessageEl.appendChild(actions);
+    appendUserFeedback(userMessageEl, feedbackText) {
+        let feedbackBlock = userMessageEl.querySelector('.user-feedback');
+        if (!feedbackBlock) {
+            feedbackBlock = document.createElement('div');
+            feedbackBlock.className = 'user-feedback';
+            feedbackBlock.innerHTML = `
+                <span class="feedback-icon" aria-hidden="true">💡</span>
+                <div class="feedback-text"></div>
+            `;
+            userMessageEl.appendChild(feedbackBlock);
         }
-        // Se já existir um botão de feedback neste user, reutiliza
-        let btn = actions.querySelector('.feedback-btn');
-        if (!btn) {
-            btn = this.createActionButton('feedback-btn', '💡', () => {
-                const isVisible = !feedbackEl.classList.toggle('hidden');
-                btn.classList.toggle('is-active', isVisible);
-            });
-            actions.appendChild(btn);
-        } else {
-            // Atualiza handler para este feedback
-            btn.onclick = () => {
-                const isVisible = !feedbackEl.classList.toggle('hidden');
-                btn.classList.toggle('is-active', isVisible);
-            };
-        }
+        const textEl = feedbackBlock.querySelector('.feedback-text');
+        if (textEl) textEl.textContent = feedbackText;
     }
 };

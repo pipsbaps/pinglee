@@ -15,6 +15,7 @@ const RolePlay = {
     modalCloseBtn: null,
     micButton: null,
     audioSpeed: 1,
+    micHandlers: {},
 
     init() {
         if (this.initialized) return;
@@ -56,10 +57,7 @@ const RolePlay = {
         }
 
         if (this.micButton) {
-            this.micButton.addEventListener('mousedown', this.handleMicPress.bind(this));
-            this.micButton.addEventListener('mouseup', this.handleMicRelease.bind(this));
-            this.micButton.addEventListener('touchstart', this.handleMicPress.bind(this), { passive: true });
-            this.micButton.addEventListener('touchend', this.handleMicRelease.bind(this));
+            this.attachMicEvents();
         }
 
         UI.attachAudioSpeedToggle('#roleplay-audio-slow-toggle', (speed) => {
@@ -114,8 +112,12 @@ const RolePlay = {
     },
 
     handleMicRelease() {
-        if (!this.isRecording) return;
-        this.mediaRecorder.stop();
+        if (!this.isRecording || !this.mediaRecorder) return;
+        try {
+            this.mediaRecorder.stop();
+        } catch (_) {
+            // ignore stop errors
+        }
         this.setRecordingState(false);
     },
 
@@ -170,6 +172,18 @@ const RolePlay = {
     scrollToBottomSmooth() {
         if (!this.messagesContainer) return;
         this.messagesContainer.scrollTo({ top: this.messagesContainer.scrollHeight, behavior: 'smooth' });
+    },
+
+    attachMicEvents() {
+        const press = this.handleMicPress.bind(this);
+        const release = this.handleMicRelease.bind(this);
+        this.micHandlers = { press, release };
+
+        this.micButton.addEventListener('pointerdown', press);
+        this.micButton.addEventListener('pointerup', release);
+        this.micButton.addEventListener('pointerleave', release);
+        this.micButton.addEventListener('pointercancel', release);
+        this.micButton.addEventListener('contextmenu', (e) => e.preventDefault());
     },
 
     toggleExitButton(show) {

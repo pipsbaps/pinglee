@@ -1,8 +1,10 @@
 const TextChat = {
+
     init() {
         const form = document.querySelector('#chat .chat-form');
         const input = document.querySelector('#chat .message-input');
         const messagesContainer = document.querySelector('#chat .chat-messages');
+        this.toggleSendButton(input, form?.querySelector('.send-button'));
 
         // Inicia a conversa e adiciona sugestões
         this.startConversation(messagesContainer, input);
@@ -12,10 +14,13 @@ const TextChat = {
             const message = input.value.trim();
             if (!message) return;
 
+            this.clearEmptyState(messagesContainer);
+
             // 1. Adiciona a mensagem do utilizador e foca o input
             UI.addUserMessage(message, messagesContainer);
             input.value = '';
             input.focus(); // Garante que o foco regressa ao input
+            this.toggleSendButton(input, form.querySelector('.send-button'));
 
             // 2. Mostra o indicador de "a escrever..."
             const loadingElement = UI.addTutorMessage('', null, null, null, messagesContainer, true);
@@ -31,7 +36,7 @@ const TextChat = {
 
                 // 4. Substitui a mensagem de loading pela resposta do tutor
                 loadingElement.remove();
-                UI.addTutorMessage(data.chinese, data.pinyin, data.translation, null, messagesContainer);
+                UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, messagesContainer);
 
             } catch (error) {
                 console.error('Text chat error:', error);
@@ -41,45 +46,62 @@ const TextChat = {
         });
     },
 
+    toggleSendButton(input, sendButton) {
+        if (!input || !sendButton) return;
+        const updateState = () => {
+            const hasText = input.value.trim().length > 0;
+            sendButton.disabled = !hasText;
+        };
+        input.addEventListener('input', updateState);
+        updateState();
+    },
+
     startConversation(container, input) {
         // Garante que a mensagem inicial e as sugestões só são adicionadas uma vez.
         if (container.children.length > 0) return;
 
         // Adiciona a mensagem de boas-vindas do Tutor
         UI.addTutorMessage(
-            "你好! 我是PingLee, 你的专属中文老师。有什么可以帮你的吗?", 
-            "Nǐ hǎo! Wǒ shì PingLee, nǐ de zhuānshǔ Zhōngwén lǎoshī. Yǒu shé me kěyǐ bāng nǐ de ma?", 
-            "Olá! Eu sou o PingLee, o seu tutor pessoal de Mandarim. Como posso ajudá-lo hoje?", 
+            "你好！我是PingLee，咱们一步一步练中文吧。要不要先问我一个简单的问题？", 
+            "Nǐ hǎo! Wǒ shì PingLee, zánmen yī bù yī bù liàn Zhōngwén ba. Yào bú yào xiān wèn wǒ yīgè jiǎndān de wèntí?", 
+            "Olá! Eu sou o PingLee, vamos praticar chinês passo a passo. Quer começar fazendo uma pergunta simples?", 
             null, 
             container
         );
-        
-        // Adiciona os chips de sugestão
-        this.addSuggestionChips(container, input);
+        // Adiciona estado inicial com sugestões
+        this.addEmptyState(container, input);
     },
 
-    addSuggestionChips(container, input) {
-        const suggestionsContainer = document.createElement('div');
-        suggestionsContainer.className = 'suggestion-chips-container';
+    addEmptyState(container, input) {
+        if (!container || !input) return;
+        const existing = container.querySelector('.empty-state');
+        if (existing) return;
 
-        const suggestions = [
-            'Como se diz "aeroporto" em Mandarim?',
-            'Qual é a diferença entre 你 e 您?'
-        ];
+        const emptyEl = document.createElement('div');
+        emptyEl.className = 'empty-state';
+        emptyEl.innerHTML = `
+            <div class="empty-copy">Comece a conversa ou escolha uma sugestão:</div>
+            <div class="empty-suggestions">
+                <button type="button" class="suggestion-btn">你好吗？</button>
+                <button type="button" class="suggestion-btn">我们可以练习机场对话吗？</button>
+            </div>
+        `;
 
-        suggestions.forEach(text => {
-            const chip = document.createElement('button');
-            chip.className = 'suggestion-chip';
-            chip.textContent = text;
-            chip.onclick = () => {
-                input.value = text;
-                input.focus();
-                suggestionsContainer.remove(); // Remove as sugestões após o clique
-            };
-            suggestionsContainer.appendChild(chip);
+        emptyEl.querySelectorAll('.suggestion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                input.value = btn.textContent;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                const form = document.querySelector('#chat .chat-form');
+                if (form) form.requestSubmit();
+            });
         });
 
-        container.appendChild(suggestionsContainer);
+        container.appendChild(emptyEl);
         UI.scrollToBottom(container);
+    },
+
+    clearEmptyState(container) {
+        const emptyEl = container.querySelector('.empty-state');
+        if (emptyEl) emptyEl.remove();
     }
 };

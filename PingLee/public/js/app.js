@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const App = {
         navItems: document.querySelectorAll('.nav-item'),
         sections: document.querySelectorAll('main section'),
+        headerTitle: document.querySelector('.header-title'),
 
         init() {
             this.setupNavigation();
@@ -35,6 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
             this.navItems.forEach(item => {
                 item.classList.toggle('active', item.dataset.target === targetId);
             });
+
+            if (this.headerTitle) {
+                if (targetId === 'role-play') {
+                    this.headerTitle.textContent = 'Role-Play';
+                    this.headerTitle.classList.remove('hidden');
+                } else {
+                    this.headerTitle.textContent = '';
+                    this.headerTitle.classList.add('hidden');
+                }
+            }
         },
 
         showInitialSection() {

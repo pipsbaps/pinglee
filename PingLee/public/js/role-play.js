@@ -3,6 +3,7 @@ const RolePlay = {
     mediaRecorder: null,
     audioChunks: [],
     isRecording: false,
+    isStarting: false,
     exitButton: null,
     scenarioModal: null,
     scenarioModalTitle: null,
@@ -36,6 +37,7 @@ const RolePlay = {
             this.exitButton.addEventListener('click', () => {
                 this.messagesContainer.innerHTML = '';
                 this.currentScenario = null;
+                this.isStarting = false;
                 this.toggleExitButton(false);
                 this.hideScenarioModal();
             });
@@ -50,7 +52,8 @@ const RolePlay = {
     },
 
     async start() {
-        if (!this.currentScenario) return;
+        if (!this.currentScenario || this.isStarting) return;
+        this.isStarting = true;
         this.toggleExitButton(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
@@ -69,6 +72,8 @@ const RolePlay = {
             console.error('Role-play start error:', error);
             loadingElement.remove();
             UI.addTutorMessage('Não foi possível iniciar o cenário.', null, null, null, this.messagesContainer);
+        } finally {
+            this.isStarting = false;
         }
     },
 

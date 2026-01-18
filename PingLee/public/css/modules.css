@@ -730,6 +730,13 @@
   width: 26px;
   height: 26px;
 }
+.vocab-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
 .add-word-btn {
   background-color: #1da8da;
   color: white;
@@ -826,16 +833,16 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 0.9rem;
-  background: linear-gradient(135deg, #f5f9ff, #ffffff);
+  background: linear-gradient(135deg, #69a8da, #8cc7ff);
   cursor: pointer;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .panel-card.sub {
-  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  background: linear-gradient(135deg, #7fbdd0, #a2d8e6);
 }
 .panel-card.rad {
-  background: linear-gradient(135deg, #f9fbff, #ffffff);
+  background: linear-gradient(135deg, #9ed9e2, #c7eef3);
 }
 .panel-card:hover {
   transform: translateY(-2px);

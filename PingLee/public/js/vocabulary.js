@@ -91,10 +91,10 @@ const Vocabulary = {
     this.state.breadcrumb = [categoryName];
     
     const categoryData = VOCABULARY_DATA.categories[categoryName];
-    const firstKey = Object.keys(categoryData.radicals)[0];
-    const first = categoryData.radicals[firstKey];
+    const firstKey = Array.isArray(categoryData.radicals) ? categoryData.radicals[0] : null;
+    const first = firstKey ? VOCABULARY_DATA.radicals[firstKey] : null;
     
-    this.state.currentView = first.characters ? 'radicals' : 'subcategories';
+    this.state.currentView = first && first.characters ? 'radicals' : 'subcategories';
     this.render();
   },
 
@@ -163,7 +163,7 @@ const Vocabulary = {
 
   renderSubcategories() {
     const categoryData = VOCABULARY_DATA.categories[this.state.selectedCategory];
-    const subs = Object.keys(categoryData.radicals);
+    const subs = Array.isArray(categoryData.radicals) ? categoryData.radicals : [];
 
     const html = subs.map(sub => {
       const count = this.getRadicalsInSubcategory(sub).length;
@@ -186,7 +186,7 @@ const Vocabulary = {
       radicals = this.getRadicalsInSubcategory(this.state.selectedSubcategory);
     } else {
       const categoryData = VOCABULARY_DATA.categories[this.state.selectedCategory];
-      radicals = Object.keys(categoryData.radicals).map(key => ({
+      radicals = (categoryData.radicals || []).map(key => ({
         key,
         data: VOCABULARY_DATA.radicals[key]
       }));
@@ -244,7 +244,7 @@ const Vocabulary = {
     const words = [];
     const catData = VOCABULARY_DATA.categories[cat];
     
-    Object.keys(catData.radicals).forEach(key => {
+    (catData.radicals || []).forEach(key => {
       const rad = VOCABULARY_DATA.radicals[key];
       if (rad && rad.characters) words.push(...rad.characters);
     });

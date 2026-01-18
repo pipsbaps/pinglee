@@ -840,16 +840,18 @@ body.modal-open {
 
 /* Role-play modal */
 .role-modal {
-  width: calc(100% - 64px);
-  max-width: 440px;
-  min-height: 70vh;
-  max-height: 85vh;
-  padding: 1.25rem 1.25rem 1rem;
+  width: 96%;
+  max-width: 560px;
+  min-height: 78vh;
+  max-height: 92vh;
+  padding: 1.4rem 1.4rem 1.6rem;
   background: linear-gradient(
     180deg,
-    rgba(198, 225, 254, 0.9) 0%,
-    rgba(255, 255, 255, 0.96) 65%
+    rgba(198, 225, 254, 0.92) 0%,
+    rgba(255, 255, 255, 0.96) 72%
   );
+  border-radius: 28px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -857,29 +859,30 @@ body.modal-open {
 
 @media (min-width: 721px) and (max-width: 1024px) {
   .role-modal {
-    width: calc(100% - 48px);
+    width: 94%;
+    max-width: 540px;
   }
 }
 
 @media (max-width: 720px) {
   .role-modal {
-    width: calc(100% - 32px);
+    width: 96%;
     max-width: none;
-    min-height: 75vh;
-    max-height: calc(100vh - 32px);
-    padding: 1.4rem 1.25rem 1.1rem;
-    border-radius: 18px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    min-height: 82vh;
+    max-height: 96vh;
+    padding: 1.35rem 1.2rem 1.35rem;
+    border-radius: 24px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
   }
   .role-modal-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
   .role-modal-desc {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
   .role-modal-messages {
-    max-height: 65vh;
-    padding: 0.5rem 0.75rem 1rem;
+    max-height: 70vh;
+    padding: 0.75rem 0.9rem 1.25rem;
   }
 }
 /* --- Fim: Estilos Restaurados --- */

@@ -7,7 +7,7 @@
     <title>PingLee - Tutor de Mandarim</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/modules.css">
-    <link rel="icon" href="/images/favicon.png">
+    <link rel="icon" href="images/favicon.png">
 </head>
 
 <body>
@@ -20,10 +20,10 @@
             <!-- Módulo de Chat Principal (Texto) -->
             <section id="chat">
                 <div class="chat-toolbar">
-                    <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false" title="Modo áudio lento">🐌</button>
+                    <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false"
+                        title="Modo áudio lento">🐌</button>
                 </div>
                 <div class="chat-messages"></div>
-
                 <div class="chat-form-container">
                     <form class="chat-form text-form">
                         <input type="text" class="message-input" placeholder="Escreva a sua mensagem..."
@@ -43,34 +43,36 @@
                 <div class="scenario-list-container">
                     <div class="scenario-list">
                         <button class="scenario-button" data-scenario="restaurant">
-                            <img src="/images/roleplay_restaurante.png" alt="Restaurante" loading="lazy">
+                            <img src="images/roleplay/restaurante.png" alt="Restaurante" loading="lazy">
                         </button>
                         <button class="scenario-button" data-scenario="shopping">
-                            <img src="/images/roleplay_compras.png" alt="Compras" loading="lazy">
+                            <img src="images/roleplay/compras.png" alt="Compras" loading="lazy">
                         </button>
                         <button class="scenario-button" data-scenario="introductions">
-                            <img src="/images/roleplay_apresentacao.png" alt="Apresentações" loading="lazy">
+                            <img src="images/roleplay/apresentacao.png" alt="Apresentações" loading="lazy">
                         </button>
                         <button class="scenario-button" data-scenario="taxi">
-                            <img src="/images/roleplay_taxi.png" alt="Táxi" loading="lazy">
+                            <img src="images/roleplay/taxi.png" alt="Táxi" loading="lazy">
                         </button>
                     </div>
                 </div>
+
                 <!-- Modal de Role-Play (interação decorre aqui) -->
                 <div id="role-play-modal" class="modal-overlay hidden">
                     <div class="modal-content role-modal">
                         <div class="role-modal-header">
                             <div></div>
                             <div class="role-modal-actions">
-                                <button type="button" class="pill-toggle" id="roleplay-audio-slow-toggle" aria-pressed="false" title="Modo áudio lento">🐌</button>
-                                <button class="role-modal-close" aria-label="Fechar role-play">×</button>
+                                <button type="button" class="pill-toggle" id="roleplay-audio-slow-toggle"
+                                    aria-pressed="false" title="Modo áudio lento">🐌</button>
+                                <button class="role-modal-close" aria-label="Fechar role-play">✕</button>
                             </div>
                         </div>
                         <div class="role-modal-body">
                             <div class="chat-messages role-modal-messages"></div>
                             <div class="role-play-controls modal-controls">
-                                <button type="button" class="mic-button" aria-label="Gravar Áudio">
-                                    <img src="/images/mic_icon.png" alt="" class="mic-icon" loading="lazy" />
+                                <button type="button" class="mic-button" aria-label="Gravar áudio">
+                                    <img src="images/micicon.png" alt="" class="mic-icon" loading="lazy">
                                     <div class="recording-indicator hidden"></div>
                                 </button>
                             </div>
@@ -85,20 +87,23 @@
                     <div class="breadcrumb-row">
                         <div class="breadcrumb" id="vocab-breadcrumb"></div>
                         <button class="back-root-btn" id="vocab-back-root" aria-label="Voltar ao início">
-                            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z" />
+                            </svg>
                         </button>
                     </div>
+
                     <div class="vocab-summary-row">
                         <div class="vocab-summary">
                             <div class="metric">
-                                <img src="/images/nav_iconsflat_vocab.png" alt="" class="metric-icon" loading="lazy">
+                                <img src="images/navicons/flat/vocab.png" alt="" class="metric-icon" loading="lazy">
                                 <div>
                                     <span class="metric-label">Total</span>
                                     <span class="metric-value" id="metric-total">0</span>
                                 </div>
                             </div>
                             <div class="metric">
-                                <img src="/images/nav_iconsflat_role.png" alt="" class="metric-icon" loading="lazy">
+                                <img src="images/navicons/flat/role.png" alt="" class="metric-icon" loading="lazy">
                                 <div>
                                     <span class="metric-label">A treinar</span>
                                     <span class="metric-value" id="metric-train">0</span>
@@ -107,8 +112,11 @@
                         </div>
                         <button class="add-word-btn" id="open-add-word" aria-label="Adicionar nova palavra">+</button>
                     </div>
+
                     <div class="vocab-filters">
-                        <input type="search" id="vocab-search" placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off" inputmode="search">
+                        <input type="search" id="vocab-search"
+                            placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off"
+                            inputmode="search">
                         <select id="vocab-filter-hsk">
                             <option value="">HSK (filtrar)</option>
                             <option value="HSK1">HSK1</option>
@@ -117,7 +125,7 @@
                             <option value="HSK4">HSK4</option>
                             <option value="HSK5">HSK5</option>
                             <option value="HSK6">HSK6</option>
-                            <option value="N/A">N/A</option>
+                            <option value="NA">N/A</option>
                         </select>
                         <select id="vocab-filter-pos">
                             <option value="">Função (filtrar)</option>
@@ -132,6 +140,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="vocab-stats" id="vocab-stats"></div>
                 <div class="vocab-panel" id="vocab-panel"></div>
             </section>
@@ -145,19 +154,19 @@
 
         <nav class="mobile-nav">
             <a href="#chat" class="nav-item active" data-target="chat">
-                <img src="/images/nav_iconsflat_chat.png" alt="Chat" loading="lazy">
+                <img src="images/navicons/flat/chat.png" alt="Chat" loading="lazy">
                 <span>Chat</span>
             </a>
             <a href="#role-play" class="nav-item" data-target="role-play">
-                <img src="/images/nav_iconsflat_role.png" alt="Role-Play" loading="lazy">
+                <img src="images/navicons/flat/role.png" alt="Role-Play" loading="lazy">
                 <span>Role-Play</span>
             </a>
             <a href="#vocabulary" class="nav-item" data-target="vocabulary">
-                <img src="/images/nav_iconsflat_vocab.png" alt="Vocabulário" loading="lazy">
+                <img src="images/navicons/flat/vocab.png" alt="Vocabulário" loading="lazy">
                 <span>Vocabulário</span>
             </a>
             <a href="#lessons" class="nav-item" data-target="lessons">
-                <img src="/images/nav_iconsflat_lessons.png" alt="Aulas" loading="lazy">
+                <img src="images/navicons/flat/lessons.png" alt="Aulas" loading="lazy">
                 <span>Aulas</span>
             </a>
         </nav>
@@ -168,7 +177,7 @@
         <div class="modal-content word-modal">
             <div class="word-modal-header">
                 <h3 id="modal-title">Detalhe</h3>
-                <button type="button" class="word-modal-close" aria-label="Fechar">×</button>
+                <button type="button" class="word-modal-close" aria-label="Fechar">✕</button>
             </div>
             <div id="word-modal-body"></div>
         </div>
@@ -179,13 +188,14 @@
         <div class="modal-content word-modal">
             <div class="word-modal-header">
                 <h3 id="form-modal-title">Adicionar Palavra</h3>
-                <button type="button" class="word-form-close" aria-label="Fechar">×</button>
+                <button type="button" class="word-form-close" aria-label="Fechar">✕</button>
             </div>
             <form id="word-form">
                 <input type="hidden" id="word-id-input">
+
                 <div class="form-row triple">
                     <div class="form-group">
-                        <label for="character-input">Caractere(s)</label>
+                        <label for="character-input">Caracteres</label>
                         <input type="text" id="character-input" required lang="zh-Hans" inputmode="text">
                     </div>
                     <div class="form-group">
@@ -197,6 +207,7 @@
                         <button type="button" id="ai-fill-btn" class="word-btn">Auto</button>
                     </div>
                 </div>
+
                 <div class="form-row triple">
                     <div class="form-group">
                         <label for="translation-input">Significado</label>
@@ -204,13 +215,15 @@
                     </div>
                     <div class="form-group">
                         <label for="hsk-input">HSK</label>
-                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text" />
+                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text">
                     </div>
                     <div class="form-group">
                         <label for="pos-input">Função</label>
-                        <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." lang="pt" inputmode="text" />
+                        <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." lang="pt"
+                            inputmode="text">
                     </div>
                 </div>
+
                 <div class="form-row double">
                     <div class="form-group">
                         <label for="example-chinese-input">Exemplo</label>
@@ -221,10 +234,12 @@
                         <input type="text" id="example-translation-input" lang="pt" inputmode="text">
                     </div>
                 </div>
+
                 <div class="form-group notes-group">
                     <label for="notes-input" class="visually-hidden">Notas</label>
                     <textarea id="notes-input" rows="2" placeholder="Notas"></textarea>
                 </div>
+
                 <div class="form-actions">
                     <button type="submit" class="save-btn word-btn">Guardar</button>
                 </div>
@@ -234,8 +249,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/ui.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="data/vocabulary_data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

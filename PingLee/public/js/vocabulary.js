@@ -1,784 +1,298 @@
-const VocabularyData = {
-    mainCategories: [
-        {
-            id: 'daily-life',
-            name: 'Vida diária',
-            icon: '🏠',
-            radicals: [
-                {
-                    id: 'greetings',
-                    name: 'Saudações',
-                    radicals: [
-                        {
-                            id: 'rad-people',
-                            name: '亻 (pessoa)',
-                            words: [
-                                { id: 'w1', character: '你好', pinyin: 'nǐ hǎo', meaning: 'olá', hsk: 'HSK1', type: 'Expressão', notes: 'Saudação padrão', compounds: ['w2'], example: { zh: '你好！', pinyin: 'nǐ hǎo', pt: 'Olá!' } },
-                                { id: 'w2', character: '您', pinyin: 'nín', meaning: 'você (formal)', hsk: 'HSK2', type: 'Pronome', notes: '', compounds: [], example: { zh: '您好！', pinyin: 'nín hǎo', pt: 'Olá (formal)!' } }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 'food',
-                    name: 'Comida',
-                    words: [
-                        { id: 'w3', character: '吃', pinyin: 'chī', meaning: 'comer', hsk: 'HSK1', type: 'Verbo', notes: '', compounds: [], example: { zh: '我想吃饭。', pinyin: 'wǒ xiǎng chī fàn', pt: 'Quero comer.' } }
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'travel',
-            name: 'Viagens',
-            icon: '✈️',
-            radicals: [
-                {
-                    id: 'transport',
-                    name: 'Transportes',
-                    radicals: [
-                        {
-                            id: 'rad-car',
-                            name: '车 (veículo)',
-                            words: [
-                                { id: 'w4', character: '出租车', pinyin: 'chūzūchē', meaning: 'táxi', hsk: 'HSK2', type: 'Substantivo', notes: '', compounds: [], example: { zh: '我们坐出租车。', pinyin: 'wǒmen zuò chūzūchē', pt: 'Vamos de táxi.' } }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
-
 const Vocabulary = {
-    _initialized: false,
-    wordsIndex: [],
-    radicalsIndex: new Map(),
-    stats: { searched: {}, used: {}, wrong: {} },
-    modalStack: [],
-    State: {
-        searchTerm: '',
-        filterHSK: '',
-        filterPOS: '',
-        openMainCategoryId: null,
-        openSubCategoryId: null,
-        openRadicalId: null,
-        panelMode: 'verCategorias',
-        visibleWords: []
-    },
+  initialized: false,
+  
+  state: {
+    currentView: 'categories',
+    breadcrumb: [],
+    selectedCategory: null,
+    selectedSubcategory: null,
+    selectedRadical: null,
+    searchQuery: '',
+    filterHSK: '',
+    filterPOS: ''
+  },
 
-    init() {
-        if (this._initialized) return;
-        this._initialized = true;
+  init() {
+    if (this.initialized) return;
+    this.initialized = true;
 
-        this.el = {
-            section: document.getElementById('vocabulary'),
-            breadcrumb: document.getElementById('vocab-breadcrumb'),
-            backRoot: document.getElementById('vocab-back-root'),
-            stats: document.getElementById('vocab-stats'),
-            panel: document.getElementById('vocab-panel'),
-            search: document.getElementById('vocab-search'),
-            filterHSK: document.getElementById('vocab-filter-hsk'),
-            filterPOS: document.getElementById('vocab-filter-pos'),
-            metricTotal: document.getElementById('metric-total'),
-            metricTrain: document.getElementById('metric-train'),
-            modalOverlay: document.getElementById('word-modal'),
-            modalTitle: document.getElementById('modal-title'),
-            modalBody: document.getElementById('word-modal-body'),
-            modalClose: document.querySelector('.word-modal-close'),
-            formModal: document.getElementById('word-form-modal'),
-            formModalTitle: document.getElementById('form-modal-title'),
-            formClose: document.querySelector('.word-form-close'),
-            wordForm: document.getElementById('word-form'),
-            aiFillBtn: document.getElementById('ai-fill-btn'),
-            feedback: document.getElementById('vocab-feedback'),
-            addBtn: document.getElementById('open-add-word')
-        };
-        if (!this.el.section) return;
-
-        this.formFields = {
-            wordId: document.getElementById('word-id-input'),
-            character: document.getElementById('character-input'),
-            pinyin: document.getElementById('pinyin-input'),
-            meaning: document.getElementById('translation-input'),
-            hsk: document.getElementById('hsk-input'),
-            type: document.getElementById('pos-input'),
-            exampleZh: document.getElementById('example-chinese-input'),
-            examplePt: document.getElementById('example-translation-input'),
-            notes: document.getElementById('notes-input')
-        };
-
-        this.buildIndex(VocabularyData);
-        this.loadStats();
-        this.applyFilters();
-        this.renderAll();
-        this.bindEvents();
-    },
-
-    buildIndex(data) {
-        this.wordsIndex = [];
-        this.radicalsIndex = new Map();
-        const traverse = (nodes, mainId, parentId = null) => {
-            if (!Array.isArray(nodes)) return;
-            nodes.forEach(node => {
-                const isRadical = Array.isArray(node.words);
-                if (isRadical) {
-                    const wordIds = [];
-                    node.words.forEach(w => {
-                        this.wordsIndex.push({
-                            ...w,
-                            mainId,
-                            subId: parentId,
-                            radicalId: node.id,
-                            searchBlob: [
-                                w.character,
-                                w.pinyin,
-                                w.meaning,
-                                w.hsk,
-                                w.type,
-                                w.notes
-                            ].filter(Boolean).join(' ').toLowerCase()
-                        });
-                        wordIds.push(w.id);
-                    });
-                    this.radicalsIndex.set(node.id, wordIds);
-                } else if (Array.isArray(node.radicals)) {
-                    traverse(node.radicals, mainId, node.id);
-                }
-            });
-        };
-        data.mainCategories.forEach(main => traverse(main.radicals, main.id, null));
-    },
-
-    bindEvents() {
-        if (this.el.search) {
-            this.el.search.addEventListener('input', () => {
-                this.State.searchTerm = this.el.search.value.trim();
-                this.applyFilters();
-                this.renderPanel('verPalavras');
-                this.trackSearch(this.State.searchTerm, this.State.visibleWords.map(w => w.id));
-            });
-        }
-        if (this.el.filterHSK) {
-            this.el.filterHSK.addEventListener('change', () => {
-                this.State.filterHSK = this.el.filterHSK.value;
-                this.applyFilters();
-                this.renderPanel('verPalavras');
-            });
-        }
-        if (this.el.filterPOS) {
-            this.el.filterPOS.addEventListener('change', () => {
-                this.State.filterPOS = this.el.filterPOS.value;
-                this.applyFilters();
-                this.renderPanel('verPalavras');
-            });
-        }
-        if (this.el.backRoot) {
-            this.el.backRoot.addEventListener('click', () => {
-                this.State.openMainCategoryId = null;
-                this.State.openSubCategoryId = null;
-                this.State.openRadicalId = null;
-                this.State.panelMode = 'verCategorias';
-                this.applyFilters();
-                this.renderAll();
-            });
-        }
-        if (this.el.addBtn) {
-            this.el.addBtn.addEventListener('click', () => this.openFormModal());
-        }
-        if (this.el.formClose) {
-            this.el.formClose.addEventListener('click', () => this.closeFormModal());
-        }
-        if (this.el.aiFillBtn) {
-            this.el.aiFillBtn.addEventListener('click', () => this.handleAiFill());
-        }
-        if (this.el.wordForm) {
-            this.el.wordForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
-        }
-        if (this.el.modalOverlay) {
-            this.el.modalOverlay.addEventListener('click', e => {
-                if (e.target === this.el.modalOverlay) this.closeModal();
-            });
-        }
-        if (this.el.modalClose) {
-            this.el.modalClose.addEventListener('click', () => this.closeModal());
-        }
-    },
-
-    applyFilters() {
-        const term = (this.State.searchTerm || '').toLowerCase();
-        const noFilter = !term && !this.State.filterHSK && !this.State.filterPOS && !this.State.openRadicalId;
-        this.State.visibleWords = this.wordsIndex.filter(w => {
-            if (noFilter) return false;
-            if (term && !w.searchBlob.includes(term)) return false;
-            if (this.State.filterHSK && w.hsk !== this.State.filterHSK) return false;
-            if (this.State.filterPOS && w.type !== this.State.filterPOS) return false;
-            if (this.State.openRadicalId && w.radicalId !== this.State.openRadicalId) return false;
-            return true;
-        });
-        const count = this.State.visibleWords.length;
-        if (this.el.filterHSK) {
-            this.el.filterHSK.classList.toggle('is-active', !!this.State.filterHSK);
-            this.el.filterHSK.dataset.count = count;
-        }
-        if (this.el.filterPOS) {
-            this.el.filterPOS.classList.toggle('is-active', !!this.State.filterPOS);
-            this.el.filterPOS.dataset.count = count;
-        }
-        this.renderHeaderSummary();
-        this.renderStats();
-    },
-
-    renderAll() {
-        this.renderBreadcrumb();
-        this.renderPanel(this.State.panelMode);
-        this.renderStats();
-        this.renderHeaderSummary();
-    },
-
-    renderBreadcrumb() {
-        const parts = [];
-        const { openMainCategoryId, openSubCategoryId, openRadicalId } = this.State;
-        const main = VocabularyData.mainCategories.find(m => m.id === openMainCategoryId);
-        const nodes = main?.radicals || [];
-        const sub = nodes.find(s => s.id === openSubCategoryId);
-        const rad = (sub?.radicals || nodes)?.find(r => r.id === openRadicalId);
-        if (main) parts.push({ label: main.name, level: 'main', id: main.id });
-        if (sub) parts.push({ label: sub.name, level: 'sub', id: sub.id });
-        if (rad) parts.push({ label: rad.name, level: 'rad', id: rad.id });
-
-        const frag = document.createDocumentFragment();
-        if (parts.length) {
-            parts.forEach((p, idx) => {
-                const btn = document.createElement('button');
-                btn.textContent = p.label;
-                btn.addEventListener('click', () => {
-                    if (p.level === 'main') {
-                        this.State.openMainCategoryId = p.id;
-                        this.State.openSubCategoryId = null;
-                        this.State.openRadicalId = null;
-                        this.renderPanel('verRadicais');
-                    } else if (p.level === 'sub') {
-                        this.State.openSubCategoryId = p.id;
-                        this.State.openRadicalId = null;
-                        this.renderPanel('verRadicais');
-                    } else if (p.level === 'rad') {
-                        this.State.openRadicalId = p.id;
-                        this.renderPanel('verPalavras');
-                    }
-                    this.applyFilters();
-                    this.renderBreadcrumb();
-                });
-                frag.appendChild(btn);
-                if (idx < parts.length - 1) {
-                    const sep = document.createElement('span');
-                    sep.className = 'sep';
-                    sep.textContent = '>';
-                    frag.appendChild(sep);
-                }
-            });
-        }
-        this.el.breadcrumb.innerHTML = '';
-        this.el.breadcrumb.appendChild(frag);
-    },
-
-    renderPanel(mode) {
-        this.State.panelMode = mode;
-        this.el.panel.innerHTML = '';
-        if (mode === 'verCategorias') {
-            this.renderCategorias();
-        } else if (mode === 'verRadicais') {
-            this.renderRadicais();
-        } else {
-            this.renderPalavras();
-        }
-    },
-
-    renderCategorias() {
-        const grid = document.createElement('div');
-        grid.className = 'panel-grid fade-in';
-        VocabularyData.mainCategories.forEach(cat => {
-            const card = document.createElement('div');
-            card.className = 'panel-card main';
-            card.innerHTML = `<div class="title">${cat.icon || ''} ${cat.name}</div><div class="meta">${cat.subCategories.length} subcategorias</div>`;
-            card.addEventListener('click', () => {
-                this.State.openMainCategoryId = cat.id;
-                this.State.openSubCategoryId = null;
-                this.State.openRadicalId = null;
-                this.renderBreadcrumb();
-                this.renderPanel('verRadicais');
-            });
-            grid.appendChild(card);
-        });
-        this.el.panel.appendChild(grid);
-    },
-
-    renderRadicais() {
-        const main = VocabularyData.mainCategories.find(m => m.id === this.State.openMainCategoryId);
-        if (!main) {
-            this.renderPanel('verCategorias');
-            return;
-        }
-        const nodes = Array.isArray(main.radicals) ? main.radicals : [];
-        const first = nodes[0];
-        const firstIsRadical = first && Array.isArray(first.words);
-
-        if (firstIsRadical) {
-            // Categoria sem subcategorias: lista diretamente os radicais
-            const radGrid = document.createElement('div');
-            radGrid.className = 'panel-grid fade-in';
-            nodes.forEach(rad => {
-                const count = this.radicalsIndex.get(rad.id)?.length || 0;
-                const card = document.createElement('div');
-                card.className = 'panel-card rad';
-                card.innerHTML = `<div class="title">${rad.name}</div><div class="meta">${count} palavras</div>`;
-                card.addEventListener('click', () => {
-                    this.State.openSubCategoryId = null;
-                    this.State.openRadicalId = rad.id;
-                    this.applyFilters();
-                    this.renderBreadcrumb();
-                    this.renderPanel('verPalavras');
-                });
-                radGrid.appendChild(card);
-            });
-            this.el.panel.appendChild(radGrid);
-            return;
-        }
-
-        // Categoria com subcategorias: primeiro mostra subcategorias
-        const subGrid = document.createElement('div');
-        subGrid.className = 'panel-grid fade-in';
-        nodes.forEach(sub => {
-            const wordCount = (sub.radicals || sub.words || []).reduce
-                ? (sub.radicals || []).reduce((acc, r) => acc + (this.radicalsIndex.get(r.id)?.length || 0), 0)
-                : 0;
-            const card = document.createElement('div');
-            card.className = 'panel-card sub';
-            card.innerHTML = `<div class="title">${sub.name}</div><div class="meta">${wordCount} palavras</div>`;
-            card.addEventListener('click', () => {
-                this.State.openSubCategoryId = sub.id;
-                this.State.openRadicalId = null;
-                this.renderBreadcrumb();
-                this.renderRadicais();
-            });
-            subGrid.appendChild(card);
-        });
-        this.el.panel.appendChild(subGrid);
-
-        const sub = nodes.find(s => s.id === this.State.openSubCategoryId);
-        if (!sub) return;
-        const radGrid = document.createElement('div');
-        radGrid.className = 'panel-grid fade-in';
-        (sub.radicals || []).forEach(rad => {
-            const count = this.radicalsIndex.get(rad.id)?.length || 0;
-            const card = document.createElement('div');
-            card.className = 'panel-card rad';
-            card.innerHTML = `<div class="title">${rad.name}</div><div class="meta">${count} palavras</div>`;
-            card.addEventListener('click', () => {
-                this.State.openRadicalId = rad.id;
-                this.applyFilters();
-                this.renderBreadcrumb();
-                this.renderPanel('verPalavras');
-            });
-            radGrid.appendChild(card);
-        });
-        this.el.panel.appendChild(radGrid);
-    },
-
-    renderPalavras() {
-        const list = document.createElement('div');
-        list.className = 'vocab-list fade-in';
-        const noFilters =
-            !this.State.searchTerm &&
-            !this.State.filterHSK &&
-            !this.State.filterPOS &&
-            !this.State.openRadicalId;
-        if (noFilters) {
-            const p = document.createElement('p');
-            p.className = 'empty-list-msg';
-            p.textContent = 'Escolhe uma categoria/radical ou aplica filtros/pesquisa para ver palavras.';
-            list.appendChild(p);
-            this.el.panel.appendChild(list);
-            return;
-        }
-        if (!this.State.visibleWords.length) {
-            const p = document.createElement('p');
-            p.className = 'empty-list-msg';
-            p.textContent = 'Nenhuma palavra encontrada.';
-            list.appendChild(p);
-        } else {
-            this.State.visibleWords.forEach(w => {
-                const card = document.createElement('div');
-                card.className = 'panel-card';
-                card.innerHTML = `
-                    <div class="title">${w.character} • <span class="meta">${w.pinyin}</span></div>
-                    <div class="meta">${w.meaning}</div>
-                    <div class="meta"><span class="tag-pill">${w.hsk || '—'}</span> <span class="tag-pill subtle">${w.type || '—'}</span></div>
-                `;
-                card.addEventListener('click', () => this.openWord(w.id));
-                card.addEventListener('contextmenu', (e) => { e.preventDefault(); this.openFormModal(w.id); });
-                list.appendChild(card);
-            });
-        }
-        this.el.panel.appendChild(list);
-    },
-
-    renderStats() {
-        const top = (map) => Object.entries(map || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
-        const searched = top(this.stats.searched);
-        const used = top(this.stats.used);
-        const wrong = top(this.stats.wrong);
-        this.el.stats.innerHTML = '';
-        const blocks = [
-            { title: 'Mais pesquisadas', data: searched },
-            { title: 'Mais usadas', data: used },
-            { title: 'Mais erradas', data: wrong }
-        ];
-        blocks.forEach(block => {
-            const card = document.createElement('div');
-            card.className = 'stat-card';
-            card.innerHTML = `<h4>${block.title}</h4>`;
-            const ul = document.createElement('ul');
-            if (!block.data.length) {
-                const li = document.createElement('li');
-                li.textContent = '—';
-                ul.appendChild(li);
-            } else {
-                block.data.forEach(([id, count]) => {
-                    const word = this.wordsIndex.find(w => w.id === id);
-                    if (!word) return;
-                    const li = document.createElement('li');
-                    const btn = document.createElement('button');
-                    btn.textContent = `${word.character} ${word.pinyin ? `(${word.pinyin})` : ''} • ${count}`;
-                    btn.addEventListener('click', () => this.openWord(word.id));
-                    li.appendChild(btn);
-                    ul.appendChild(li);
-                });
-            }
-            card.appendChild(ul);
-            this.el.stats.appendChild(card);
-        });
-    },
-
-    renderHeaderSummary() {
-        if (this.el.metricTotal) this.el.metricTotal.textContent = this.wordsIndex.length;
-        const trainList = Object.entries(this.stats.wrong || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
-        if (this.el.metricTrain) this.el.metricTrain.textContent = trainList.length;
-    },
-
-    openWord(id) {
-        const word = this.wordsIndex.find(w => w.id === id);
-        if (!word || !this.el.modalBody) return;
-        if (this.modalStack[this.modalStack.length - 1] !== id) this.modalStack.push(id);
-        this.el.modalTitle.textContent = word.character;
-        const relatedLinks = (word.compounds || []).map(cid => {
-            const rel = this.wordsIndex.find(w => w.id === cid);
-            return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.character} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
-        }).join('');
-        this.el.modalBody.innerHTML = `
-            <div class="word-detail">
-                <div class="word-detail-header">
-                    <div class="word-char">${word.character}</div>
-                    <div class="word-pinyin">${word.pinyin || '—'}</div>
-                </div>
-                <div class="word-meaning">${word.meaning || '—'}</div>
-                <div class="word-tags">
-                    <span class="tag-pill">${word.hsk || '—'}</span>
-                    ${word.type ? `<span class="tag-pill subtle">${word.type}</span>` : ''}
-                </div>
-                ${word.notes ? `<p class="word-notes">${word.notes}</p>` : ''}
-                ${word.example ? `<div class="word-example"><div>${word.example.zh || ''}</div><div class="word-example-py">${word.example.pinyin || ''}</div><div class="word-example-pt">${word.example.pt || ''}</div></div>` : ''}
-                ${relatedLinks ? `<div class="related-links">${relatedLinks}</div>` : ''}
-                <div class="detail-actions">
-                    <button class="word-btn ghost detail-back" ${this.modalStack.length <= 1 ? 'disabled' : ''}>Voltar</button>
-                    <button class="word-btn detail-edit">Editar</button>
-                </div>
-            </div>
-        `;
-        this.el.modalBody.querySelectorAll('.link-rel').forEach(btn => {
-            btn.addEventListener('click', () => this.openWord(btn.dataset.id));
-        });
-        const backBtn = this.el.modalBody.querySelector('.detail-back');
-        if (backBtn) {
-            backBtn.addEventListener('click', () => {
-                this.modalStack.pop();
-                const prev = this.modalStack.pop();
-                if (prev) this.openWord(prev);
-            });
-        }
-        const editBtn = this.el.modalBody.querySelector('.detail-edit');
-        if (editBtn) editBtn.addEventListener('click', () => this.openFormModal(word.id));
-        this.el.modalOverlay.classList.remove('hidden');
-        requestAnimationFrame(() => this.el.modalOverlay.classList.add('active'));
-    },
-
-    closeModal() {
-        if (!this.el.modalOverlay) return;
-        this.el.modalOverlay.classList.remove('active');
-        setTimeout(() => this.el.modalOverlay.classList.add('hidden'), 200);
-        this.modalStack = [];
-    },
-
-    trackSearch(term, ids) {
-        if (!term || !ids.length) return;
-        ids.forEach(id => {
-            this.stats.searched[id] = (this.stats.searched[id] || 0) + 1;
-        });
-        this.saveStats();
-        this.renderStats();
-    },
-    trackUsed(id) {
-        if (!id) return;
-        this.stats.used[id] = (this.stats.used[id] || 0) + 1;
-        this.saveStats();
-        this.renderStats();
-    },
-    trackWrong(id) {
-        if (!id) return;
-        this.stats.wrong[id] = (this.stats.wrong[id] || 0) + 1;
-        this.saveStats();
-        this.renderStats();
-    },
-
-    // ---------- Form modal (adicionar/editar) ----------
-    openFormModal(id = null) {
-        if (!this.State.openRadicalId && !id) {
-            alert('Escolhe primeiro um radical para adicionar palavras.');
-            return;
-        }
-        this.applyFilters();
-        this.clearFeedback();
-        if (id) {
-            const w = this.wordsIndex.find(x => x.id === id);
-            if (!w) return;
-            this.formFields.wordId.value = w.id;
-            this.formFields.character.value = w.character;
-            this.formFields.pinyin.value = w.pinyin;
-            this.formFields.meaning.value = w.meaning;
-            this.formFields.hsk.value = w.hsk;
-            this.formFields.type.value = w.type;
-            this.formFields.exampleZh.value = w.example?.zh || '';
-            this.formFields.examplePt.value = w.example?.pt || '';
-            this.formFields.notes.value = w.notes || '';
-            if (this.el.formModalTitle) this.el.formModalTitle.textContent = 'Editar Palavra';
-        } else {
-            if (this.el.wordForm) this.el.wordForm.reset();
-            this.formFields.wordId.value = '';
-            if (this.el.formModalTitle) this.el.formModalTitle.textContent = 'Adicionar Palavra';
-        }
-        if (this.el.formModal) {
-            this.el.formModal.classList.remove('hidden');
-            requestAnimationFrame(() => this.el.formModal.classList.add('active'));
-        }
-    },
-
-    closeFormModal() {
-        if (!this.el.formModal) return;
-        this.el.formModal.classList.remove('active');
-        setTimeout(() => this.el.formModal.classList.add('hidden'), 200);
-    },
-
-    async handleAiFill() {
-        const character = (this.formFields.character.value || '').trim();
-        if (!character) { alert('Por favor, insira um caractere chinês.'); return; }
-        if (this.el.aiFillBtn) {
-            this.el.aiFillBtn.disabled = true;
-            this.el.aiFillBtn.textContent = 'A pesquisar...';
-        }
-        try {
-            const aiData = await this.lookupWordWithAI(character);
-            this.applyAIData(aiData);
-        } catch (error) {
-            console.error(error);
-            alert(`Não foi possível obter uma sugestão para "${character}".`);
-        } finally {
-            if (this.el.aiFillBtn) {
-                this.el.aiFillBtn.disabled = false;
-                this.el.aiFillBtn.textContent = 'Auto';
-            }
-        }
-    },
-
-    lookupWordWithAI(character) {
-        return fetch('/api/vocab-fill', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: character })
-        }).then(resp => {
-            if (!resp.ok) throw new Error('Falha ao obter sugestão');
-            return resp.json();
-        });
-    },
-
-    applyAIData(aiData) {
-        if (!aiData) return;
-        const meaning = Array.isArray(aiData.meaning) ? aiData.meaning.join('; ') : (aiData.meaning || '');
-        this.formFields.character.value = aiData.word || this.formFields.character.value;
-        this.formFields.pinyin.value = aiData.pinyin || '';
-        this.formFields.meaning.value = meaning;
-        this.formFields.hsk.value = aiData.hsk || '';
-        this.formFields.type.value = aiData.pos || '';
-        this.formFields.exampleZh.value = aiData.example_sentence || aiData.related?.[0]?.word || '';
-        this.formFields.examplePt.value = aiData.example_translation || aiData.related?.[0]?.meaning || '';
-    },
-
-    handleFormSubmit(event) {
-        event.preventDefault();
-        const idExisting = this.formFields.wordId.value || null;
-        const wordData = {
-            id: idExisting || `user-${Date.now()}`,
-            character: this.formFields.character.value.trim(),
-            pinyin: this.formFields.pinyin.value.trim(),
-            meaning: this.formFields.meaning.value.trim(),
-            hsk: this.formFields.hsk.value.trim(),
-            type: this.formFields.type.value.trim(),
-            notes: this.formFields.notes.value.trim(),
-            example: { zh: this.formFields.exampleZh.value.trim(), pt: this.formFields.examplePt.value.trim(), pinyin: '' },
-            compounds: []
-        };
-        if (!wordData.character || !wordData.pinyin || !wordData.meaning) {
-            alert('Caractere, Pinyin e Significado são obrigatórios.');
-            return;
-        }
-        const targetRadicalId = idExisting
-            ? (this.wordsIndex.find(w => w.id === idExisting)?.radicalId)
-            : this.State.openRadicalId;
-        if (!targetRadicalId) {
-            alert('Escolhe um radical antes de adicionar.');
-            return;
-        }
-        const duplicate = this.wordsIndex.find(w =>
-            w.id !== idExisting &&
-            w.character === wordData.character &&
-            w.pinyin.toLowerCase() === wordData.pinyin.toLowerCase() &&
-            w.meaning.toLowerCase() === wordData.meaning.toLowerCase() &&
-            w.hsk.toLowerCase() === wordData.hsk.toLowerCase()
-        );
-        if (duplicate) {
-            alert('Esta palavra já existe.');
-            return;
-        }
-        VocabularyData.mainCategories.forEach(main => {
-            main.subCategories.forEach(sub => {
-                sub.radicals.forEach(rad => {
-                    if (rad.id === targetRadicalId) {
-                        const idx = rad.words.findIndex(w => w.id === idExisting);
-                        if (idx >= 0) rad.words[idx] = { ...rad.words[idx], ...wordData };
-                        else rad.words.unshift(wordData);
-                    }
-                });
-            });
-        });
-        this.buildIndex(VocabularyData);
-        this.applyFilters();
-        this.renderAll();
-        this.closeFormModal();
-        this.renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
-        this.fetchSuggestionsFor(wordData.character).then(suggestions => {
-            if (suggestions?.length) this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, false);
-            else this.renderFeedback('✓ Palavra guardada com sucesso!', [], false, false);
-        });
-    },
-
-    fetchSuggestionsFor(word) {
-        return this.lookupWordWithAI(word).then(aiData => aiData.related || []).catch(() => []);
-    },
-
-    renderFeedback(message = '✓ Palavra guardada com sucesso!', suggestions = [], loadingSuggestions = false, addingSuggestions = false) {
-        if (!this.el.feedback) return;
-        const hasSuggestions = suggestions && suggestions.length;
-        const suggestionLines = hasSuggestions
-            ? suggestions.map(s => `<li>• ${s.word} ${s.pinyin ? `(${s.pinyin})` : ''} - ${s.meaning || ''}</li>`).join('')
-            : '';
-        this.el.feedback.innerHTML = `
-            <div class="vocab-feedback-body">
-                <div class="vocab-feedback-text">
-                    <p class="feedback-title">${message}</p>
-                    ${loadingSuggestions ? `<p class="feedback-sub">A obter palavras relacionadas...</p>` : ''}
-                    ${addingSuggestions ? `<p class="feedback-sub">A adicionar palavras relacionadas...</p>` : ''}
-                    ${hasSuggestions ? `<p class="feedback-sub">Palavras relacionadas que podes adicionar:</p>
-                    <ul class="feedback-list">${suggestionLines}</ul>` : ''}
-                </div>
-                <div class="feedback-actions">
-                    ${hasSuggestions ? `<button type="button" class="word-btn add-suggestions-btn"${addingSuggestions ? ' disabled' : ''}>${addingSuggestions ? 'A adicionar...' : 'Adicionar estas'}</button>` : ''}
-                    <button type="button" class="word-btn ghost close-feedback-btn"${addingSuggestions ? ' disabled' : ''}>Fechar</button>
-                </div>
-            </div>
-        `;
-        const closeBtn = this.el.feedback.querySelector('.close-feedback-btn');
-        if (closeBtn) closeBtn.onclick = () => this.clearFeedback();
-        const addBtn = this.el.feedback.querySelector('.add-suggestions-btn');
-        if (addBtn) addBtn.onclick = () => this.handleAddSuggestions(suggestions);
-    },
-
-    clearFeedback() {
-        if (this.el.feedback) this.el.feedback.innerHTML = '';
-    },
-
-    handleAddSuggestions(suggestions) {
-        if (!suggestions?.length) {
-            this.clearFeedback();
-            return;
-        }
-        this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, true);
-        const toAdd = [];
-        suggestions.forEach(sug => {
-            const exists = this.wordsIndex.find(w => w.character === sug.word && w.pinyin === sug.pinyin);
-            if (exists) return;
-            toAdd.push({
-                id: `sug-${Date.now()}-${Math.random()}`,
-                character: sug.word,
-                pinyin: sug.pinyin || '',
-                meaning: sug.meaning || '',
-                hsk: sug.hsk || '',
-                type: sug.pos || '',
-                notes: '',
-                example: { zh: sug.example_sentence || '', pt: sug.example_translation || '', pinyin: '' },
-                compounds: []
-            });
-        });
-        if (!toAdd.length) {
-            this.renderFeedback('Nenhuma sugestão adicionada.', [], false, false);
-            return;
-        }
-        const targetRad = this.State.openRadicalId || (this.State.openSubCategoryId && VocabularyData.mainCategories.find(m => m.id === this.State.openMainCategoryId)?.subCategories.find(s => s.id === this.State.openSubCategoryId)?.radicals[0]?.id);
-        if (!targetRad) {
-            this.renderFeedback('Escolhe um radical para adicionar sugestões.', suggestions, false, false);
-            return;
-        }
-        VocabularyData.mainCategories.forEach(main => {
-            main.subCategories.forEach(sub => {
-                sub.radicals.forEach(rad => {
-                    if (rad.id === targetRad) {
-                        rad.words = [...toAdd, ...rad.words];
-                    }
-                });
-            });
-        });
-        this.buildIndex(VocabularyData);
-        this.applyFilters();
-        this.renderAll();
-        this.renderFeedback('Sugestões adicionadas!', [], false, false);
-    },
-
-    saveStats() {
-        try {
-            localStorage.setItem('vocab_stats_v1', JSON.stringify(this.stats));
-        } catch (_) {}
-    },
-    loadStats() {
-        try {
-            const raw = localStorage.getItem('vocab_stats_v1');
-            if (raw) this.stats = { searched: {}, used: {}, wrong: {}, ...JSON.parse(raw) };
-        } catch (_) {}
+    if (typeof VOCABULARY_DATA === 'undefined') {
+      console.error('❌ VOCABULARY_DATA não encontrado! Certifica-te que vocabulary_data.js está carregado no HTML.');
+      return;
     }
+
+    console.log('✅ Categorias:', Object.keys(VOCABULARY_DATA.categories));
+    
+    this.cacheDOM();
+    this.attachEvents();
+    this.bootstrap();
+  },
+
+  cacheDOM() {
+    this.vocabSection = document.getElementById('vocabulary');
+    if (!this.vocabSection) return;
+
+    this.breadcrumbEl = this.vocabSection.querySelector('#vocab-breadcrumb');
+    this.panelEl = this.vocabSection.querySelector('#vocab-panel');
+    this.searchInput = this.vocabSection.querySelector('#vocab-search');
+    this.filterHSKSelect = this.vocabSection.querySelector('#vocab-filter-hsk');
+    this.filterPOSSelect = this.vocabSection.querySelector('#vocab-filter-pos');
+    this.metricTotal = this.vocabSection.querySelector('#metric-total');
+    this.metricTrain = this.vocabSection.querySelector('#metric-train');
+  },
+
+  attachEvents() {
+    if (!this.vocabSection) return;
+
+    if (this.searchInput) {
+      this.searchInput.addEventListener('input', (e) => {
+        this.state.searchQuery = e.target.value;
+        if (this.state.currentView === 'words') this.renderWords();
+      });
+    }
+
+    if (this.filterHSKSelect) {
+      this.filterHSKSelect.addEventListener('change', (e) => {
+        this.state.filterHSK = e.target.value === 'HSK (todos)' ? '' : e.target.value;
+        if (this.state.currentView === 'words') this.renderWords();
+      });
+    }
+
+    if (this.filterPOSSelect) {
+      this.filterPOSSelect.addEventListener('change', (e) => {
+        this.state.filterPOS = e.target.value === 'Função (todas)' ? '' : e.target.value;
+        if (this.state.currentView === 'words') this.renderWords();
+      });
+    }
+
+    const observer = new MutationObserver((mutations) => {
+      if (mutations.some(m => m.attributeName === 'class')) {
+        if (this.vocabSection.classList.contains('active')) this.render();
+      }
+    });
+    observer.observe(this.vocabSection, { attributes: true });
+  },
+
+  bootstrap() {
+    if (this.vocabSection.classList.contains('active')) this.render();
+  },
+
+  goToCategories() {
+    this.state.currentView = 'categories';
+    this.state.breadcrumb = [];
+    this.state.selectedCategory = null;
+    this.state.selectedSubcategory = null;
+    this.state.selectedRadical = null;
+    this.render();
+  },
+
+  goToCategory(categoryName) {
+    this.state.selectedCategory = categoryName;
+    this.state.breadcrumb = [categoryName];
+    
+    const categoryData = VOCABULARY_DATA.categories[categoryName];
+    const firstKey = Object.keys(categoryData.radicals)[0];
+    const first = categoryData.radicals[firstKey];
+    
+    this.state.currentView = first.characters ? 'radicals' : 'subcategories';
+    this.render();
+  },
+
+  goToSubcategory(subcategoryName) {
+    this.state.selectedSubcategory = subcategoryName;
+    this.state.breadcrumb = [this.state.selectedCategory, subcategoryName];
+    this.state.currentView = 'radicals';
+    this.render();
+  },
+
+  goToRadical(radicalKey) {
+    this.state.selectedRadical = radicalKey;
+    
+    if (this.state.selectedSubcategory) {
+      this.state.breadcrumb = [this.state.selectedCategory, this.state.selectedSubcategory, radicalKey];
+    } else {
+      this.state.breadcrumb = [this.state.selectedCategory, radicalKey];
+    }
+    
+    this.state.currentView = 'words';
+    this.render();
+  },
+
+  render() {
+    if (!this.panelEl) return;
+
+    this.renderBreadcrumb();
+    this.renderMetrics();
+
+    switch (this.state.currentView) {
+      case 'categories': this.renderCategories(); break;
+      case 'subcategories': this.renderSubcategories(); break;
+      case 'radicals': this.renderRadicals(); break;
+      case 'words': this.renderWords(); break;
+    }
+  },
+
+  renderBreadcrumb() {
+    if (!this.breadcrumbEl) return;
+    this.breadcrumbEl.textContent = this.state.breadcrumb.length === 0 
+      ? 'Categorias' 
+      : this.state.breadcrumb.join(' > ');
+  },
+
+  renderMetrics() {
+    if (this.metricTotal) this.metricTotal.textContent = this.getAllWords().length;
+    if (this.metricTrain) this.metricTrain.textContent = '0';
+  },
+
+  renderCategories() {
+    const categories = Object.keys(VOCABULARY_DATA.categories);
+    
+    const html = categories.map(cat => {
+      const count = this.getWordsInCategory(cat).length;
+      return `<button class="category-btn" data-category="${cat}">${cat}<br><small>${count} palavras</small></button>`;
+    }).join('');
+
+    this.panelEl.innerHTML = html;
+
+    this.panelEl.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.goToCategory(e.currentTarget.dataset.category);
+      });
+    });
+  },
+
+  renderSubcategories() {
+    const categoryData = VOCABULARY_DATA.categories[this.state.selectedCategory];
+    const subs = Object.keys(categoryData.radicals);
+
+    const html = subs.map(sub => {
+      const count = this.getRadicalsInSubcategory(sub).length;
+      return `<button class="subcategory-btn" data-sub="${sub}">${sub}<br><small>${count} radicais</small></button>`;
+    }).join('');
+
+    this.panelEl.innerHTML = html;
+
+    this.panelEl.querySelectorAll('.subcategory-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.goToSubcategory(e.currentTarget.dataset.sub);
+      });
+    });
+  },
+
+  renderRadicals() {
+    let radicals;
+
+    if (this.state.selectedSubcategory) {
+      radicals = this.getRadicalsInSubcategory(this.state.selectedSubcategory);
+    } else {
+      const categoryData = VOCABULARY_DATA.categories[this.state.selectedCategory];
+      radicals = Object.keys(categoryData.radicals).map(key => ({
+        key,
+        data: VOCABULARY_DATA.radicals[key]
+      }));
+    }
+
+    const html = radicals.map(({ key, data }) => {
+      const count = data.characters ? data.characters.length : 0;
+      return `<button class="radical-btn" data-radical="${key}">${key}<br><small>${count} palavras</small></button>`;
+    }).join('');
+
+    this.panelEl.innerHTML = html;
+
+    this.panelEl.querySelectorAll('.radical-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.goToRadical(e.currentTarget.dataset.radical);
+      });
+    });
+  },
+
+  renderWords() {
+    const radicalData = VOCABULARY_DATA.radicals[this.state.selectedRadical];
+    let words = radicalData.characters || [];
+
+    words = this.applyFilters(words);
+
+    if (words.length === 0) {
+      this.panelEl.innerHTML = '<div class="empty-message">Nenhuma palavra encontrada.</div>';
+      return;
+    }
+
+    const html = words.map(w => `
+      <div class="word-card">
+        <div class="word-char">${w.char}</div>
+        <div class="word-pinyin">${w.pinyin}</div>
+        <div class="word-meaning">${w.meaning}</div>
+        <div class="word-meta">
+          ${w.hsk ? `<span class="tag">${w.hsk}</span>` : ''}
+          ${w.type ? `<span class="tag">${Array.isArray(w.type) ? w.type.join(', ') : w.type}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    this.panelEl.innerHTML = html;
+  },
+
+  getAllWords() {
+    const words = [];
+    Object.values(VOCABULARY_DATA.radicals).forEach(r => {
+      if (r.characters) words.push(...r.characters);
+    });
+    return words;
+  },
+
+  getWordsInCategory(cat) {
+    const words = [];
+    const catData = VOCABULARY_DATA.categories[cat];
+    
+    Object.keys(catData.radicals).forEach(key => {
+      const rad = VOCABULARY_DATA.radicals[key];
+      if (rad && rad.characters) words.push(...rad.characters);
+    });
+    
+    return words;
+  },
+
+  getRadicalsInSubcategory(sub) {
+    const radicals = [];
+    Object.entries(VOCABULARY_DATA.radicals).forEach(([key, data]) => {
+      if (data.category === sub && data.characters) {
+        radicals.push({ key, data });
+      }
+    });
+    return radicals;
+  },
+
+  applyFilters(words) {
+    let filtered = words;
+
+    if (this.state.searchQuery) {
+      const q = this.state.searchQuery.toLowerCase();
+      filtered = filtered.filter(w => 
+        w.char.includes(q) ||
+        (w.pinyin && w.pinyin.toLowerCase().includes(q)) ||
+        (w.meaning && w.meaning.toLowerCase().includes(q))
+      );
+    }
+
+    if (this.state.filterHSK) {
+      filtered = filtered.filter(w => String(w.hsk) === this.state.filterHSK);
+    }
+
+    if (this.state.filterPOS) {
+      filtered = filtered.filter(w => {
+        if (Array.isArray(w.type)) return w.type.includes(this.state.filterPOS);
+        return w.type === this.state.filterPOS;
+      });
+    }
+
+    return filtered;
+  }
 };
 
 window.Vocabulary = Vocabulary;
 
 if (document.readyState !== 'loading') {
-    Vocabulary.init();
+  window.Vocabulary.init();
 } else {
-    document.addEventListener('DOMContentLoaded', () => Vocabulary.init(), { once: true });
+  document.addEventListener('DOMContentLoaded', () => window.Vocabulary.init(), { once: true });
 }

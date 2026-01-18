@@ -258,3 +258,6 @@ const RolePlay = {
         }
     }
 };
+
+// Exporta para lazy load
+window.RolePlay = RolePlay;

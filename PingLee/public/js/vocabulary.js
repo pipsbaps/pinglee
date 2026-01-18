@@ -280,3 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     init();
 
 });
+
+// Exporta para lazy load
+window.Vocabulary = window.Vocabulary || {};

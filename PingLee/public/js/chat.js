@@ -172,3 +172,6 @@ const TextChat = {
         }
     }
 };
+
+// Exporta para lazy load
+window.TextChat = TextChat;

@@ -542,9 +542,9 @@
   padding: 0;
   cursor: pointer;
   display: block;
-  min-width: 140px;
-  max-width: 160px;
-  aspect-ratio: 4 / 5;
+  min-width: 132px;
+  max-width: 152px;
+  aspect-ratio: 5 / 3;
   transition:
     transform 0.15s,
     box-shadow 0.15s;
@@ -578,9 +578,9 @@
     gap: 0.55rem;
   }
   .scenario-button {
-    min-width: 120px;
-    max-width: 140px;
-    aspect-ratio: 4 / 5;
+    min-width: 118px;
+    max-width: 132px;
+    aspect-ratio: 5 / 3;
   }
 }
 .roleplay-stage {

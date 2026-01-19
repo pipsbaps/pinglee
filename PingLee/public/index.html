@@ -19,15 +19,35 @@
         <main>
             <!-- Módulo de Chat Principal (Texto) -->
             <section id="chat">
-                <div class="chat-mode-switch" role="group" aria-label="Modo de chat">
-                    <button type="button" class="mode-btn is-active" data-mode="aulas" aria-pressed="true">Aulas</button>
-                    <button type="button" class="mode-btn" data-mode="explora" aria-pressed="false">Explora</button>
-                </div>
                 <div class="chat-toolbar">
-                    <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false"
-                        title="Modo áudio lento">🐌</button>
-                    <button type="button" class="pill-toggle save-lesson-btn" aria-label="Guardar como nota">✎</button>
-                    <button type="button" class="pill-toggle reset-chat-btn" aria-label="Reiniciar chat">↺</button>
+                    <div class="chat-mode-switch" role="group" aria-label="Modo de chat">
+                        <button type="button" class="mode-btn is-active" data-mode="aulas" aria-pressed="true">Aulas</button>
+                        <button type="button" class="mode-btn" data-mode="explora" aria-pressed="false">Explora</button>
+                    </div>
+                    <div class="chat-toolbar-actions">
+                        <button type="button" class="icon-pill save-lesson-btn" aria-label="Guardar como nota" title="Guardar nota">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 3h11l3 3v12a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z"/>
+                                <path d="M9 3v5h6V3"/>
+                                <path d="M7 15h10"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="icon-pill reset-chat-btn" aria-label="Reiniciar chat" title="Limpar conversa">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M4 16.5 16.5 4 20 7.5 7.5 20a4 4 0 0 1-5.5 0l-0.5-0.5a4 4 0 0 1 0-5.5Z"/>
+                                <path d="M15 5l4 4"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="icon-pill" id="audio-slow-toggle" aria-pressed="false"
+                            title="Modo áudio lento">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M4 12a6 6 0 0 1 6-6h4a4 4 0 0 1 4 4v2a6 6 0 0 1-6 6H8a4 4 0 0 1-4-4Z"/>
+                                <path d="M14 6a2 2 0 1 1 4 0v1"/>
+                                <path d="M6 12a2 2 0 1 0 4 0"/>
+                                <path d="M10 14v2"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="chat-messages"></div>
                 <div class="chat-form-container">

@@ -305,6 +305,12 @@ const Vocabulary = {
     const titleEl = overlay.querySelector('#modal-title');
     if (titleEl) titleEl.textContent = word.meaning || 'Detalhe';
     if (this.modalStack[this.modalStack.length - 1] !== id) this.modalStack.push(id);
+    const notesContent = Array.isArray(word.notes)
+      ? word.notes.join(' ')
+      : (word.notes || '');
+    const formattedNotes = notesContent
+      ? `<div class="word-notes">${notesContent}</div>`
+      : '';
     const compoundLinks = (word.compounds || []).map((c, idx) => {
       if (typeof c === 'string') {
         const rel = this.findWordById(c)?.word;
@@ -327,7 +333,7 @@ const Vocabulary = {
           ${word.hsk ? `<span class="tag tag-hsk">${word.hsk}</span>` : ''}
           ${this.getTypes(word).map(t => `<span class="tag tag-pos">${t}</span>`).join('')}
         </div>
-        ${word.notes?.length ? `<p class="word-notes">${word.notes.join(' ')}</p>` : ''}
+        ${formattedNotes}
         ${compoundLinks ? `<div class="related-links">${compoundLinks}</div>` : ''}
         ${word.example ? `<div class="detail-example"><div>${word.example.zh || ''}</div><div class="detail-example-py">${word.example.pinyin || ''}</div><div class="detail-example-pt">${word.example.pt || ''}</div></div>` : ''}
         <div class="detail-actions">
@@ -386,6 +392,12 @@ const Vocabulary = {
 
     const titleEl = overlay.querySelector('#modal-title');
     if (titleEl) titleEl.textContent = compound.char || 'Detalhe';
+    const notesContent = Array.isArray(compound.notes)
+      ? compound.notes.join(' ')
+      : (compound.notes || '');
+    const formattedNotes = notesContent
+      ? `<div class="word-notes">${notesContent}</div>`
+      : '';
 
     body.innerHTML = `
       <div class="word-detail">
@@ -396,7 +408,7 @@ const Vocabulary = {
         <div class="detail-meaning">${compound.meaning || '—'}</div>
         ${compound.hsk ? `<div class="word-tags"><span class="tag tag-hsk">${compound.hsk}</span></div>` : ''}
         ${compound.type?.length ? `<div class="word-tags">${compound.type.map(t => `<span class="tag tag-pos">${t}</span>`).join('')}</div>` : ''}
-        ${compound.notes?.length ? `<p class="word-notes">${compound.notes.join(' ')}</p>` : ''}
+        ${formattedNotes}
         <div class="detail-actions">
           <div class="detail-actions-left">
             <button class="icon-btn ghost detail-back" ${this.modalStack.length <= 1 ? 'disabled' : ''} aria-label="Voltar">

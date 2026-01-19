@@ -1333,7 +1333,7 @@ body.modal-open {
 }
 .notes-group textarea {
   width: 100%;
-  min-height: 64px;
+  min-height: 60px;
   resize: vertical;
 }
 .word-modal .form-group label {

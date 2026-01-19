@@ -6,7 +6,16 @@ const VOCABULARY_DATA = {
     "Pessoas e Corpo": {
       "radicals": [
         "亻人",
-        "Corpo"
+        "身",
+        "见",
+        "觉",
+        "心",
+        "足",
+        "力",
+        "攴",
+        "𠂇",
+        "又",
+        "手"
       ],
       "subcategories": {
         "Pessoa": {
@@ -16,17 +25,16 @@ const VOCABULARY_DATA = {
         },
         "Corpo": {
           "radicals": [
-            "面",
-            "頁",
-            "目",
-            "着",
-            "眞",
             "身",
-            "見",
-            "覺",
-            "心 忄",
-            "足 ⻊",
-            "辵 辶 龰"
+            "见",
+            "觉",
+            "心",
+            "足",
+            "力",
+            "攴",
+            "𠂇",
+            "又",
+            "手"
           ]
         }
       }
@@ -510,6 +518,357 @@ const VOCABULARY_DATA = {
         }
       ]
     },
+    "身": {
+      "char": "身",
+      "pinyin": "shēn",
+      "meaning": "corpo, pessoa",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Pessoas e Corpo",
+      "subcategory": "Corpo",
+      "characters": [
+        {
+          "char": "身边",
+          "pinyin": "shēnbiān",
+          "meaning": "ao lado de, junto a",
+          "hsk": 1,
+          "type": [
+            "substantivo",
+            "advérbio"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "亲身",
+          "pinyin": "qīnshēn",
+          "meaning": "pessoalmente, em pessoa",
+          "hsk": 2,
+          "type": [
+            "advérbio"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    "见": {
+      "char": "见",
+      "pinyin": "jiàn",
+      "meaning": "ver, perceber, encontrar",
+      "hsk": null,
+      "type": [
+        "verbo"
+      ],
+      "category": "Pessoas e Corpo",
+      "subcategory": "Corpo",
+      "characters": [
+        {
+          "char": "再见",
+          "pinyin": "zàijiàn",
+          "meaning": "adeus, até logo",
+          "hsk": 1,
+          "type": [
+            "expressão"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "见面",
+          "pinyin": "jiànmiàn",
+          "meaning": "encontrar-se, ver alguém pessoalmente",
+          "hsk": 1,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "意见",
+          "pinyin": "yìjiàn",
+          "meaning": "opinião",
+          "hsk": 2,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ],
+      "notes": [
+        "Algo entra na perceção."
+      ]
+    },
+    "觉": {
+      "char": "觉",
+      "pinyin": "jué",
+      "meaning": "sentir, perceber",
+      "hsk": 3,
+      "type": [
+        "verbo"
+      ],
+      "category": "Pessoas e Corpo",
+      "subcategory": "Corpo",
+      "characters": [
+        {
+          "char": "觉得",
+          "pinyin": "juéde",
+          "meaning": "achar, sentir que",
+          "hsk": 1,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    "心": {
+      "char": "心",
+      "pinyin": "xīn",
+      "meaning": "coração, mente",
+      "hsk": null,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Pessoas e Corpo",
+      "subcategory": "Corpo",
+      "characters": [
+        {
+          "char": "想",
+          "pinyin": "xiǎng",
+          "meaning": "pensar, sentir falta",
+          "hsk": 1,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "想想",
+          "pinyin": "xiǎngxiang",
+          "meaning": "pensar um pouco, refletir",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "想要",
+          "pinyin": "xiǎngyào",
+          "meaning": "querer desejo, não exigência",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "想到",
+          "pinyin": "xiǎngdào",
+          "meaning": "pensar em, lembrar-se de algo vem cabeça",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "想念",
+          "pinyin": "xiǎngniàn",
+          "meaning": "ter saudades de ti",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "爱",
+          "pinyin": "ài",
+          "meaning": "amar",
+          "hsk": null,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "爱上",
+          "pinyin": "àishàng",
+          "meaning": "apaixonar-se por, passar a amar, começar a amar",
+          "hsk": null,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "怕",
+          "pinyin": "pà",
+          "meaning": "ter medo",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "快",
+          "pinyin": "kuài",
+          "meaning": "rápido, feliz",
+          "hsk": null,
+          "type": [
+            "adjectivo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "忙",
+          "pinyin": "máng",
+          "meaning": "estar ocupado",
+          "hsk": 1,
+          "type": [
+            "verbo",
+            "adjectivo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "懂",
+          "pinyin": "dǒng",
+          "meaning": "entender, compreender",
+          "hsk": 2,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "忘",
+          "pinyin": "wàng",
+          "meaning": "esquecer",
+          "hsk": null,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "惹",
+          "pinyin": "rě",
+          "meaning": "provocar, causar",
+          "hsk": 5,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "惹我不开心",
+          "pinyin": "rě wǒ bù kāixīn",
+          "meaning": "fazer-me ficar triste",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        }
+      ],
+      "notes": [
+        "emoção, pensamento, estado mental interno"
+      ]
+    },
+    "足": {
+      "char": "足",
+      "pinyin": "zú",
+      "meaning": "pé, suficiente",
+      "hsk": 2,
+      "type": [
+        "substantivo",
+        "adjectivo"
+      ],
+      "category": "Pessoas e Corpo",
+      "subcategory": "Corpo",
+      "characters": [
+        {
+          "char": "走",
+          "pinyin": "zǒu",
+          "meaning": "andar, ir a pé, ir",
+          "hsk": 1,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "我走了",
+          "pinyin": "wǒ zǒu le",
+          "meaning": "fui-me embora",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "跑",
+          "pinyin": "pǎo",
+          "meaning": "correr",
+          "hsk": 1,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "跟",
+          "pinyin": "gēn",
+          "meaning": "com seguir",
+          "hsk": 1,
+          "type": [
+            "verbo",
+            "preposição"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "路",
+          "pinyin": "lù",
+          "meaning": "estrada caminho, jornada",
+          "hsk": 1,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        },
+        {
+          "char": "路上",
+          "pinyin": "lùshang",
+          "meaning": "no caminho",
+          "hsk": null,
+          "type": [],
+          "compounds": [],
+          "notes": []
+        }
+      ],
+      "notes": [
+        "movimento do corpo, posição, avançar, ações ligadas a caminhar",
+        "Ideia de movimento, deslocação, avanço."
+      ]
+    },
     "Corpo": {
       "char": "Corpo",
       "pinyin": "- **面**",
@@ -517,7 +876,8 @@ const VOCABULARY_DATA = {
       "hsk": null,
       "type": [],
       "category": "Pessoas e Corpo",
-      "characters": [
+      "characters": [],
+      "_legacyCharacters": [
         {
           "char": "面条",
           "pinyin": "miàntiáo",
@@ -1194,13 +1554,13 @@ const VOCABULARY_DATA = {
     "力": {
       "char": "力",
       "pinyin": "lì",
-      "meaning": "braço/músculo em tensão",
+      "meaning": "braço, músculo em tensão",
       "hsk": 3,
       "type": [
-        "substantivo",
-        "radical"
+        "substantivo"
       ],
       "category": "Mão e garras",
+      "subcategory": "Corpo",
       "characters": [
         {
           "char": "努力",
@@ -1222,17 +1582,19 @@ const VOCABULARY_DATA = {
           "compounds": [],
           "notes": []
         }
+      ],
+      "notes": [
+        "ações, movimentos, interação física"
       ]
     },
     "攴": {
-      "char": "攴 攵",
+      "char": "攴",
       "pinyin": "pū",
-      "meaning": "ação intencional, intervenção, fazer algo acontecer",
+      "meaning": "bater",
       "hsk": 6,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Mão e garras",
+      "subcategory": "Corpo",
       "characters": [
         {
           "char": "放",
@@ -1247,7 +1609,7 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "放手",
-          "pinyin": "fàng shǒu",
+          "pinyin": "fàngshǒu",
           "meaning": "largar, soltar, desistir",
           "hsk": 2,
           "type": [
@@ -1258,35 +1620,49 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "放心",
-          "pinyin": "fàng xīn",
+          "pinyin": "fàngxīn",
           "meaning": "ficar tranquilo, não se preocupar",
           "hsk": 1,
           "type": [
             "verbo"
           ],
           "compounds": [],
-          "notes": [
-            "relaxar #HSK2 #Verbo #方Fāng #攴攵Pū"
-          ]
+          "notes": []
+        },
+        {
+          "char": "放松",
+          "pinyin": "fàngsōng",
+          "meaning": "relaxar",
+          "hsk": 2,
+          "type": [
+            "verbo"
+          ],
+          "compounds": [],
+          "notes": []
         },
         {
           "char": "教",
-          "pinyin": "jiāo",
+          "pinyin": "jiào",
           "meaning": "ensinar, instruir",
           "hsk": null,
           "type": [],
           "compounds": [],
           "notes": []
         }
+      ],
+      "notes": [
+        "ação intencional, intervenção, fazer algo acontecer",
+        "aparece quase sempre na forma direita do caractere"
       ]
     },
     "𠂇": {
       "char": "𠂇",
       "pinyin": "zuǒ",
-      "meaning": "mão esquerda; ligado a posição, apoio e relação humana",
+      "meaning": "mão esquerda",
       "hsk": null,
       "type": [],
       "category": "Mão e garras",
+      "subcategory": "Corpo",
       "characters": [
         {
           "char": "在",
@@ -1334,22 +1710,26 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": [
-            "dàgài shí diǎn zuǒyò",
             "por volta das dez"
           ]
-        },
-        {
-          "char": "右",
-          "pinyin": "yòu",
-          "meaning": "direita, lado direito, posição principal ou correta",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ],
+      "notes": [
+        "ligado a posição, apoio e relação humana"
+      ]
+    },
+    "又": {
+      "char": "又",
+      "pinyin": "yòu",
+      "meaning": "direita, lado direito, posição principal ou correta",
+      "hsk": 1,
+      "type": [
+        "substantivo",
+        "adjectivo"
+      ],
+      "category": "Mão e garras",
+      "subcategory": "Corpo",
+      "characters": [
         {
           "char": "有",
           "pinyin": "yǒu",
@@ -1363,7 +1743,7 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "有用",
-          "pinyin": "yǒu yang",
+          "pinyin": "yǒuyòng",
           "meaning": "útil",
           "hsk": 2,
           "type": [
@@ -1374,7 +1754,7 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "有意思",
-          "pinyin": "yǒu yìsi",
+          "pinyin": "yǒuyìsi",
           "meaning": "interessante",
           "hsk": 1,
           "type": [
@@ -1393,20 +1773,18 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        }
-      ]
-    },
-    "又": {
-      "char": "又",
-      "pinyin": "yòu**",
-      "meaning": "mão direita; de novo, outra vez, também",
-      "hsk": 1,
-      "type": [
-        "advérbio",
-        "radical"
-      ],
-      "category": "Mão e garras",
-      "characters": [
+        },
+        {
+          "char": "右",
+          "pinyin": "yòu",
+          "meaning": "mão direita, de novo, outra vez, também",
+          "hsk": 1,
+          "type": [
+            "advérbio"
+          ],
+          "compounds": [],
+          "notes": []
+        },
         {
           "char": "反",
           "pinyin": "fǎn",
@@ -1429,6 +1807,9 @@ const VOCABULARY_DATA = {
           "compounds": [],
           "notes": []
         }
+      ],
+      "notes": [
+        "marca ação, interação, resposta, repetição"
       ]
     },
     "手": {
@@ -1440,6 +1821,7 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Mão e garras",
+      "subcategory": "Corpo",
       "characters": [
         {
           "char": "找",
@@ -1538,6 +1920,9 @@ const VOCABULARY_DATA = {
           "compounds": [],
           "notes": []
         }
+      ],
+      "notes": [
+        "força, energia, aplicar força para produzir um efeito, esforço, capacidade, poder de ação"
       ]
     },
     "厂": {

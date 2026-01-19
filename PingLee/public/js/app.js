@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.documentElement.style.setProperty('--app-height', `${h}px`);
                 this.toggleNavForKeyboard();
             };
+            if (!this.initialViewportHeight) {
+                this.initialViewportHeight = window.innerHeight;
+            }
             apply();
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', apply);
@@ -43,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const apply = () => {
                 const vv = window.visualViewport;
-                const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+                const baseH = this.initialViewportHeight || window.innerHeight;
+                const offset = Math.max(0, baseH - vv.height - vv.offsetTop);
                 root.style.setProperty('--keyboard-offset', `${offset}px`);
             };
             const toggleNav = this.toggleNavForKeyboard.bind(this);
@@ -67,11 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const nav = document.querySelector('.mobile-nav');
             if (!nav) return;
 
-            const vv = window.visualViewport;
-            const measuredOffset = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
             const keyboardOpen =
                 getKeyboardOffsetPx() > 0 ||
-                measuredOffset > 80 ||
                 ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '');
 
             nav.classList.toggle('hidden', keyboardOpen);

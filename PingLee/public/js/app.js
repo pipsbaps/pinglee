@@ -49,19 +49,33 @@ document.addEventListener('DOMContentLoaded', () => {
             apply();
             window.visualViewport.addEventListener('resize', apply);
             window.visualViewport.addEventListener('scroll', apply);
+            window.addEventListener('focusin', this.toggleNavForKeyboard.bind(this));
+            window.addEventListener('focusout', this.toggleNavForKeyboard.bind(this));
+            this.toggleNavForKeyboard();
         },
 
         toggleNavForKeyboard() {
-            const nav = document.querySelector('.mobile-nav');
+            function getKeyboardOffsetPx() {
+                const v = getComputedStyle(document.documentElement)
+                    .getPropertyValue('--keyboard-offset')
+                    .trim();
+                const px = parseInt(v || '0', 10);
+                return Number.isFinite(px) ? px : 0;
+            }
+
+            const nav = document.querySelector('.bottom-nav');
             if (!nav) return;
-            const vv = window.visualViewport;
-            const keyboardOpen = vv ? (window.innerHeight - vv.height) > 120 : false;
-            const navHeight = getComputedStyle(document.documentElement).getPropertyValue('--nav-height') || '78px';
-            document.documentElement.style.setProperty('--nav-offset', keyboardOpen ? '0px' : navHeight.trim());
-            nav.style.opacity = keyboardOpen ? '0' : '1';
-            nav.style.pointerEvents = keyboardOpen ? 'none' : 'auto';
-            nav.style.transform = keyboardOpen ? 'translateY(20px)' : 'translateY(0)';
-            document.body.classList.toggle('keyboard-open', keyboardOpen);
+
+            const keyboardOpen =
+                getKeyboardOffsetPx() > 0 ||
+                ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '');
+
+            nav.classList.toggle('hidden', keyboardOpen);
+
+            document.documentElement.style.setProperty(
+                '--nav-offset',
+                keyboardOpen ? '0px' : 'var(--nav-height)'
+            );
         },
 
         init() {

@@ -44,7 +44,10 @@ const Lessons = {
       this.modal.addEventListener('modal:closed', () => this.closeModal());
     }
     if (this.searchInput) {
-      this.searchInput.addEventListener('input', () => this.render());
+      this.searchInput.addEventListener('input', () => {
+        clearTimeout(this.searchDebounce);
+        this.searchDebounce = setTimeout(() => this.render(), 150);
+      });
     }
   },
 
@@ -138,6 +141,7 @@ const Lessons = {
   },
 
   openModal(id = null) {
+    this.lastFocusEl = document.activeElement;
     const lesson = id ? this.lessons.find(l => l.id === id) : null;
     this.selectedId = lesson ? lesson.id : null;
     const today = this.today();
@@ -162,6 +166,10 @@ const Lessons = {
     this.modal.classList.remove('active');
     setTimeout(() => this.modal.classList.add('hidden'), 150);
     this.form?.reset();
+    if (this.lastFocusEl) {
+      this.lastFocusEl.focus();
+      this.lastFocusEl = null;
+    }
   },
 
   handleSubmit(e) {

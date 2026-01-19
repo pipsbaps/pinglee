@@ -658,6 +658,7 @@ const Vocabulary = {
 
   openFormModal(id = null) {
     if (!this.formModal) return;
+    this.lastFocusEl = document.activeElement;
     this.formModal.dataset.mode = 'word';
     this.formModal.dataset.parentId = '';
     this.formModal.dataset.compoundIdx = '';
@@ -696,6 +697,10 @@ const Vocabulary = {
     if (!this.formModal) return;
     this.formModal.classList.remove('active');
     setTimeout(() => this.formModal.classList.add('hidden'), 150);
+    if (this.lastFocusEl) {
+      this.lastFocusEl.focus();
+      this.lastFocusEl = null;
+    }
   },
 
   openCompoundForm(compound, parentId, compoundIndex = null) {

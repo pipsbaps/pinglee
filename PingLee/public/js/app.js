@@ -146,6 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modal.dataset.trapInit === '1') return;
             modal.dataset.trapInit = '1';
             modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.forceCloseModal(modal);
+                    return;
+                }
                 if (e.key !== 'Tab') return;
                 const focusable = modal.querySelectorAll(
                     'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
@@ -175,12 +179,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
-                    modal.classList.remove('active');
-                    setTimeout(() => modal.classList.add('hidden'), 150);
-                    const evt = new CustomEvent('modal:closed', { detail: { id: modal.id, reason: 'backdrop' } });
-                    modal.dispatchEvent(evt);
+                    this.forceCloseModal(modal);
                 }
             });
+        },
+
+        forceCloseModal(modal) {
+            if (!modal) return;
+            modal.classList.remove('active');
+            setTimeout(() => modal.classList.add('hidden'), 150);
+            const evt = new CustomEvent('modal:closed', { detail: { id: modal.id, reason: 'backdrop' } });
+            modal.dispatchEvent(evt);
+            const returnElId = modal.dataset.returnFocusId;
+            if (returnElId) {
+                const el = document.getElementById(returnElId);
+                if (el) el.focus();
+            }
         }
     };
 

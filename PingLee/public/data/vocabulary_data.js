@@ -107,23 +107,36 @@ const VOCABULARY_DATA = {
     },
     "Natureza": {
       "radicals": [
-        "Plantas,",
-        "Animais",
-        "Elementos"
+        "禾",
+        "木",
+        "来",
+        "食",
+        "艹",
+        "鸟",
+        "马",
+        "水",
+        "冫",
+        "次",
+        "干",
+        "王",
+        "理",
+        "气",
+        "白",
+        "钅",
+        "日曰",
+        "田",
+        "月",
+        "雨",
+        "土",
+        "久"
       ],
       "subcategories": {
         "Plantas, Alimentos": {
           "radicals": [
             "禾",
-            "米",
             "木",
-            "本",
-            "杯",
-            "机",
-            "椅",
-            "概",
             "来",
-            "飠饣",
+            "食",
             "艹"
           ]
         },
@@ -135,10 +148,11 @@ const VOCABULARY_DATA = {
         },
         "Elementos": {
           "radicals": [
-            "水 氵",
-            "冫冰",
+            "水",
+            "冫",
+            "次",
             "干",
-            "王 玉",
+            "王",
             "理",
             "气",
             "白",
@@ -1594,31 +1608,41 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Mão e garras",
-      "subcategory": "Corpo",
       "characters": [
         {
-          "char": "努力",
-          "pinyin": "nǔlì",
-          "meaning": "esforçar-se, fazer um esforço",
-          "hsk": 1,
+          "char": "力",
+          "pinyin": "lì",
+          "meaning": "braço, músculo em tensão",
+          "hsk": 3,
           "type": [
-            "verbo"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "能力",
-          "pinyin": "nénglì",
-          "meaning": "capacidade, habilidade",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "努力",
+              "pinyin": "nǔlì",
+              "meaning": "esforçar-se, fazer um esforço",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "能力",
+              "pinyin": "nénglì",
+              "meaning": "capacidade, habilidade",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "força, energia, aplicar força para produzir um efeito, esforço, capacidade, poder de ação"
+          ]
         }
-      ],
-      "notes": [
-        "ações, movimentos, interação física"
       ]
     },
     "斤": {
@@ -1633,32 +1657,44 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "新",
-          "pinyin": "xīn",
-          "meaning": "novo",
+          "char": "斤",
+          "pinyin": "jīn",
+          "meaning": "meio quilo, unidade de peso",
           "hsk": 1,
           "type": [
-            "adjectivo"
+            "substantivo",
+            "classificador"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "近",
-          "pinyin": "jìn",
-          "meaning": "perto, próximo",
-          "hsk": 1,
-          "type": [
-            "adjectivo",
-            "advérbio"
+          "compounds": [
+            {
+              "char": "新",
+              "pinyin": "xīn",
+              "meaning": "novo",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "近",
+              "pinyin": "jìn",
+              "meaning": "perto, próximo",
+              "hsk": 1,
+              "type": [
+                "adjectivo",
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "telhado",
+            "medida e conceitos abstratos ligados a divisão ou distinção"
+          ]
         }
-      ],
-      "notes": [
-        "telhado",
-        "medida e conceitos abstratos ligados a divisão ou distinção"
       ]
     },
     "所": {
@@ -1673,42 +1709,54 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "所以",
-          "pinyin": "suǒyǐ",
-          "meaning": "por isso portanto",
+          "char": "所",
+          "pinyin": "suǒ",
+          "meaning": "lugar, aquilo que, partícula nominal",
           "hsk": 1,
           "type": [
-            "conector"
+            "substantivo",
+            "partícula"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "所有",
-          "pinyin": "suǒyǒu",
-          "meaning": "todos possuir",
-          "hsk": 2,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "所以",
+              "pinyin": "suǒyǐ",
+              "meaning": "por isso portanto",
+              "hsk": 1,
+              "type": [
+                "conector"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "所有",
+              "pinyin": "suǒyǒu",
+              "meaning": "todos possuir",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "所有人",
+              "pinyin": "suǒyǒu rén",
+              "meaning": "todas as pessoas",
+              "hsk": 2,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "所有人",
-          "pinyin": "suǒyǒu rén",
-          "meaning": "todas as pessoas",
-          "hsk": 2,
-          "type": [
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "Transforma ações em coisas. verbo → aquilo que se... o que em português",
+            "Normalmente usado com 以"
+          ]
         }
-      ],
-      "notes": [
-        "Transforma ações em coisas. verbo → aquilo que se... o que em português",
-        "Normalmente usado com 以"
       ]
     },
     "后": {
@@ -1723,82 +1771,94 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "以后",
-          "pinyin": "yǐhòu",
-          "meaning": "depois no futuro",
+          "char": "后",
+          "pinyin": "hòu",
+          "meaning": "depois atrs",
           "hsk": 1,
           "type": [
+            "substantivo",
             "advérbio"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "后来",
-          "pinyin": "hòulái",
-          "meaning": "mais tarde",
-          "hsk": 1,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "以后",
+              "pinyin": "yǐhòu",
+              "meaning": "depois no futuro",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "后来",
+              "pinyin": "hòulái",
+              "meaning": "mais tarde",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "最后",
+              "pinyin": "zuìhòu",
+              "meaning": "finalmente o último",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "之后",
+              "pinyin": "zhīhòu",
+              "meaning": "depois de",
+              "hsk": 1,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "后果",
+              "pinyin": "hòuguǒ",
+              "meaning": "consequência",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "然后",
+              "pinyin": "ránhòu",
+              "meaning": "depois em seguida",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "然后呢",
+              "pinyin": "ránhòu ne",
+              "meaning": "e depois? Interrogação",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "最后",
-          "pinyin": "zuìhòu",
-          "meaning": "finalmente o último",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "之后",
-          "pinyin": "zhīhòu",
-          "meaning": "depois de",
-          "hsk": 1,
-          "type": [
-            "preposição"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "后果",
-          "pinyin": "hòuguǒ",
-          "meaning": "consequência",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "然后",
-          "pinyin": "ránhòu",
-          "meaning": "depois em seguida",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "然后呢",
-          "pinyin": "ránhòu ne",
-          "meaning": "e depois? Interrogação",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "广": {
       "char": "广",
@@ -1809,30 +1869,39 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "床",
-          "pinyin": "chuáng",
-          "meaning": "cama",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "classificador"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "应",
-          "pinyin": "yīng",
-          "meaning": "responder, dever, corresponder",
+          "char": "广",
+          "pinyin": "guǎng",
+          "meaning": "abrigo, edifício, espao coberto, extenso, medida, escala",
           "hsk": null,
-          "type": [
-            "verbo"
+          "type": [],
+          "compounds": [
+            {
+              "char": "床",
+              "pinyin": "chuáng",
+              "meaning": "cama",
+              "hsk": 1,
+              "type": [
+                "substantivo",
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "应",
+              "pinyin": "yīng",
+              "meaning": "responder, dever, corresponder",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "底": {
       "char": "底",
@@ -1843,54 +1912,63 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "心底",
-          "pinyin": "xīndǐ",
-          "meaning": "fundo do coração",
+          "char": "底",
+          "pinyin": "dǐ",
+          "meaning": "fundo, base, parte de baixo",
           "hsk": null,
           "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "年底",
-          "pinyin": "niándǐ",
-          "meaning": "final do ano",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "底下",
-          "pinyin": "dǐxia",
-          "meaning": "debaixo, em baixo",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "彻底",
-          "pinyin": "chèdǐ",
-          "meaning": "completamente, a fundo",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "到底",
-          "pinyin": "dàodǐ",
-          "meaning": "afinal, no fim de tudo, até ao fundo",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "心底",
+              "pinyin": "xīndǐ",
+              "meaning": "fundo do coração",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "年底",
+              "pinyin": "niándǐ",
+              "meaning": "final do ano",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "底下",
+              "pinyin": "dǐxia",
+              "meaning": "debaixo, em baixo",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "彻底",
+              "pinyin": "chèdǐ",
+              "meaning": "completamente, a fundo",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "到底",
+              "pinyin": "dàodǐ",
+              "meaning": "afinal, no fim de tudo, até ao fundo",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "A ideia original é o chão ou a base dentro de um espaço. Pode ser físico (fundo do mar), temporal (fim do ano)..., emocional (fundo do coração), abstrato (completamente)",
+            "usado para insistir ou pedir clareza - afinal, queres ir ou não?"
+          ]
         }
-      ],
-      "notes": [
-        "A ideia original é o chão ou a base dentro de um espaço. Pode ser físico (fundo do mar), temporal (fim do ano)..., emocional (fundo do coração), abstrato (completamente)",
-        "usado para insistir ou pedir clareza - afinal, queres ir ou não?"
       ]
     },
     "唐": {
@@ -1904,20 +1982,31 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "糖",
+          "char": "唐",
           "pinyin": "táng",
-          "meaning": "açúcar",
-          "hsk": 1,
+          "meaning": "dinastia Tang",
+          "hsk": 3,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "糖",
+              "pinyin": "táng",
+              "meaning": "açúcar",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "por extensão chinês (China em certos contextos)",
+            "outros usos: grandioso, antigo, relacionado com prosperidade cultural"
+          ]
         }
-      ],
-      "notes": [
-        "por extensão chinês (China em certos contextos)",
-        "outros usos: grandioso, antigo, relacionado com prosperidade cultural"
       ]
     },
     "店": {
@@ -1931,54 +2020,65 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "书店",
-          "pinyin": "shūdiàn",
-          "meaning": "livraria",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "花店",
-          "pinyin": "huādiàn",
-          "meaning": "florista",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "商店",
-          "pinyin": "shāngdiàn",
-          "meaning": "loja, estabelecimento comercial",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饭店",
-          "pinyin": "fàndiàn",
-          "meaning": "restaurante, hotel pequeno",
+          "char": "店",
+          "pinyin": "diàn",
+          "meaning": "loja",
           "hsk": 1,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "咖啡店",
-          "pinyin": "kāfēi diàn",
-          "meaning": "café, cafetaria",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "书店",
+              "pinyin": "shūdiàn",
+              "meaning": "livraria",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "花店",
+              "pinyin": "huādiàn",
+              "meaning": "florista",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "商店",
+              "pinyin": "shāngdiàn",
+              "meaning": "loja, estabelecimento comercial",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "饭店",
+              "pinyin": "fàndiàn",
+              "meaning": "restaurante, hotel pequeno",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "咖啡店",
+              "pinyin": "kāfēi diàn",
+              "meaning": "café, cafetaria",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "座": {
       "char": "座",
@@ -1989,8 +2089,19 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Lugares e edifícios",
-      "characters": [],
-      "notes": []
+      "characters": [
+        {
+          "char": "座",
+          "pinyin": "zuò",
+          "meaning": "assento, edifício, estrutura grande",
+          "hsk": null,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "庙": {
       "char": "庙",
@@ -2001,8 +2112,19 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Lugares e edifícios",
-      "characters": [],
-      "notes": []
+      "characters": [
+        {
+          "char": "庙",
+          "pinyin": "miào",
+          "meaning": "templo",
+          "hsk": null,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "度": {
       "char": "度",
@@ -2015,88 +2137,99 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "高度",
-          "pinyin": "gāodù",
-          "meaning": "altura, grau elevado",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "角度",
-          "pinyin": "jiǎodù",
-          "meaning": "ângulo, ponto de vista",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "强度",
-          "pinyin": "qiángdù",
-          "meaning": "intensidade",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "态度",
-          "pinyin": "tàidù",
-          "meaning": "atitude",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "难度",
-          "pinyin": "nándù",
-          "meaning": "dificuldade grau de dificuldade",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "温度",
-          "pinyin": "wēndù",
-          "meaning": "temperatura",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "速度",
-          "pinyin": "sùdù",
-          "meaning": "velocidade",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "长度",
-          "pinyin": "chángdù",
-          "meaning": "comprimento",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "深度",
-          "pinyin": "shēndù",
-          "meaning": "profundidade",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
+          "char": "度",
+          "pinyin": "dù",
+          "meaning": "grau, medida, nível, grau de intensidade",
+          "hsk": 3,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [
+            {
+              "char": "高度",
+              "pinyin": "gāodù",
+              "meaning": "altura, grau elevado",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "角度",
+              "pinyin": "jiǎodù",
+              "meaning": "ângulo, ponto de vista",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "强度",
+              "pinyin": "qiángdù",
+              "meaning": "intensidade",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "态度",
+              "pinyin": "tàidù",
+              "meaning": "atitude",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "难度",
+              "pinyin": "nándù",
+              "meaning": "dificuldade grau de dificuldade",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "温度",
+              "pinyin": "wēndù",
+              "meaning": "temperatura",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "速度",
+              "pinyin": "sùdù",
+              "meaning": "velocidade",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "长度",
+              "pinyin": "chángdù",
+              "meaning": "comprimento",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "深度",
+              "pinyin": "shēndù",
+              "meaning": "profundidade",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "宀": {
       "char": "宀",
@@ -2107,40 +2240,49 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "写",
-          "pinyin": "xiě",
-          "meaning": "escrever",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "char": "宀",
+          "pinyin": "mián",
+          "meaning": "cobertura, teto, algo que cobre, envolve ou protege",
+          "hsk": null,
+          "type": [],
+          "compounds": [
+            {
+              "char": "写",
+              "pinyin": "xiě",
+              "meaning": "escrever",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "家",
+              "pinyin": "jiā",
+              "meaning": "casa, família",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "室",
+              "pinyin": "shì",
+              "meaning": "sala, divisão, quarto",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "家",
-          "pinyin": "jiā",
-          "meaning": "casa, família",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "室",
-          "pinyin": "shì",
-          "meaning": "sala, divisão, quarto",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "穴": {
       "char": "穴",
@@ -2153,54 +2295,65 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "空",
-          "pinyin": "kōng, kòng",
-          "meaning": "vazio, oco, disponível",
-          "hsk": 2,
+          "char": "穴",
+          "pinyin": "xué",
+          "meaning": "caverna, buraco",
+          "hsk": 6,
           "type": [
-            "adjectivo"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "有空",
-          "pinyin": "yǒu kòng",
-          "meaning": "ter tempo livre",
-          "hsk": 2,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "空",
+              "pinyin": "kōng, kòng",
+              "meaning": "vazio, oco, disponível",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "有空",
+              "pinyin": "yǒu kòng",
+              "meaning": "ter tempo livre",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "空闲",
+              "pinyin": "kòngxián",
+              "meaning": "tempo livre, disponibilidade",
+              "hsk": 3,
+              "type": [
+                "substantivo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "空手",
+              "pinyin": "kōngshǒu",
+              "meaning": "com as mãos vazias, sem nada",
+              "hsk": 3,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "空闲",
-          "pinyin": "kòngxián",
-          "meaning": "tempo livre, disponibilidade",
-          "hsk": 3,
-          "type": [
-            "substantivo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "空手",
-          "pinyin": "kōngshǒu",
-          "meaning": "com as mãos vazias, sem nada",
-          "hsk": 3,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "espaço vazio - sentido físico (vazio, ar - espaciais; cu, espaço) - abstratos (tempo livre, irreal, sem contedo)",
+            "O tom muda o significado, kōng (estado), kòng (disponibilidade)"
+          ]
         }
-      ],
-      "notes": [
-        "espaço vazio - sentido físico (vazio, ar - espaciais; cu, espaço) - abstratos (tempo livre, irreal, sem contedo)",
-        "O tom muda o significado, kōng (estado), kòng (disponibilidade)"
       ]
     },
     "宀 (京)": {
@@ -2214,71 +2367,82 @@ const VOCABULARY_DATA = {
       "category": "Lugares e edifícios",
       "characters": [
         {
-          "char": "就",
-          "pinyin": "jiù",
-          "meaning": "logo, imediatamente",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "我就来",
-          "pinyin": "wǒ jiù lái",
-          "meaning": "já vou",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "现在就走",
-          "pinyin": "xiànzài jiù zǒu",
-          "meaning": "sair agora mesmo",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "就这样",
-          "pinyin": "jiù zhè yàng",
-          "meaning": "fica assim então",
+          "char": "京",
+          "pinyin": "jīng",
+          "meaning": "capital, centro elevado",
           "hsk": 2,
           "type": [
-            "expressão"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "就怕",
-          "pinyin": "jiù pà",
-          "meaning": "era precisamente isso que temias, o meu maior medo é que",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "高",
-          "pinyin": "gāo",
-          "meaning": "alto, elevado",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
+          "compounds": [
+            {
+              "char": "就",
+              "pinyin": "jiù",
+              "meaning": "logo, imediatamente",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "我就来",
+              "pinyin": "wǒ jiù lái",
+              "meaning": "já vou",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "现在就走",
+              "pinyin": "xiànzài jiù zǒu",
+              "meaning": "sair agora mesmo",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "就这样",
+              "pinyin": "jiù zhè yàng",
+              "meaning": "fica assim então",
+              "hsk": 2,
+              "type": [
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "就怕",
+              "pinyin": "jiù pà",
+              "meaning": "era precisamente isso que temias, o meu maior medo é que",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "高",
+              "pinyin": "gāo",
+              "meaning": "alto, elevado",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "攴": {
       "char": "攴",
@@ -2287,65 +2451,73 @@ const VOCABULARY_DATA = {
       "hsk": 6,
       "type": [],
       "category": "Mão e garras",
-      "subcategory": "Corpo",
       "characters": [
         {
-          "char": "放",
-          "pinyin": "fàng",
-          "meaning": "pôr, colocar, largar",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "放手",
-          "pinyin": "fàngshǒu",
-          "meaning": "largar, soltar, desistir",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "放心",
-          "pinyin": "fàngxīn",
-          "meaning": "ficar tranquilo, não se preocupar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "放松",
-          "pinyin": "fàngsōng",
-          "meaning": "relaxar",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "教",
-          "pinyin": "jiào",
-          "meaning": "ensinar, instruir",
-          "hsk": null,
+          "char": "攴",
+          "pinyin": "pū",
+          "meaning": "bater",
+          "hsk": 6,
           "type": [],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "放",
+              "pinyin": "fàng",
+              "meaning": "pôr, colocar, largar",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "放手",
+              "pinyin": "fàngshǒu",
+              "meaning": "largar, soltar, desistir",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "放心",
+              "pinyin": "fàngxīn",
+              "meaning": "ficar tranquilo, não se preocupar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "放松",
+              "pinyin": "fàngsōng",
+              "meaning": "relaxar",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "教",
+              "pinyin": "jiào",
+              "meaning": "ensinar, instruir",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "ação intencional, intervenção, fazer algo acontecer",
+            "aparece quase sempre na forma direita do caractere"
+          ]
         }
-      ],
-      "notes": [
-        "ação intencional, intervenção, fazer algo acontecer",
-        "aparece quase sempre na forma direita do caractere"
       ]
     },
     "𠂇": {
@@ -3558,264 +3730,235 @@ const VOCABULARY_DATA = {
       "pinyin": "shàng",
       "meaning": "em cima, sobre, subir, anterior, passado, iniciar, ir para, mais",
       "hsk": 1,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Localização e movimento",
       "characters": [
         {
-          "char": "Substantivo",
-          "pinyin": "- **Preposição Funcional**",
-          "meaning": "“em”, “sobre”, muitas vezes não literal",
-          "hsk": null,
+          "char": "上",
+          "pinyin": "shàng",
+          "meaning": "em cima, sobre, subir, anterior, passado, iniciar, ir para, mais",
+          "hsk": 1,
           "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "在工作上",
-          "pinyin": "zài gōngzuò shàng",
-          "meaning": "em termos de trabalho",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "Preposição",
-          "pinyin": "- **locativo**",
-          "meaning": "em cima",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上面",
-          "pinyin": "shàngmiàn",
-          "meaning": "em cima, na parte de cima",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上边",
-          "pinyin": "shàngbian",
-          "meaning": "em cima, no lado superior",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上方",
-          "pinyin": "shàngfāng",
-          "meaning": "acima, por cima",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上层",
-          "pinyin": "shàngcéng",
-          "meaning": "andar superior, camada superior",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "山上",
-          "pinyin": "shān shàng",
-          "meaning": "na montanha",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "桌子上",
-          "pinyin": "zhuōzi shàng",
-          "meaning": "em cima da cama",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "de grau",
-          "pinyin": "mais de",
-          "meaning": "- **上百种**",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": [
-            "shàng bǎi zhǒng",
-            "mais de cem tipos, centenas de maneiras, imensos motivos, uma quantidade absurda"
-          ]
-        },
-        {
-          "char": "Marcador temporal",
-          "pinyin": "período anterior ou superior na linha do tempo.",
-          "meaning": "上 + palavra de tempo/ordem = anterior / antes / parte inicial",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上个月",
-          "pinyin": "shàngge yuè",
-          "meaning": "mês passado",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上周",
-          "pinyin": "shàngzhōu",
-          "meaning": "semana passada",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上个月",
-          "pinyin": "shàng ge yuè",
-          "meaning": "mês passado",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上午",
-          "pinyin": "shàngwǔ",
-          "meaning": "de manhã",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上次",
-          "pinyin": "shàngcì",
-          "meaning": "da última vez",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "Verbo",
-          "pinyin": "- **Classificador verbal implícito**",
-          "meaning": "- **上班**",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": [
-            "ir trabalhar"
-          ]
-        },
-        {
-          "char": "上课",
-          "pinyin": "shàng kè",
-          "meaning": "assistir aula",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上升",
-          "pinyin": "shàngshēng",
-          "meaning": "subir, aumentar",
-          "hsk": null,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "在工作上",
+              "pinyin": "zài gōngzuò shàng",
+              "meaning": "em termos de trabalho",
+              "hsk": null,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上面",
+              "pinyin": "shàngmian",
+              "meaning": "em cima, na parte de cima",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上边",
+              "pinyin": "shàngbian",
+              "meaning": "em cima, no lado superior",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上方",
+              "pinyin": "shàngfāng",
+              "meaning": "acima, por cima",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上层",
+              "pinyin": "shàngcéng",
+              "meaning": "andar superior, camada superior",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "山上",
+              "pinyin": "shān shàng",
+              "meaning": "na montanha",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "桌子上",
+              "pinyin": "zhuōzi shàng",
+              "meaning": "em cima da mesa",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上百种",
+              "pinyin": "shàng bǎi zhǒng",
+              "meaning": "mais de cem tipos, centenas de maneiras, imensos motivos, uma quantidade absurda",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上个月",
+              "pinyin": "shàng ge yuè",
+              "meaning": "mês passado",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上周",
+              "pinyin": "shàngzhōu",
+              "meaning": "semana passada",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上午",
+              "pinyin": "shàngwǔ",
+              "meaning": "de manhã",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上次",
+              "pinyin": "shàngcì",
+              "meaning": "da última vez",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上班",
+              "pinyin": "shàng bān",
+              "meaning": "ir trabalhar",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上课",
+              "pinyin": "shàng kè",
+              "meaning": "assistir aula",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上升",
+              "pinyin": "shàngshēng",
+              "meaning": "subir, aumentar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上涨",
+              "pinyin": "shàngzhǎng",
+              "meaning": "subir preços, valores",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上来",
+              "pinyin": "shàng lái",
+              "meaning": "subir e vir para cá - aproximar-se",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上去",
+              "pinyin": "shàng qù",
+              "meaning": "subir e ir para lá - afastar-se",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上楼",
+              "pinyin": "shàng lóu",
+              "meaning": "subir escadas, subir ao andar de cima, ir para cima",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "楼上",
+              "pinyin": "lóu shàng",
+              "meaning": "No andar de cima",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上车",
+              "pinyin": "shàng chē",
+              "meaning": "entrar no carro",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上床",
+              "pinyin": "shàngchuáng",
+              "meaning": "ir para a cama",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "上厕所",
+              "pinyin": "shàng cèsuǒ",
+              "meaning": "ir à casa de banho",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上涨",
-          "pinyin": "shàngzhǎng",
-          "meaning": "subir [preços, valores]",
-          "hsk": null,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "Direccional",
-          "pinyin": "subir, entrar, iniciar",
-          "meaning": "- **上来**",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
           "notes": [
-            "subir e vir (para cá) / aproximar-se"
+            "Localização: vem depois do nome do lugar - 山上 - no corpo (roupa, algo que carregas)",
+            "Tempo: anterior, passado recente (vem antes do tempo)",
+            "Quando vem antes do nome, na maioria dos casos é verbo. Quando vem depois do nome, é localizador. Quando aparece com 来/去, é complemento direcional."
           ]
-        },
-        {
-          "char": "上去",
-          "pinyin": "shàng qù",
-          "meaning": "subir e ir (para lá) / afastar-se",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上楼",
-          "pinyin": "shàng lóu",
-          "meaning": "subir escadas / subir ao andar de cima / ir para cima",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "楼上",
-          "pinyin": "lóu shàng",
-          "meaning": "No andar de cima",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上车",
-          "pinyin": "shàng chē",
-          "meaning": "entrar no carro",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上床",
-          "pinyin": "shàngchuáng",
-          "meaning": "ir para a cama",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "上厕所",
-          "pinyin": "shàng cèsuǒ",
-          "meaning": "ir à casa de banho",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
         }
       ]
     },
@@ -3824,43 +3967,51 @@ const VOCABULARY_DATA = {
       "pinyin": "xià",
       "meaning": "em baixo, abaixo, descer",
       "hsk": null,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Localização e movimento",
       "characters": [
         {
-          "char": "下午",
-          "pinyin": "xià wǔ",
-          "meaning": "tarde (período do dia)",
-          "hsk": 1,
-          "type": [
-            "substantivo"
+          "char": "下",
+          "pinyin": "xià",
+          "meaning": "em baixo, abaixo, descer",
+          "hsk": null,
+          "type": [],
+          "compounds": [
+            {
+              "char": "下午",
+              "pinyin": "xià wǔ",
+              "meaning": "tarde - período do dia",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "下雨",
+              "pinyin": "xià yǔ",
+              "meaning": "chover",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "下面",
+              "pinyin": "xiàmian",
+              "meaning": "embaixo, parte inferior",
+              "hsk": 1,
+              "type": [
+                "substantivo",
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "下雨",
-          "pinyin": "xià yǔ",
-          "meaning": "chover",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "下面",
-          "pinyin": "xiàmiàn",
-          "meaning": "embaixo, parte inferior",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "advérbio"
-          ],
-          "compounds": [],
           "notes": []
         }
       ]
@@ -3870,9 +4021,7 @@ const VOCABULARY_DATA = {
       "pinyin": "chì",
       "meaning": "passo, movimento, ação em curso",
       "hsk": null,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Localização e movimento",
       "characters": [
         {
@@ -3897,18 +4046,224 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        },
+        }
+      ],
+      "notes": [
+        "Ação que avança passo a passo, movimento físico ou progresso abstrato. Aparece muito em verbos, processos, ações graduais. Muito comuns em complementos com verbos de ir, andar, conseguir, permanecer"
+      ]
+    },
+    "辶": {
+      "char": "辶",
+      "pinyin": "zhī chuò",
+      "meaning": "ir, vir, seguir um caminho, processo contínuo",
+      "hsk": 1,
+      "type": [],
+      "category": "Localização e movimento",
+      "characters": [
+        {
+          "char": "辶",
+          "pinyin": "zhī chuò",
+          "meaning": "ir, vir, seguir um caminho, processo contínuo",
+          "hsk": 1,
+          "type": [],
+          "compounds": [
+            {
+              "char": "远",
+              "pinyin": "yuǎn",
+              "meaning": "longe",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "还",
+              "pinyin": "hái",
+              "meaning": "ainda",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "还是",
+              "pinyin": "háishi",
+              "meaning": "ainda ou então - escolha",
+              "hsk": 1,
+              "type": [
+                "advérbio",
+                "conjunção"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "还没",
+              "pinyin": "hái méi",
+              "meaning": "ainda não",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "还好",
+              "pinyin": "háihǎo",
+              "meaning": "ainda bem, mais ou menos",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "你还好吗",
+              "pinyin": "nǐ hái hǎo ma",
+              "meaning": "estás bem?",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "还可以",
+              "pinyin": "hái kěyǐ",
+              "meaning": "não é mau, aceitável",
+              "hsk": 1,
+              "type": [
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "进",
+              "pinyin": "jìn",
+              "meaning": "entrar, avançar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "过",
+              "pinyin": "guò",
+              "meaning": "passar, atravessar, já ter feito",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "partícula"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "近",
+              "pinyin": "jìn",
+              "meaning": "perto",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "这",
+              "pinyin": "zhè",
+              "meaning": "este, isto",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "连",
+              "pinyin": "lián",
+              "meaning": "até, inclusive, ligar, unir",
+              "hsk": 3,
+              "type": [
+                "verbo",
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "那",
+              "pinyin": "nà",
+              "meaning": "aquele, aquilo",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "送",
+              "pinyin": "sòng",
+              "meaning": "levar, acompanhar, oferecer",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "Forma simplificada de 辵"
+          ]
+        }
+      ]
+    },
+    "得": {
+      "char": "得",
+      "pinyin": "de, dé",
+      "meaning": "obter, conseguir, partícula de grau ou resultado",
+      "hsk": 1,
+      "type": [
+        "verbo",
+        "partícula"
+      ],
+      "category": "Localização e movimento",
+      "characters": [
         {
           "char": "得",
           "pinyin": "de, dé",
-          "meaning": "obter, conseguir",
-          "hsk": null,
-          "type": [],
+          "meaning": "obter, conseguir, partícula de grau ou resultado",
+          "hsk": 1,
+          "type": [
+            "verbo",
+            "partícula"
+          ],
           "compounds": [],
-          "notes": [
-            "partícula de grau ou resultado #HSK1 #HSK2 #Verbo #Partícula #日曰Rì"
-          ]
-        },
+          "notes": []
+        }
+      ]
+    },
+    "行": {
+      "char": "行",
+      "pinyin": "xíng",
+      "meaning": "ir, viajar, funcionar, estar ok",
+      "hsk": 1,
+      "type": [
+        "verbo"
+      ],
+      "category": "Localização e movimento",
+      "characters": [
         {
           "char": "行",
           "pinyin": "xíng",
@@ -3919,7 +4274,19 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "待": {
+      "char": "待",
+      "pinyin": "dài",
+      "meaning": "esperar, tratar, lidar com",
+      "hsk": 2,
+      "type": [
+        "verbo"
+      ],
+      "category": "Localização e movimento",
+      "characters": [
         {
           "char": "待",
           "pinyin": "dài",
@@ -3928,185 +4295,19 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "待会儿",
-          "pinyin": "dài huìr",
-          "meaning": "daqui a pouco",
-          "hsk": 2,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "待会儿",
+              "pinyin": "dài huǐr",
+              "meaning": "daqui a pouco",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        }
-      ]
-    },
-    "辶": {
-      "char": "辶 龰 (zhǐ)",
-      "pinyin": "chuò",
-      "meaning": "ir, vir, seguir um caminho, processo contínuo",
-      "hsk": 1,
-      "type": [
-        "radical"
-      ],
-      "category": "Localização e movimento",
-      "characters": [
-        {
-          "char": "远",
-          "pinyin": "yuǎn",
-          "meaning": "longe",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "还",
-          "pinyin": "hái",
-          "meaning": "ainda",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "还是",
-          "pinyin": "háishi",
-          "meaning": "ainda; ou então (escolha)",
-          "hsk": 1,
-          "type": [
-            "advérbio",
-            "conjunção"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "还没",
-          "pinyin": "hái méi",
-          "meaning": "ainda não",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "还好",
-          "pinyin": "háihǎo",
-          "meaning": "ainda bem; mais ou menos",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "你还好吗？",
-          "pinyin": "nǐ hái hǎo ma",
-          "meaning": "estás bem?",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "还可以",
-          "pinyin": "hái kěyǐ",
-          "meaning": "não é mau; aceitável",
-          "hsk": 1,
-          "type": [
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "进",
-          "pinyin": "jìn",
-          "meaning": "entrar, avançar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "过",
-          "pinyin": "guò",
-          "meaning": "passar, atravessar, já ter feito",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "partícula"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "近",
-          "pinyin": "jìn",
-          "meaning": "perto",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "这",
-          "pinyin": "zhè",
-          "meaning": "este, isto",
-          "hsk": 1,
-          "type": [
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "连",
-          "pinyin": "lián",
-          "meaning": "até, inclusive, ligar, unir",
-          "hsk": 3,
-          "type": [
-            "verbo",
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "那",
-          "pinyin": "nà",
-          "meaning": "aquele, aquilo",
-          "hsk": 1,
-          "type": [
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "送",
-          "pinyin": "sòng",
-          "meaning": "levar, acompanhar, oferecer",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
           "notes": []
         }
       ]
@@ -4120,7 +4321,19 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Acções e Elementos",
-      "characters": []
+      "characters": [
+        {
+          "char": "一",
+          "pinyin": "yī",
+          "meaning": "um",
+          "hsk": 1,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "万": {
       "char": "万",
@@ -4133,49 +4346,58 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "万一",
-          "pinyin": "wàn yī",
-          "meaning": "e se, no caso de, possibilidade remota",
-          "hsk": 2,
+          "char": "万",
+          "pinyin": "wàn",
+          "meaning": "dez mil",
+          "hsk": 1,
           "type": [
-            "advérbio"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "万分",
-          "pinyin": "wàn fēn",
-          "meaning": "extremamente, em grau máximo",
-          "hsk": 4,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "万一",
+              "pinyin": "wàn yī",
+              "meaning": "e se, no caso de, possibilidade remota",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "万分",
+              "pinyin": "wàn fēn",
+              "meaning": "extremamente, em grau máximo",
+              "hsk": 4,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "千万",
+              "pinyin": "qiān wàn",
+              "meaning": "de modo nenhum",
+              "hsk": 3,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "千万",
-          "pinyin": "qiān wàn",
-          "meaning": "de modo nenhum",
-          "hsk": 3,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
           "notes": [
             "por favor não, aviso enfático"
           ]
         }
-      ],
-      "notes": [
-        "por favor não, aviso enfático"
       ]
     },
     "多": {
       "char": "多",
       "pinyin": "duō",
-      "meaning": "muito; muitos",
+      "meaning": "muito, muitos",
       "hsk": 1,
       "type": [
         "adjectivo",
@@ -4184,79 +4406,97 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "很多",
-          "pinyin": "hěn duō",
-          "meaning": "muito(s)",
+          "char": "多",
+          "pinyin": "duō",
+          "meaning": "muito, muitos",
           "hsk": 1,
           "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "人很多",
-          "pinyin": "rén hěn duō",
-          "meaning": "há muita gente",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "多去",
-          "pinyin": "duō qù",
-          "meaning": "ir mais vezes",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "多事",
-          "pinyin": "duōshì",
-          "meaning": "intrometer-se; criar problemas",
-          "hsk": 3,
-          "type": [
-            "verbo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "多少",
-          "pinyin": "duōshao",
-          "meaning": "quanto(s)",
-          "hsk": 1,
-          "type": [
-            "pronome",
-            "interrogação"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "多么",
-          "pinyin": "duōme",
-          "meaning": "quão…! (ênfase exclamativa)",
-          "hsk": 1,
-          "type": [
+            "adjectivo",
             "advérbio"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "多半",
-          "pinyin": "duōbàn",
-          "meaning": "provavelmente; na maioria dos casos",
-          "hsk": 2,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "很多",
+              "pinyin": "hěn duō",
+              "meaning": "muitos",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "人很多",
+              "pinyin": "rén hěn duō",
+              "meaning": "há muita gente",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "多去",
+              "pinyin": "duō qù",
+              "meaning": "ir mais vezes",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "多事",
+              "pinyin": "duōshì",
+              "meaning": "intrometer-se, criar problemas",
+              "hsk": 3,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "多少",
+              "pinyin": "duōshao",
+              "meaning": "quantos",
+              "hsk": 1,
+              "type": [
+                "pronome",
+                "interrogação"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "多么",
+              "pinyin": "duōme",
+              "meaning": "quão...! ênfase exclamativa",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "多半",
+              "pinyin": "duōbàn",
+              "meaning": "provavelmente, na maioria dos casos",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "acumulação, quantidade, grau, comparação implícita",
+            "substantivo: quantidade",
+            "verbo: frequência",
+            "estado mental ou comportamento"
+          ]
         }
       ]
     },
@@ -4271,60 +4511,74 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "东",
-          "pinyin": "dōng",
-          "meaning": "leste",
-          "hsk": null,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "东西",
-          "pinyin": "dōngxi",
-          "meaning": "coisas",
-          "hsk": null,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "小时",
-          "pinyin": "xiǎoshí",
-          "meaning": "hora",
+          "char": "小",
+          "pinyin": "xiǎo",
+          "meaning": "pequeno",
           "hsk": 1,
           "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "小心",
-          "pinyin": "xiǎoxīn",
-          "meaning": "ter cuidado",
-          "hsk": 1,
-          "type": [
-            "verbo",
             "adjectivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "小看",
-          "pinyin": "xiǎokàn",
-          "meaning": "menosprezar, subestimar (figurado)",
-          "hsk": 3,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "东",
+              "pinyin": "dōng",
+              "meaning": "leste",
+              "hsk": null,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "东西",
+              "pinyin": "dōngxi",
+              "meaning": "coisas",
+              "hsk": null,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "小时",
+              "pinyin": "xiǎoshí",
+              "meaning": "hora",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "小心",
+              "pinyin": "xiǎoxīn",
+              "meaning": "ter cuidado",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "小看",
+              "pinyin": "xiǎokàn",
+              "meaning": "menosprezar, subestimar - figurado",
+              "hsk": 3,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "tamanho, grau, idade, intensidade reduzida"
+          ]
         }
       ]
     },
@@ -4337,24 +4591,34 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "千",
-          "pinyin": "qiān",
-          "meaning": "mil",
-          "hsk": 1,
+          "char": "十",
+          "pinyin": "shí",
+          "meaning": "Estrutura, contagem, total",
+          "hsk": null,
           "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "千克",
-          "pinyin": "qiān kè",
-          "meaning": "quilograma",
-          "hsk": 2,
-          "type": [
-            "substantivo",
-            "classificador"
+          "compounds": [
+            {
+              "char": "千",
+              "pinyin": "qiān",
+              "meaning": "mil",
+              "hsk": 1,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "千克",
+              "pinyin": "qiān kè",
+              "meaning": "quilograma",
+              "hsk": 2,
+              "type": [
+                "substantivo",
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         }
       ]
@@ -4370,30 +4634,41 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "上午",
-          "pinyin": "shàngwǔ",
-          "meaning": "manhã",
+          "char": "午",
+          "pinyin": "wǔ",
+          "meaning": "meio-dia",
           "hsk": 1,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "午饭",
-          "pinyin": "wǔfàn",
-          "meaning": "almoço",
-          "hsk": 1,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "上午",
+              "pinyin": "shàngwǔ",
+              "meaning": "manhã",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "午饭",
+              "pinyin": "wǔfàn",
+              "meaning": "almoço",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "eixo do dia"
+          ]
         }
-      ],
-      "notes": [
-        "eixo do dia"
       ]
     },
     "大": {
@@ -4407,19 +4682,30 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "大家",
-          "pinyin": "dàjiā",
-          "meaning": "todos, toda a gente",
+          "char": "大",
+          "pinyin": "dà",
+          "meaning": "grande",
           "hsk": 1,
           "type": [
-            "pronome"
+            "adjectivo"
           ],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "大家",
+              "pinyin": "dàjiā",
+              "meaning": "todos, toda a gente",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "dimensão, escala, peso, importância"
+          ]
         }
-      ],
-      "notes": [
-        "dimensão, escala, peso, importância"
       ]
     },
     "几": {
@@ -4434,33 +4720,48 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "几个",
-          "pinyin": "jǐ gè",
-          "meaning": "quantos (classificador geral)",
+          "char": "几",
+          "pinyin": "jǐ, jī",
+          "meaning": "quantos?, alguns, poucos",
           "hsk": 1,
           "type": [
+            "advérbio",
             "pronome"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "几乎",
-          "pinyin": "jīhū",
-          "meaning": "quase, praticamente",
-          "hsk": 2,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "几个",
+              "pinyin": "jǐ gè",
+              "meaning": "quantos - classificador geral",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "几乎",
+              "pinyin": "jīhū",
+              "meaning": "quase, praticamente",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "quantidade pequena, indefinição numérica"
+          ]
         }
       ]
     },
     "为": {
-      "char": "为 為",
+      "char": "为",
       "pinyin": "wéi",
-      "meaning": "fazer; agir; ser",
+      "meaning": "fazer, agir, ser",
       "hsk": 2,
       "type": [
         "verbo"
@@ -4468,77 +4769,93 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "认为",
-          "pinyin": "rènwéi",
-          "meaning": "achar; considerar",
-          "hsk": 1,
+          "char": "为",
+          "pinyin": "wéi",
+          "meaning": "fazer, agir, ser",
+          "hsk": 2,
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "成为",
-          "pinyin": "chéngwéi",
-          "meaning": "tornar-se",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "认为",
+              "pinyin": "rènwéi",
+              "meaning": "achar, considerar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "成为",
+              "pinyin": "chéngwéi",
+              "meaning": "tornar-se",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "作为",
+              "pinyin": "zuòwéi",
+              "meaning": "como, enquanto - papel/função",
+              "hsk": 2,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "行为",
+              "pinyin": "xíngwéi",
+              "meaning": "comportamento",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "为你",
+              "pinyin": "wéi nǐ",
+              "meaning": "por ti, para ti",
+              "hsk": 1,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "为了",
+              "pinyin": "wèile",
+              "meaning": "para, com o objetivo de",
+              "hsk": 1,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "作为",
-          "pinyin": "zuòwéi",
-          "meaning": "como; enquanto (papel/função)",
-          "hsk": 2,
-          "type": [
-            "preposição"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "行为",
-          "pinyin": "xíngwéi",
-          "meaning": "comportamento",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "为你",
-          "pinyin": "wèi nǐ",
-          "meaning": "por ti; para ti",
-          "hsk": 1,
-          "type": [
-            "preposição"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "为了",
-          "pinyin": "wèile",
-          "meaning": "para; com o objetivo de",
-          "hsk": 1,
-          "type": [
-            "preposição"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "explica porquê, para quê e em que função algo é feito",
+            "为 (wéi): ser, tornar-se, agir como",
+            "为 (wèi): por, para, em benefício de"
+          ]
         }
       ]
     },
     "开": {
       "char": "开",
       "pinyin": "kāi",
-      "meaning": "abrir; iniciar",
+      "meaning": "abrir, iniciar",
       "hsk": 1,
       "type": [
         "verbo"
@@ -4546,47 +4863,59 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "开车",
-          "pinyin": "kāi chē",
-          "meaning": "conduzir",
+          "char": "开",
+          "pinyin": "kāi",
+          "meaning": "abrir, iniciar",
           "hsk": 1,
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "开会",
-          "pinyin": "kāi huì",
-          "meaning": "ter uma reunião",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "开车",
+              "pinyin": "kāi chē",
+              "meaning": "conduzir",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "开会",
+              "pinyin": "kāi huì",
+              "meaning": "ter uma reunião",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "开始",
+              "pinyin": "kāishǐ",
+              "meaning": "começar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "开心",
+              "pinyin": "kāixīn",
+              "meaning": "feliz, contente",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "开始",
-          "pinyin": "kāishǐ",
-          "meaning": "começar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "开心",
-          "pinyin": "kāixīn",
-          "meaning": "feliz; contente",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
           "notes": []
         }
       ]
@@ -4601,7 +4930,22 @@ const VOCABULARY_DATA = {
         "advérbio"
       ],
       "category": "Acções e Elementos",
-      "characters": []
+      "characters": [
+        {
+          "char": "无",
+          "pinyin": "wú",
+          "meaning": "não ter, inexistente",
+          "hsk": 3,
+          "type": [
+            "verbo",
+            "advérbio"
+          ],
+          "compounds": [],
+          "notes": [
+            "mais formal e abstrato do que 没"
+          ]
+        }
+      ]
     },
     "亦": {
       "char": "亦",
@@ -4614,26 +4958,40 @@ const VOCABULARY_DATA = {
       "category": "Acções e Elementos",
       "characters": [
         {
-          "char": "已",
-          "pinyin": "yǐ",
-          "meaning": "já, ação concluída",
-          "hsk": 2,
+          "char": "亦",
+          "pinyin": "yì",
+          "meaning": "também, igualmente",
+          "hsk": 1,
           "type": [
             "advérbio"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "已",
+              "pinyin": "yǐ",
+              "meaning": "já, ação concluída",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
-    "Plantas,": {
-      "char": "Plantas, Alimentos",
-      "pinyin": "艹 → cresce naturalmente",
-      "meaning": "木 → madeira/matéria-prima",
-      "hsk": null,
-      "type": [],
+    "禾": {
+      "char": "禾",
+      "pinyin": "hé",
+      "meaning": "cereal, planta de arroz, grão",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
       "category": "Natureza",
+      "subcategory": "Plantas, Alimentos",
       "characters": [
         {
           "char": "禾",
@@ -4641,653 +4999,767 @@ const VOCABULARY_DATA = {
           "meaning": "cereal, planta de arroz, grão",
           "hsk": 1,
           "type": [
-            "substantivo",
-            "radical"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "和",
-          "pinyin": "hé",
-          "meaning": "e, com, harmonia",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "米",
-          "pinyin": "mǐ",
-          "meaning": "arroz",
-          "hsk": 1,
-          "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "秋",
-          "pinyin": "qiū",
-          "meaning": "outono",
-          "hsk": 1,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "和",
+              "pinyin": "hé",
+              "meaning": "e, com, harmonia",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "米",
+              "pinyin": "mǐ",
+              "meaning": "arroz",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "秋",
+              "pinyin": "qiū",
+              "meaning": "outono",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "科",
+              "pinyin": "kē",
+              "meaning": "área de estudo, disciplina",
+              "hsk": 2,
+              "type": [
+                "substantivo",
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "一科中文",
+              "pinyin": "yī kē zhōngwén",
+              "meaning": "uma disciplina de chinês",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "这科很难",
+              "pinyin": "zhè kē hěn nán",
+              "meaning": "esta matéria é difícil",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "种",
+              "pinyin": "zhǒng, zhòng",
+              "meaning": "tipo, espécie",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "一种",
+              "pinyin": "yī zhǒng",
+              "meaning": "um tipo de",
+              "hsk": 2,
+              "type": [
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "科",
-          "pinyin": "kē",
-          "meaning": "área de estudo, disciplina",
-          "hsk": 2,
-          "type": [
-            "substantivo",
-            "classificador"
-          ],
-          "compounds": [],
           "notes": [
-            "Classificador: matérias, disciplinas, áreas formais"
+            "cresce naturalmente, madeira/matéria-prima",
+            "Classificador matérias, disciplinas, áreas formais",
+            "种 (zhǒng) responde a que tipo?. 种 (zhòng) responde a fazer crescer"
           ]
-        },
-        {
-          "char": "一科中文",
-          "pinyin": "yì kē zhōngwén",
-          "meaning": "uma disciplina de chinês",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "这科很难",
-          "pinyin": "zhè kē hěn nán",
-          "meaning": "esta matéria é difícil",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "种",
-          "pinyin": "zhǒng, zhòng",
-          "meaning": "tipo, espécie",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": [
-            "zhǒng responde a “que tipo?”. zhòng responde a “fazer crescer”"
-          ]
-        },
-        {
-          "char": "一种",
-          "pinyin": "yì zhǒng",
-          "meaning": "um tipo de",
-          "hsk": 2,
-          "type": [
-            "classificador"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "木": {
+      "char": "木",
+      "pinyin": "mù",
+      "meaning": "árvore, madeira",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Plantas, Alimentos",
+      "characters": [
         {
           "char": "木",
           "pinyin": "mù",
           "meaning": "árvore, madeira",
           "hsk": 1,
           "type": [
-            "substantivo",
-            "radical"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": [
-            "envolve plantas, objetos sólidos, base material ou crescimento"
-          ]
-        },
-        {
-          "char": "本",
-          "pinyin": "běn",
-          "meaning": "raiz, base, origem, classificador de livros",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "radical",
-            "classificador"
+          "compounds": [
+            {
+              "char": "本",
+              "pinyin": "běn",
+              "meaning": "raiz, base, origem, classificador de livros",
+              "hsk": 1,
+              "type": [
+                "substantivo",
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "本身",
+              "pinyin": "běnshēn",
+              "meaning": "em si mesmo",
+              "hsk": 2,
+              "type": [
+                "advérbio",
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "杯",
+              "pinyin": "bēi",
+              "meaning": "copo, chávena",
+              "hsk": 1,
+              "type": [
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "杯子",
+              "pinyin": "bēizi",
+              "meaning": "copo, chávena",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "干杯",
+              "pinyin": "gān bēi",
+              "meaning": "brindar à saúde",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "机",
+              "pinyin": "jī",
+              "meaning": "máquina, secretária, oportunidade - figurado",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "机器",
+              "pinyin": "jīqì",
+              "meaning": "máquina",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "手机",
+              "pinyin": "shǒujī",
+              "meaning": "telemóvel",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "飞机",
+              "pinyin": "fēijī",
+              "meaning": "avião",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "相机",
+              "pinyin": "xiàngjī",
+              "meaning": "câmara fotográfica",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "椅",
+              "pinyin": "yǐ",
+              "meaning": "cadeira",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "概",
+              "pinyin": "gài",
+              "meaning": "geral, aproximado",
+              "hsk": 4,
+              "type": [
+                "adjectivo",
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "大概",
+              "pinyin": "dàgài",
+              "meaning": "aproximadamente, provavelmente",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": [
+            "envolve plantas, objetos sólidos, base material ou crescimento",
             "aponta para o que está na base"
           ]
-        },
-        {
-          "char": "本身",
-          "pinyin": "běnshēn",
-          "meaning": "em si mesmo",
-          "hsk": 2,
-          "type": [
-            "advérbio",
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "杯",
-          "pinyin": "bēi",
-          "meaning": "copo, chávena",
-          "hsk": 1,
-          "type": [
-            "classificador"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "杯子",
-          "pinyin": "bēizi",
-          "meaning": "copo; chávena",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "干杯",
-          "pinyin": "gān bēi",
-          "meaning": "brindar; à saúde",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "机",
-          "pinyin": "jī",
-          "meaning": "máquina, secretária, oportunidade (figurado)",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "机器",
-          "pinyin": "jīqì",
-          "meaning": "máquina",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "手机",
-          "pinyin": "shǒujī",
-          "meaning": "telemóvel",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "飞机",
-          "pinyin": "fēijī",
-          "meaning": "avião",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "相机",
-          "pinyin": "xiàngjī",
-          "meaning": "câmara fotográfica",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "椅",
-          "pinyin": "yǐ",
-          "meaning": "cadeira",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "概",
-          "pinyin": "gài",
-          "meaning": "geral; aproximado",
-          "hsk": 4,
-          "type": [
-            "adjectivo",
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "大概",
-          "pinyin": "dàgài",
-          "meaning": "aproximadamente; provavelmente",
-          "hsk": 2,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": [
-            "cerca de dez pessoas"
-          ]
-        },
+        }
+      ]
+    },
+    "来": {
+      "char": "来",
+      "pinyin": "lái",
+      "meaning": "espiga de cereal, chegar, acontecer, iniciar uma ação, trazer para o agora",
+      "hsk": 1,
+      "type": [
+        "verbo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Plantas, Alimentos",
+      "characters": [
         {
           "char": "来",
           "pinyin": "lái",
-          "meaning": "espiga de cereal",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": [
-            "chegar, acontecer, iniciar uma ação, trazer para o agora #HSK1 #Verbo #Radical"
-          ]
-        },
-        {
-          "char": "过来",
-          "pinyin": "guò lái",
-          "meaning": "vir até aqui",
+          "meaning": "espiga de cereal, chegar, acontecer, iniciar uma ação, trazer para o agora",
           "hsk": 1,
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "再来",
-          "pinyin": "zài lái",
-          "meaning": "vir outra vez",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "过来",
+              "pinyin": "guò lái",
+              "meaning": "vir até aqui",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "再来",
+              "pinyin": "zài lái",
+              "meaning": "vir outra vez",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "来得及",
+              "pinyin": "lái de jí",
+              "meaning": "chegar a tempo",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "后来",
+              "pinyin": "hòulái",
+              "meaning": "mais tarde, depois",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "食": {
+      "char": "食",
+      "pinyin": "shí",
+      "meaning": "comer, alimento",
+      "hsk": null,
+      "type": [],
+      "category": "Natureza",
+      "subcategory": "Plantas, Alimentos",
+      "characters": [
         {
-          "char": "来得及",
-          "pinyin": "lái de jí",
-          "meaning": "chegar a tempo",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "后来",
-          "pinyin": "hòulái",
-          "meaning": "mais tarde; depois",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饣",
+          "char": "食",
           "pinyin": "shí",
           "meaning": "comer, alimento",
           "hsk": null,
-          "type": [
-            "radical"
+          "type": [],
+          "compounds": [
+            {
+              "char": "饭",
+              "pinyin": "fàn",
+              "meaning": "arroz cozido, refeição",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "饮",
+              "pinyin": "yǐn",
+              "meaning": "beber",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "饿",
+              "pinyin": "è",
+              "meaning": "ter fome",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "饱",
+              "pinyin": "bǎo",
+              "meaning": "estar cheio, satisfeito após comer",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "饺",
+              "pinyin": "jiǎo",
+              "meaning": "bolinho recheado, jiaozi",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": [
-            "comer, comida e ingestão.",
-            "forma simplificada de 食 (tradicional)."
+            "comer, comida e ingestão. 食 é forma simplificada de 飠 (tradicional)."
           ]
-        },
-        {
-          "char": "饭",
-          "pinyin": "fàn",
-          "meaning": "arroz cozido; refeição",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饮",
-          "pinyin": "yǐn",
-          "meaning": "beber",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饿",
-          "pinyin": "è",
-          "meaning": "ter fome",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饱",
-          "pinyin": "bǎo",
-          "meaning": "estar cheio (satisfeito após comer)",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "饺",
-          "pinyin": "jiǎo",
-          "meaning": "bolinho recheado (jiaozi)",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "艹": {
+      "char": "艹",
+      "pinyin": "cǎo",
+      "meaning": "erva, vegetação",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Plantas, Alimentos",
+      "characters": [
         {
           "char": "艹",
           "pinyin": "cǎo",
-          "meaning": "erva; vegetação",
+          "meaning": "erva, vegetação",
           "hsk": 1,
           "type": [
-            "substantivo",
-            "radical"
+            "substantivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "花",
+              "pinyin": "huā",
+              "meaning": "flor",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "茶",
+              "pinyin": "chá",
+              "meaning": "chá",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "菜",
+              "pinyin": "cài",
+              "meaning": "legume, prato",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "药",
+              "pinyin": "yào",
+              "meaning": "medicamento",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
-            "tudo o que cresce, é natural, orgânico ou derivado de plantas.",
-            "forma reduzida de 草 no topo"
+            "tudo o que cresce, natural, orgânico ou derivado de plantas.",
+            "艹 é forma reduzida de 艸 no topo"
           ]
-        },
-        {
-          "char": "花",
-          "pinyin": "huā",
-          "meaning": "flor",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "茶",
-          "pinyin": "chá",
-          "meaning": "chá",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "菜",
-          "pinyin": "cài",
-          "meaning": "legume; prato",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "药",
-          "pinyin": "yào",
-          "meaning": "medicamento",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
         }
       ]
     },
-    "Animais": {
-      "char": "Animais",
-      "pinyin": "- **鸟**",
-      "meaning": "niǎo",
-      "hsk": null,
-      "type": [],
+    "鸟": {
+      "char": "鸟",
+      "pinyin": "niǎo",
+      "meaning": "pássaro, ave",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
       "category": "Natureza",
+      "subcategory": "Animais",
       "characters": [
         {
-          "char": "鸡",
-          "pinyin": "jī",
-          "meaning": "galinha, frango",
+          "char": "鸟",
+          "pinyin": "niǎo",
+          "meaning": "pássaro, ave",
           "hsk": 1,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "鸭",
-          "pinyin": "yā",
-          "meaning": "pato",
-          "hsk": 2,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "鸡",
+              "pinyin": "jī",
+              "meaning": "galinha, frango",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "鸭",
+              "pinyin": "yā",
+              "meaning": "pato",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
+          "notes": [
+            "Não fales comigo"
+          ]
+        }
+      ]
+    },
+    "马": {
+      "char": "马",
+      "pinyin": "mǎ",
+      "meaning": "cavalo",
+      "hsk": null,
+      "type": [],
+      "category": "Natureza",
+      "subcategory": "Animais",
+      "characters": [
         {
-          "char": "不鸟你",
-          "pinyin": "Não fales comigo",
-          "meaning": "- **马**",
+          "char": "马",
+          "pinyin": "mǎ",
+          "meaning": "cavalo",
           "hsk": null,
           "type": [],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "马上",
+              "pinyin": "mǎshàng",
+              "meaning": "imediatamente, logo, neste instante",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "马马虎虎",
+              "pinyin": "mǎmǎhǔhǔ",
+              "meaning": "mais ou menos, feito sem grande cuidado",
+              "hsk": 3,
+              "type": [
+                "adjectivo",
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "rapidez, eficiência, ação imediata, trabalho árduo"
           ]
-        },
-        {
-          "char": "马上",
-          "pinyin": "mǎ shàng",
-          "meaning": "imediatamente, logo, neste instante",
-          "hsk": 2,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "马马虎虎",
-          "pinyin": "mǎ mǎ hū hū",
-          "meaning": "mais ou menos, feito sem grande cuidado",
-          "hsk": 3,
-          "type": [
-            "adjectivo",
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
         }
       ]
     },
-    "Elementos": {
-      "char": "Elementos",
-      "pinyin": "- **水 氵**",
-      "meaning": "shuǐ",
-      "hsk": null,
-      "type": [],
+    "水": {
+      "char": "水",
+      "pinyin": "shuǐ",
+      "meaning": "água",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
       "category": "Natureza",
+      "subcategory": "Elementos",
       "characters": [
         {
-          "char": "汁",
-          "pinyin": "zhī",
-          "meaning": "sumo, líquido extraído",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "游",
-          "pinyin": "yóu",
-          "meaning": "nadar, passear",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "法",
-          "pinyin": "fǎ",
-          "meaning": "lei, método",
+          "char": "水",
+          "pinyin": "shuǐ",
+          "meaning": "água",
           "hsk": 1,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "汁",
+              "pinyin": "zhī",
+              "meaning": "sumo, líquido extraído",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "游",
+              "pinyin": "yóu",
+              "meaning": "nadar, passear",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "法",
+              "pinyin": "fǎ",
+              "meaning": "lei, método",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "满",
+              "pinyin": "mǎn",
+              "meaning": "cheio",
+              "hsk": 2,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "清",
+              "pinyin": "qīng",
+              "meaning": "limpo, claro",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "没",
+              "pinyin": "méi",
+              "meaning": "não - negação no passado ou de existência",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "洗",
+              "pinyin": "xǐ",
+              "meaning": "lavar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "活",
+              "pinyin": "huó",
+              "meaning": "viver, estar vivo",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "生活",
+              "pinyin": "shēnghuó",
+              "meaning": "vida, quotidiano, viver",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
-            "sentido abstrato, “fluxo organizado”"
+            "sentido abstrato, fluxo organizado",
+            "Se 氵 aparece, quase sempre há a ideia de algo não parado."
           ]
-        },
+        }
+      ]
+    },
+    "冫": {
+      "char": "冫",
+      "pinyin": "bīng",
+      "meaning": "Gelo",
+      "hsk": 1,
+      "type": [],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
-          "char": "满",
-          "pinyin": "mǎn",
-          "meaning": "cheio",
-          "hsk": 2,
-          "type": [
-            "verbo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "清",
-          "pinyin": "qīng",
-          "meaning": "limpo, claro",
-          "hsk": 2,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "没",
-          "pinyin": "méi",
-          "meaning": "não (negação no passado ou de existência)",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "洗",
-          "pinyin": "xǐ",
-          "meaning": "lavar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "活",
-          "pinyin": "huó",
-          "meaning": "viver, estar vivo",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": [
-            "Se 活 aparece, quase sempre há a ideia de algo não parado."
-          ]
-        },
-        {
-          "char": "生活",
-          "pinyin": "shēnghuó",
-          "meaning": "vida, quotidiano, viver",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "冰 冫",
+          "char": "冫",
           "pinyin": "bīng",
-          "meaning": "Gelo; ausência de calor físico ou emocional",
+          "meaning": "Gelo",
           "hsk": 1,
-          "type": [
-            "radical"
+          "type": [],
+          "compounds": [
+            {
+              "char": "冷",
+              "pinyin": "lěng",
+              "meaning": "frio",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "冷",
-          "pinyin": "lěng",
-          "meaning": "frio",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+          "notes": [
+            "ausência de calor físico ou emocional"
+          ]
+        }
+      ]
+    },
+    "次": {
+      "char": "次",
+      "pinyin": "cì",
+      "meaning": "vez, ocorrência",
+      "hsk": 1,
+      "type": [
+        "substantivo",
+        "classificador"
+      ],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "次",
           "pinyin": "cì",
@@ -5299,7 +5771,20 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "干": {
+      "char": "干",
+      "pinyin": "gān",
+      "meaning": "seco",
+      "hsk": 1,
+      "type": [
+        "adjectivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "干",
           "pinyin": "gān",
@@ -5308,49 +5793,45 @@ const VOCABULARY_DATA = {
           "type": [
             "adjectivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "干活",
+              "pinyin": "gàn huó",
+              "meaning": "trabalhar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "干什么",
+              "pinyin": "gàn shénme",
+              "meaning": "fazer o quê",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "atalho mental obrigatório, se é estado físico, lê gān. Se é ação, lê gàn."
           ]
-        },
-        {
-          "char": "干",
-          "pinyin": "gàn",
-          "meaning": "fazer, trabalhar",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "干活",
-          "pinyin": "gàn huó",
-          "meaning": "trabalhar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "干事",
-          "pinyin": "gàn shì",
-          "meaning": "fazer algo, executar tarefas",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "你在干嘛呢",
-          "pinyin": "nǐ zài gàn ma ne",
-          "meaning": "O que estás a fazer agora?",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "王": {
+      "char": "王",
+      "pinyin": "wáng",
+      "meaning": "rei, jade",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "王",
           "pinyin": "wáng",
@@ -5361,30 +5842,20 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        },
-        {
-          "char": "现",
-          "pinyin": "xiàn",
-          "meaning": "aparecer, manifestar-se",
-          "hsk": 3,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "现在",
-          "pinyin": "xiàn zài",
-          "meaning": "agora, atualmente",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "理": {
+      "char": "理",
+      "pinyin": "lǐ",
+      "meaning": "princípio, lógica",
+      "hsk": 2,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "理",
           "pinyin": "lǐ",
@@ -5393,153 +5864,189 @@ const VOCABULARY_DATA = {
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "理由",
-          "pinyin": "lǐ yóu",
-          "meaning": "razão, motivo",
-          "hsk": 2,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "理由",
+              "pinyin": "lǐ yóu",
+              "meaning": "razão, motivo",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "气": {
+      "char": "气",
+      "pinyin": "qì",
+      "meaning": "ar, gás, respiração",
+      "hsk": 1,
+      "type": [
+        "substantivo"
+      ],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "气",
           "pinyin": "qì",
           "meaning": "ar, gás, respiração",
           "hsk": 1,
           "type": [
-            "substantivo",
-            "radical"
+            "substantivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "天气",
+              "pinyin": "tiānqì",
+              "meaning": "tempo, clima",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "空气",
+              "pinyin": "kōngqì",
+              "meaning": "ar",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "estado, qualidade ou ambiente"
           ]
-        },
-        {
-          "char": "天气",
-          "pinyin": "tiānqì",
-          "meaning": "tempo, clima",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "空气",
-          "pinyin": "kōngqì",
-          "meaning": "ar",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "白": {
+      "char": "白",
+      "pinyin": "bái",
+      "meaning": "cor branca, clareza visual e clareza conceptual",
+      "hsk": null,
+      "type": [],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "白",
           "pinyin": "bái",
-          "meaning": "cor branca, clareza visual e clareza conceptua",
+          "meaning": "cor branca, clareza visual e clareza conceptual",
           "hsk": null,
           "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "的",
-          "pinyin": "de",
-          "meaning": "partícula de ligação",
-          "hsk": 1,
-          "type": [
-            "partícula"
+          "compounds": [
+            {
+              "char": "的",
+              "pinyin": "de",
+              "meaning": "partícula de ligação",
+              "hsk": 1,
+              "type": [
+                "partícula"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "明白",
+              "pinyin": "míngbai",
+              "meaning": "compreender claramente",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
-        },
-        {
-          "char": "明白",
-          "pinyin": "míngbai",
-          "meaning": "compreender claramente",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "钅": {
+      "char": "钅",
+      "pinyin": "jīn",
+      "meaning": "metal",
+      "hsk": null,
+      "type": [],
+      "category": "Natureza",
+      "subcategory": "Elementos",
+      "characters": [
         {
           "char": "钅",
           "pinyin": "jīn",
           "meaning": "metal",
           "hsk": null,
-          "type": [
-            "radical"
+          "type": [],
+          "compounds": [
+            {
+              "char": "钱",
+              "pinyin": "qián",
+              "meaning": "dinheiro",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "错",
+              "pinyin": "cuò",
+              "meaning": "errado, erro",
+              "hsk": 2,
+              "type": [
+                "substantivo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "错过",
+              "pinyin": "cuò guò",
+              "meaning": "perder uma oportunidade, deixar passar",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "搞错",
+              "pinyin": "gǎo cuò",
+              "meaning": "enganar-se, fazer errado",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "不错",
+              "pinyin": "bú cuò",
+              "meaning": "não é mau, bastante bom",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "钱",
-          "pinyin": "qián",
-          "meaning": "dinheiro",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "错",
-          "pinyin": "cuò",
-          "meaning": "errado, erro",
-          "hsk": 2,
-          "type": [
-            "substantivo",
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "错过",
-          "pinyin": "cuò guò",
-          "meaning": "perder uma oportunidade, deixar passar",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "搞错",
-          "pinyin": "gǎo cuò",
-          "meaning": "enganar-se, fazer errado",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "不错",
-          "pinyin": "bú cuò",
-          "meaning": "não é mau, bastante bom",
-          "hsk": 2,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
           "notes": []
         }
       ]
@@ -6150,9 +6657,20 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Objectos",
-      "characters": [],
-      "notes": [
-        "cortar, separar, eliminar, decidir de forma rápida e definitiva. É uma ação que corta um estado anterior."
+      "characters": [
+        {
+          "char": "刀",
+          "pinyin": "dāo",
+          "meaning": "faca, lâmina",
+          "hsk": 1,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": [
+            "cortar, separar, eliminar, decidir de forma rápida e definitiva. É uma ação que corta um estado anterior."
+          ]
+        }
       ]
     },
     "前": {
@@ -6167,18 +6685,30 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "之前",
-          "pinyin": "zhī qián",
-          "meaning": "antes de",
+          "char": "前",
+          "pinyin": "qián",
+          "meaning": "frente, antes",
           "hsk": 1,
           "type": [
-            "preposição"
+            "substantivo",
+            "advérbio"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "之前",
+              "pinyin": "zhī qián",
+              "meaning": "antes de",
+              "hsk": 1,
+              "type": [
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "初": {
       "char": "初",
@@ -6192,18 +6722,30 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "如初",
-          "pinyin": "rú chū",
-          "meaning": "como no início, igual ao começo",
-          "hsk": 5,
+          "char": "初",
+          "pinyin": "chū",
+          "meaning": "início, começo",
+          "hsk": 3,
           "type": [
-            "expressão"
+            "substantivo",
+            "adjectivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "如初",
+              "pinyin": "rú chū",
+              "meaning": "como no início, igual ao começo",
+              "hsk": 5,
+              "type": [
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "到": {
       "char": "到",
@@ -6216,117 +6758,128 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "来到",
-          "pinyin": "lái dào",
-          "meaning": "chegar a um lugar",
-          "hsk": null,
+          "char": "到",
+          "pinyin": "dào",
+          "meaning": "chegar, atingir",
+          "hsk": 1,
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "到家",
-          "pinyin": "dào jiā",
-          "meaning": "chegar a casa",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "得到",
-          "pinyin": "dé dào",
-          "meaning": "obter, conseguir",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "迟到",
-          "pinyin": "chí dào",
-          "meaning": "chegar atrasado",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "看到",
-          "pinyin": "kàn dào",
-          "meaning": "ver e efetivamente perceber",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "早到",
-          "pinyin": "zǎo dào",
-          "meaning": "chegar cedo",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "学到",
-          "pinyin": "xué dào",
-          "meaning": "aprender, adquirir conhecimento",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "听到",
-          "pinyin": "tīng dào",
-          "meaning": "ouvir - algo chegou aos ouvidos",
-          "hsk": null,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "来到",
+              "pinyin": "lái dào",
+              "meaning": "chegar a um lugar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "到家",
+              "pinyin": "dào jiā",
+              "meaning": "chegar a casa",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "得到",
+              "pinyin": "dé dào",
+              "meaning": "obter, conseguir",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "迟到",
+              "pinyin": "chí dào",
+              "meaning": "chegar atrasado",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "看到",
+              "pinyin": "kàn dào",
+              "meaning": "ver e efetivamente perceber",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "早到",
+              "pinyin": "zǎo dào",
+              "meaning": "chegar cedo",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "学到",
+              "pinyin": "xué dào",
+              "meaning": "aprender, adquirir conhecimento",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "听到",
+              "pinyin": "tīng dào",
+              "meaning": "ouvir - algo chegou aos ouvidos",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "想到",
+              "pinyin": "xiǎng dào",
+              "meaning": "pensar em, lembrar-se de",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "见到",
+              "pinyin": "jiàn dào",
+              "meaning": "ver, conseguir ver, encontrar",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "做到",
+              "pinyin": "zuò dào",
+              "meaning": "conseguir fazer, cumprir",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "想到",
-          "pinyin": "xiǎng dào",
-          "meaning": "pensar em, lembrar-se de",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "见到",
-          "pinyin": "jiàn dào",
-          "meaning": "ver, conseguir ver, encontrar",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "做到",
-          "pinyin": "zuò dào",
-          "meaning": "conseguir fazer, cumprir",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "verbo + 到: resultado alcançado",
+            "Não é tentativa, é chegar ao ponto final.",
+            "ver → ver mesmo",
+            "ouvir → ouvir mesmo",
+            "fazer → conseguir fazer"
+          ]
         }
-      ],
-      "notes": [
-        "verbo + 到: resultado alcançado",
-        "Não é tentativa, é chegar ao ponto final.",
-        "ver → ver mesmo",
-        "ouvir → ouvir mesmo",
-        "fazer → conseguir fazer"
       ]
     },
     "分": {
@@ -6340,18 +6893,29 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "分享",
-          "pinyin": "fēnxiǎng",
-          "meaning": "partilhar, dividir",
-          "hsk": null,
+          "char": "分",
+          "pinyin": "fēn",
+          "meaning": "dividir, separar",
+          "hsk": 2,
           "type": [
             "verbo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "分享",
+              "pinyin": "fēnxiǎng",
+              "meaning": "partilhar, dividir",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
-      ],
-      "notes": []
+      ]
     },
     "匕": {
       "char": "匕",
@@ -6399,14 +6963,26 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "衣服",
-          "pinyin": "yī fu",
-          "meaning": "roupa, vestuário",
+          "char": "衣",
+          "pinyin": "yī",
+          "meaning": "roupa",
           "hsk": 1,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "衣服",
+              "pinyin": "yīfu",
+              "meaning": "roupa, vestuário",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         }
       ]
@@ -6420,22 +6996,29 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "给",
-          "pinyin": "gěi",
-          "meaning": "dar; para (destinatário)",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "preposição"
+          "char": "糸",
+          "pinyin": "sī",
+          "meaning": "fio, linha, seda",
+          "hsk": null,
+          "type": [],
+          "compounds": [
+            {
+              "char": "给",
+              "pinyin": "gěi",
+              "meaning": "dar - para destinatário",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": [
-            "S + 给 + Pessoa + V + O"
+            "ligação e estrutura"
           ]
         }
-      ],
-      "notes": [
-        "ligação e estrutura"
       ]
     },
     "纸": {
@@ -6447,8 +7030,19 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Objectos",
-      "characters": [],
-      "notes": []
+      "characters": [
+        {
+          "char": "纸",
+          "pinyin": "zhǐ",
+          "meaning": "papel",
+          "hsk": 1,
+          "type": [
+            "substantivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "约": {
       "char": "约",
@@ -6460,8 +7054,20 @@ const VOCABULARY_DATA = {
         "advérbio"
       ],
       "category": "Objectos",
-      "characters": [],
-      "notes": []
+      "characters": [
+        {
+          "char": "约",
+          "pinyin": "yuē",
+          "meaning": "combinar, aproximadamente",
+          "hsk": 2,
+          "type": [
+            "verbo",
+            "advérbio"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "红": {
       "char": "红",
@@ -6473,11 +7079,23 @@ const VOCABULARY_DATA = {
         "adjectivo"
       ],
       "category": "Objectos",
-      "characters": [],
-      "notes": []
+      "characters": [
+        {
+          "char": "红",
+          "pinyin": "hóng",
+          "meaning": "vermelho",
+          "hsk": 1,
+          "type": [
+            "substantivo",
+            "adjectivo"
+          ],
+          "compounds": [],
+          "notes": []
+        }
+      ]
     },
     "竹": {
-      "char": "竹 ⺮",
+      "char": "竹",
       "pinyin": "zhú",
       "meaning": "bambu",
       "hsk": 3,
@@ -6487,327 +7105,365 @@ const VOCABULARY_DATA = {
       "category": "Objectos",
       "characters": [
         {
-          "char": "等",
-          "pinyin": "děng",
-          "meaning": "esperar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "等一下",
-          "pinyin": "děng yíxià",
-          "meaning": "espera um momento",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "等待",
-          "pinyin": "děng dài",
-          "meaning": "esperar",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "等到",
-          "pinyin": "děng dào",
-          "meaning": "esperar até",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "等于",
-          "pinyin": "děngyú",
-          "meaning": "ser igual a",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "平等",
-          "pinyin": "píngděng",
-          "meaning": "igualdade",
+          "char": "竹",
+          "pinyin": "zhú",
+          "meaning": "bambu",
           "hsk": 3,
           "type": [
             "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "笔",
-          "pinyin": "bǐ",
-          "meaning": "caneta; pincel",
-          "hsk": 1,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "等",
+              "pinyin": "děng",
+              "meaning": "esperar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "等一下",
+              "pinyin": "děng yīxià",
+              "meaning": "espera um momento",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "等待",
+              "pinyin": "děngdài",
+              "meaning": "esperar",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "等到",
+              "pinyin": "děng dào",
+              "meaning": "esperar até",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "等于",
+              "pinyin": "děngyú",
+              "meaning": "ser igual a",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "平等",
+              "pinyin": "píngděng",
+              "meaning": "igualdade",
+              "hsk": 3,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "笔",
+              "pinyin": "bǐ",
+              "meaning": "caneta, pincel",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "第",
+              "pinyin": "dì",
+              "meaning": "prefixo ordinal - primeiro, segundo...",
+              "hsk": 1,
+              "type": [
+                "prefixo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "笑",
+              "pinyin": "xiào",
+              "meaning": "rir",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "笑容",
+              "pinyin": "xiàoróng",
+              "meaning": "sorriso",
+              "hsk": null,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "笑话",
+              "pinyin": "xiàohua",
+              "meaning": "piada, gozação",
+              "hsk": 2,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "答",
+              "pinyin": "dá",
+              "meaning": "responder",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "笨",
+              "pinyin": "bèn",
+              "meaning": "burro, pouco inteligente",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "第",
-          "pinyin": "dì",
-          "meaning": "prefixo ordinal (primeiro, segundo…)",
-          "hsk": 1,
-          "type": [
-            "prefixo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "笑",
-          "pinyin": "xiào",
-          "meaning": "rir",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "笑容",
-          "pinyin": "xiàoróng",
-          "meaning": "sorriso",
-          "hsk": null,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "笑话",
-          "pinyin": "xiàohuà",
-          "meaning": "piada; gozação",
-          "hsk": 2,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "答",
-          "pinyin": "dá",
-          "meaning": "responder",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "笨",
-          "pinyin": "bèn",
-          "meaning": "burro, pouco inteligente",
-          "hsk": 2,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "ordem, ferramentas, sistemas e métodos"
+          ]
         }
       ]
     },
     "欠": {
       "char": "欠",
       "pinyin": "qiàn",
-      "meaning": "dever; faltar",
+      "meaning": "dever, faltar",
       "hsk": 4,
       "type": [
-        "verbo",
-        "radical",
-        "interrogação"
+        "verbo"
       ],
       "category": "Oralidade",
       "characters": [
         {
-          "char": "欣",
-          "pinyin": "xīn",
-          "meaning": "contente; satisfeito",
+          "char": "欠",
+          "pinyin": "qiàn",
+          "meaning": "dever, faltar",
           "hsk": 4,
           "type": [
-            "adjectivo"
+            "verbo"
           ],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "欣",
+              "pinyin": "xīn",
+              "meaning": "contente, satisfeito",
+              "hsk": 4,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "Interrogação",
+            "falta, carência, algo incompleto ou pendente"
+          ]
         }
       ]
     },
-    "讠": {
-      "char": "讠",
+    "言": {
+      "char": "言",
       "pinyin": "yán",
       "meaning": "fala, palavra",
       "hsk": null,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Oralidade",
       "characters": [
         {
-          "char": "说",
-          "pinyin": "shuō",
-          "meaning": "dizer, falar, explicar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "说话",
-          "pinyin": "shuōhuà",
-          "meaning": "falar",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "说明",
-          "pinyin": "shuōmíng",
-          "meaning": "explicar",
+          "char": "言",
+          "pinyin": "yán",
+          "meaning": "fala, palavra",
           "hsk": null,
-          "type": [
-            "verbo"
+          "type": [],
+          "compounds": [
+            {
+              "char": "说",
+              "pinyin": "shuō",
+              "meaning": "dizer, falar, explicar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "说话",
+              "pinyin": "shuōhuà",
+              "meaning": "falar",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "说明",
+              "pinyin": "shuōmíng",
+              "meaning": "explicar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "小说",
+              "pinyin": "xiǎoshuō",
+              "meaning": "romance, história",
+              "hsk": null,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "话",
+              "pinyin": "huà",
+              "meaning": "fala, palavra, conversa",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "电话",
+              "pinyin": "diànhuà",
+              "meaning": "telefone, chamada telefónica",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "语",
+              "pinyin": "yǔ",
+              "meaning": "língua, linguagem",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "请",
+              "pinyin": "qǐng",
+              "meaning": "pedir, convidar, por favor",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "读",
+              "pinyin": "dú",
+              "meaning": "ler em voz alta, ler",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "讲",
+              "pinyin": "jiǎng",
+              "meaning": "explicar, contar, dar uma palestra",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "认",
+              "pinyin": "rèn",
+              "meaning": "reconhecer, admitir verbalmente",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "认识",
+              "pinyin": "rènshi",
+              "meaning": "conhecer, reconhecer",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "记",
+              "pinyin": "jì",
+              "meaning": "registar, lembrar por palavras ou escrita",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "小说",
-          "pinyin": "xiǎoshuō",
-          "meaning": "romance, história",
-          "hsk": null,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "话",
-          "pinyin": "huà",
-          "meaning": "fala, palavra, conversa",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "电话",
-          "pinyin": "diànhuà",
-          "meaning": "telefone; chamada telefónica",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "语",
-          "pinyin": "yǔ",
-          "meaning": "língua, linguagem",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "请",
-          "pinyin": "qǐng",
-          "meaning": "pedir, convidar, por favor",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "读",
-          "pinyin": "dú",
-          "meaning": "ler em voz alta, ler",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "讲",
-          "pinyin": "jiǎng",
-          "meaning": "explicar, contar, dar uma palestra",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "认",
-          "pinyin": "rèn",
-          "meaning": "reconhecer, admitir verbalmente",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "认识",
-          "pinyin": "rènshi",
-          "meaning": "conhecer, reconhecer",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "记",
-          "pinyin": "jì",
-          "meaning": "registar, lembrar (por palavras ou escrita)",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "palavras ligadas a falar, dizer, comunicar",
+            "言 é a forma simplificada de 訁"
+          ]
         }
       ]
     },
@@ -6816,262 +7472,314 @@ const VOCABULARY_DATA = {
       "pinyin": "kǒu",
       "meaning": "boca",
       "hsk": null,
-      "type": [
-        "radical"
-      ],
+      "type": [],
       "category": "Oralidade",
       "characters": [
         {
-          "char": "吃",
-          "pinyin": "chī",
-          "meaning": "comer",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "char": "口",
+          "pinyin": "kǒu",
+          "meaning": "boca",
+          "hsk": null,
+          "type": [],
+          "compounds": [
+            {
+              "char": "吃",
+              "pinyin": "chī",
+              "meaning": "comer",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "吃饭",
+              "pinyin": "chī fàn",
+              "meaning": "comer refeição",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "吃苦",
+              "pinyin": "chī kǔ",
+              "meaning": "sofrer dificuldades, passar por tempos duros",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "吃惊",
+              "pinyin": "chī jīng",
+              "meaning": "ficar surpreendido",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "喝",
+              "pinyin": "hē",
+              "meaning": "beber",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "喝醉",
+              "pinyin": "hē zuì",
+              "meaning": "ficar bêbado",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "喝彩",
+              "pinyin": "hè cǎi",
+              "meaning": "aplaudir, aclamar - sentido figurado",
+              "hsk": 4,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "听",
+              "pinyin": "tīng",
+              "meaning": "ouvir",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "叫",
+              "pinyin": "jiào",
+              "meaning": "chamar, gritar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "他叫我等一下",
+              "pinyin": "tā jiào wǒ děng yīxià",
+              "meaning": "ele pediu-me para esperar",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "哄",
+              "pinyin": "hǒng",
+              "meaning": "acalmar, consolar",
+              "hsk": 4,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "哄睡",
+              "pinyin": "hǒng shuì",
+              "meaning": "ajudar alguém a adormecer",
+              "hsk": null,
+              "type": [
+                "verbo",
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": [
+            "falar, cantar, celebrar, coisas feitas com a boca",
+            "口 repetido: emoções expressas, fala, som, celebração",
             "experienciar algo no corpo ou na vida"
           ]
-        },
-        {
-          "char": "吃饭",
-          "pinyin": "chī fàn",
-          "meaning": "comer (refeição)",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "吃苦",
-          "pinyin": "chī kǔ",
-          "meaning": "sofrer dificuldades, passar por tempos duros",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "吃惊",
-          "pinyin": "chī jīng",
-          "meaning": "ficar surpreendido",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "喝",
-          "pinyin": "hē",
-          "meaning": "beber",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": [
-            "口 + 曷 (曰 + 匃)"
-          ]
-        },
-        {
-          "char": "喝醉",
-          "pinyin": "hē zuì",
-          "meaning": "ficar bêbado",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "喝彩",
-          "pinyin": "hè cǎi",
-          "meaning": "aplaudir, aclamar (sentido figurado)",
-          "hsk": 4,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "听",
-          "pinyin": "tīng",
-          "meaning": "ouvir",
-          "hsk": null,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "叫",
-          "pinyin": "jiào",
-          "meaning": "chamar; gritar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": [
-            "t**ā jiào wǒ děng yīxià",
-            "ele pediu-me para esperar"
-          ]
-        },
-        {
-          "char": "哄",
-          "pinyin": "hǒng",
-          "meaning": "acalmar, consolar",
-          "hsk": 4,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "哄睡",
-          "pinyin": "hǒng shuì",
-          "meaning": "ajudar alguém a adormecer",
-          "hsk": null,
-          "type": [
-            "verbo",
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "占": {
+      "char": "占",
+      "pinyin": "zhàn",
+      "meaning": "ocupar, tomar",
+      "hsk": null,
+      "type": [
+        "verbo"
+      ],
+      "category": "Oralidade",
+      "characters": [
         {
           "char": "占",
           "pinyin": "zhàn",
           "meaning": "ocupar, tomar",
           "hsk": null,
           "type": [
-            "verbo",
-            "radical"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "占比",
-          "pinyin": "zhàn bǐ",
-          "meaning": "proporção, percentagem ocupada",
-          "hsk": 3,
-          "type": [
-            "verbo",
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "占地方",
-          "pinyin": "zhàn dìfang",
-          "meaning": "ocupar espaço",
-          "hsk": 1,
-          "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "只",
-          "pinyin": "zhǐ",
-          "meaning": "apenas; só",
-          "hsk": 1,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "占比",
+              "pinyin": "zhàn bǐ",
+              "meaning": "proporção, percentagem ocupada",
+              "hsk": 3,
+              "type": [
+                "verbo",
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "占地方",
+              "pinyin": "zhàn dìfang",
+              "meaning": "ocupar espaço",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "只",
+              "pinyin": "zhǐ",
+              "meaning": "apenas, só",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "只",
+              "pinyin": "zhī",
+              "meaning": "classificador para animais",
+              "hsk": 1,
+              "type": [
+                "classificador"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "只要",
+              "pinyin": "zhǐyào",
+              "meaning": "desde que, basta que",
+              "hsk": 1,
+              "type": [
+                "conector"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "只是",
+              "pinyin": "zhǐshì",
+              "meaning": "apenas que, só que",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "只好",
+              "pinyin": "zhǐhǎo",
+              "meaning": "não ter alternativa senão",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
-        },
-        {
-          "char": "只",
-          "pinyin": "zhī",
-          "meaning": "classificador para animais",
-          "hsk": 1,
-          "type": [
-            "classificador"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "只要",
-          "pinyin": "zhǐyào",
-          "meaning": "desde que; basta que",
-          "hsk": 1,
-          "type": [
-            "conector"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "只是",
-          "pinyin": "zhǐshì",
-          "meaning": "apenas que; só que",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "只好",
-          "pinyin": "zhǐhǎo",
-          "meaning": "não ter alternativa senão",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "别": {
+      "char": "别",
+      "pinyin": "bié",
+      "meaning": "não - imperativo, separar",
+      "hsk": 1,
+      "type": [
+        "verbo",
+        "advérbio"
+      ],
+      "category": "Oralidade",
+      "characters": [
         {
           "char": "别",
           "pinyin": "bié",
-          "meaning": "não (imperativo), separar",
+          "meaning": "não - imperativo, separar",
           "hsk": 1,
           "type": [
             "verbo",
             "advérbio"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "别人",
+              "pinyin": "biérén",
+              "meaning": "outra pessoa, os outros - pronome",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "别的",
+              "pinyin": "bié de",
+              "meaning": "outro, diferente",
+              "hsk": 1,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
-        },
-        {
-          "char": "别人",
-          "pinyin": "biérén",
-          "meaning": "outra pessoa; os outros",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": [
-            "pronome #HSK1 #Pronome"
-          ]
-        },
-        {
-          "char": "别的",
-          "pinyin": "bié de",
-          "meaning": "outro; diferente",
-          "hsk": 1,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
+        }
+      ]
+    },
+    "哭": {
+      "char": "哭",
+      "pinyin": "kū",
+      "meaning": "chorar",
+      "hsk": 1,
+      "type": [
+        "verbo"
+      ],
+      "category": "Oralidade",
+      "characters": [
         {
           "char": "哭",
           "pinyin": "kū",
@@ -7082,7 +7790,19 @@ const VOCABULARY_DATA = {
           ],
           "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "知": {
+      "char": "知",
+      "pinyin": "zhī",
+      "meaning": "saber, conhecer",
+      "hsk": 1,
+      "type": [
+        "verbo"
+      ],
+      "category": "Oralidade",
+      "characters": [
         {
           "char": "知",
           "pinyin": "zhī",
@@ -7091,20 +7811,33 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "知道",
-          "pinyin": "zhī dào",
-          "meaning": "saber, ter conhecimento de",
-          "hsk": 1,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "知道",
+              "pinyin": "zhīdào",
+              "meaning": "saber, ter conhecimento de",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
-        },
+        }
+      ]
+    },
+    "喜": {
+      "char": "喜",
+      "pinyin": "xǐ",
+      "meaning": "gostar, alegria",
+      "hsk": 1,
+      "type": [
+        "verbo"
+      ],
+      "category": "Oralidade",
+      "characters": [
         {
           "char": "喜",
           "pinyin": "xǐ",
@@ -7113,52 +7846,53 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "欢喜",
-          "pinyin": "huānxǐ",
-          "meaning": "alegria, felicidade",
-          "hsk": null,
-          "type": [
-            "substantivo"
+          "compounds": [
+            {
+              "char": "欢喜",
+              "pinyin": "huānxǐ",
+              "meaning": "alegria, felicidade",
+              "hsk": null,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "喜",
+              "pinyin": "xǐ",
+              "meaning": "gostar muito, amar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "喜欢",
+              "pinyin": "xǐhuan",
+              "meaning": "gostar de, ter o hábito de",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "欢",
+              "pinyin": "huān",
+              "meaning": "alegria, prazer, contentamento",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "喜爱",
-          "pinyin": "xǐ’ài",
-          "meaning": "gostar muito, amar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "喜欢",
-          "pinyin": "xǐhuan",
-          "meaning": "gostar de / ter o hábito de",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
           "notes": [
-            "alegria, prazer, contentamento"
+            "他喜欢晚睡。Ele costuma dormir tarde"
           ]
-        },
-        {
-          "char": "他喜欢晚睡。",
-          "pinyin": "Tā xǐhuan wǎn shuì.",
-          "meaning": "Ele costuma dormir tarde.",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
         }
       ]
     }

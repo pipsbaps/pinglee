@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const apply = () => {
                 const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
                 document.documentElement.style.setProperty('--app-height', `${h}px`);
+                this.toggleNavForKeyboard();
             };
             apply();
             if (window.visualViewport) {
@@ -32,6 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 window.addEventListener('resize', apply);
             }
+        },
+
+        toggleNavForKeyboard() {
+            const nav = document.querySelector('.mobile-nav');
+            if (!nav) return;
+            const vv = window.visualViewport;
+            const keyboardOpen = vv ? (window.innerHeight - vv.height) > 120 : false;
+            const navHeight = getComputedStyle(document.documentElement).getPropertyValue('--nav-height') || '78px';
+            document.documentElement.style.setProperty('--nav-offset', keyboardOpen ? '0px' : navHeight.trim());
+            nav.style.opacity = keyboardOpen ? '0' : '1';
+            nav.style.pointerEvents = keyboardOpen ? 'none' : 'auto';
+            nav.style.transform = keyboardOpen ? 'translateY(20px)' : 'translateY(0)';
+            document.body.classList.toggle('keyboard-open', keyboardOpen);
         },
 
         init() {

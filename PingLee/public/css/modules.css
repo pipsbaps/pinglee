@@ -416,7 +416,7 @@
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+  bottom: calc(var(--nav-offset, var(--nav-height)) + env(safe-area-inset-bottom));
   z-index: 5;
   display: flex;
   align-items: center;

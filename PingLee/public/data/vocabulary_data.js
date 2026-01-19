@@ -2527,60 +2527,75 @@ const VOCABULARY_DATA = {
       "hsk": null,
       "type": [],
       "category": "Mão e garras",
-      "subcategory": "Corpo",
       "characters": [
         {
-          "char": "在",
-          "pinyin": "zài",
-          "meaning": "estar em, encontrar-se em",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "preposição"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "正在",
-          "pinyin": "zhèngzài",
-          "meaning": "estar a (ação em progresso)",
-          "hsk": 1,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "左",
+          "char": "𠂇",
           "pinyin": "zuǒ",
-          "meaning": "esquerda, lado esquerdo, posição não dominante",
-          "hsk": 1,
-          "type": [
-            "substantivo",
-            "adjectivo"
+          "meaning": "mão esquerda",
+          "hsk": null,
+          "type": [],
+          "compounds": [
+            {
+              "char": "在",
+              "pinyin": "zài",
+              "meaning": "estar em, encontrar-se em",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "preposição"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "正在",
+              "pinyin": "zhèngzài",
+              "meaning": "estar a - ação em progresso",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "左",
+              "pinyin": "zuǒ",
+              "meaning": "esquerda, lado esquerdo, posição não dominante",
+              "hsk": 1,
+              "type": [
+                "substantivo",
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "左右",
+              "pinyin": "zuǒyòu",
+              "meaning": "cerca de, aproximadamente, esquerda e direita literal",
+              "hsk": 2,
+              "type": [
+                "substantivo",
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "大概十点左右",
+              "pinyin": "dàgài shí diǎn zuǒyòu",
+              "meaning": "por volta das dez",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "左右",
-          "pinyin": "zuǒyòu",
-          "meaning": "cerca de, aproximadamente, esquerda e direita (literal)",
-          "hsk": 2,
-          "type": [
-            "substantivo",
-            "advérbio"
-          ],
-          "compounds": [],
           "notes": [
-            "por volta das dez"
+            "ligado a posição, apoio e relação humana"
           ]
         }
-      ],
-      "notes": [
-        "ligado a posição, apoio e relação humana"
       ]
     },
     "又": {
@@ -2593,92 +2608,103 @@ const VOCABULARY_DATA = {
         "adjectivo"
       ],
       "category": "Mão e garras",
-      "subcategory": "Corpo",
       "characters": [
         {
-          "char": "有",
-          "pinyin": "yǒu",
-          "meaning": "ter, existir, haver, possuir",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "有用",
-          "pinyin": "yǒuyòng",
-          "meaning": "útil",
-          "hsk": 2,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "有意思",
-          "pinyin": "yǒuyìsi",
-          "meaning": "interessante",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "友",
-          "pinyin": "yǒu",
-          "meaning": "amigo, relação de amizade",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "右",
+          "char": "又",
           "pinyin": "yòu",
-          "meaning": "mão direita, de novo, outra vez, também",
+          "meaning": "direita, lado direito, posição principal ou correta",
           "hsk": 1,
           "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "反",
-          "pinyin": "fǎn",
-          "meaning": "voltar, inverter",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "双",
-          "pinyin": "shuāng",
-          "meaning": "duplo, par",
-          "hsk": 2,
-          "type": [
+            "substantivo",
             "adjectivo"
           ],
-          "compounds": [],
-          "notes": []
+          "compounds": [
+            {
+              "char": "有",
+              "pinyin": "yǒu",
+              "meaning": "ter, existir, haver, possuir",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "有用",
+              "pinyin": "yǒuyòng",
+              "meaning": "útil",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "有意思",
+              "pinyin": "yǒuyìsi",
+              "meaning": "interessante",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "友",
+              "pinyin": "yǒu",
+              "meaning": "amigo, relação de amizade",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "右",
+              "pinyin": "yòu",
+              "meaning": "mão direita, de novo, outra vez, também",
+              "hsk": 1,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "反",
+              "pinyin": "fǎn",
+              "meaning": "voltar, inverter",
+              "hsk": 2,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "双",
+              "pinyin": "shuāng",
+              "meaning": "duplo, par",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
+          "notes": [
+            "marca ação, interação, resposta, repetição"
+          ]
         }
-      ],
-      "notes": [
-        "marca ação, interação, resposta, repetição"
       ]
     },
     "手": {
-      "char": "手 龵 扌",
+      "char": "手",
       "pinyin": "shǒu",
       "meaning": "mão, ação manual",
       "hsk": 1,
@@ -2686,108 +2712,118 @@ const VOCABULARY_DATA = {
         "substantivo"
       ],
       "category": "Mão e garras",
-      "subcategory": "Corpo",
       "characters": [
         {
-          "char": "找",
-          "pinyin": "zhǎo",
-          "meaning": "procurar",
+          "char": "手",
+          "pinyin": "shǒu",
+          "meaning": "mão, ação manual",
           "hsk": 1,
           "type": [
-            "verbo"
+            "substantivo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "拉",
-          "pinyin": "lā",
-          "meaning": "puxar",
-          "hsk": null,
-          "type": [
-            "verbo"
+          "compounds": [
+            {
+              "char": "找",
+              "pinyin": "zhǎo",
+              "meaning": "procurar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "拉",
+              "pinyin": "lā",
+              "meaning": "puxar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "推",
+              "pinyin": "tuī",
+              "meaning": "empurrar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "打",
+              "pinyin": "dǎ",
+              "meaning": "bater, tocar, fazer - verbo muito geral",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "打电话",
+              "pinyin": "dǎ diànhuà",
+              "meaning": "telefonar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "打球",
+              "pinyin": "dǎqiú",
+              "meaning": "jogar bola",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "打字",
+              "pinyin": "dǎzì",
+              "meaning": "digitar",
+              "hsk": 1,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "搞",
+              "pinyin": "gǎo",
+              "meaning": "fazer, tratar de",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "拿",
+              "pinyin": "ná",
+              "meaning": "pegar, segurar",
+              "hsk": null,
+              "type": [
+                "verbo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "推",
-          "pinyin": "tuī",
-          "meaning": "empurrar",
-          "hsk": null,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "打",
-          "pinyin": "dǎ",
-          "meaning": "bater, tocar, fazer (verbo muito geral)",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "打电话",
-          "pinyin": "dǎ diànhuà",
-          "meaning": "telefonar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "打球",
-          "pinyin": "dǎ qiú",
-          "meaning": "jogar bola",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "打字",
-          "pinyin": "dǎ zì",
-          "meaning": "digitar",
-          "hsk": 1,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "搞",
-          "pinyin": "gǎo",
-          "meaning": "fazer, tratar de",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "拿",
-          "pinyin": "ná",
-          "meaning": "pegar, segurar",
-          "hsk": null,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
+          "notes": [
+            "ações, movimentos, interação física"
+          ]
         }
-      ],
-      "notes": [
-        "força, energia, aplicar força para produzir um efeito, esforço, capacidade, poder de ação"
       ]
     },
     "厂": {

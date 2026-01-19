@@ -67,8 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const nav = document.querySelector('.mobile-nav');
             if (!nav) return;
 
+            const vv = window.visualViewport;
+            const measuredOffset = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
             const keyboardOpen =
                 getKeyboardOffsetPx() > 0 ||
+                measuredOffset > 80 ||
                 ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '');
 
             nav.classList.toggle('hidden', keyboardOpen);

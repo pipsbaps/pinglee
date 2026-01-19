@@ -107,13 +107,13 @@
   overflow-y: auto;
   padding: 0.5rem 1rem 1rem;
   scroll-padding-bottom: calc(
-    var(--chat-form-height) + var(--nav-height) + 16px
+    var(--chat-form-height) + var(--nav-height) + 16px + var(--keyboard-offset, 0px)
   );
   background-color: transparent;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;

@@ -58,6 +58,7 @@ const Lessons = {
       words: payload.words || '',
       notes: payload.notes || ''
     };
+    lesson.quiz = this.buildQuiz(lesson);
     this.lessons.unshift(lesson);
     this.persist();
     this.render();

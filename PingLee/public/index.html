@@ -162,13 +162,13 @@
                         <h2>Aulas & Notas</h2>
                     </div>
                     <div class="lessons-actions">
-                        <div class="lessons-search">
-                            <input type="search" id="lessons-search" placeholder="Procurar notas, títulos ou palavras-chave...">
-                        </div>
                         <button type="button" class="add-lesson-btn" id="add-lesson-btn">+ Nova nota</button>
                     </div>
                 </div>
                 <div class="lessons-body">
+                    <div class="lessons-search">
+                        <input type="search" id="lessons-search" placeholder="Procurar notas, títulos ou palavras-chave...">
+                    </div>
                     <div class="lessons-list" id="lessons-list"></div>
                     <div class="lessons-empty" id="lessons-empty">Seleciona ou cria uma nota para rever o que aprendeste no chat ou no role-play.</div>
                 </div>
@@ -271,7 +271,7 @@
 
     <!-- Modal de Aulas/Notas -->
     <div id="lesson-modal" class="modal-overlay hidden">
-        <div class="modal-content lesson-modal">
+        <div class="modal-content word-modal lesson-modal">
             <div class="lesson-modal-header">
                 <div>
                     <p class="eyebrow">Resumo</p>
@@ -312,6 +312,7 @@
                     <label for="lesson-notes">Notas</label>
                     <textarea id="lesson-notes" rows="6" placeholder="Resumo do que praticaste ou aprendeste."></textarea>
                 </div>
+                <div class="lesson-quiz"></div>
                 <div class="lesson-actions">
                     <button type="button" class="lesson-btn ghost" id="lesson-cancel">Cancelar</button>
                     <button type="submit" class="lesson-btn primary" id="lesson-save">Guardar</button>

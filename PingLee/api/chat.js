@@ -3,10 +3,12 @@ const OpenAI = require("openai");
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+const ANTHROPIC_KEY = process.env.VITE_ANTHROPIC_API_KEY;
 
 // Históricos de conversa separados
 let textChatHistory = [];
 let voiceChatHistory = [];
+let exploreHistory = [];
 
 const scenarios = {
     restaurant: { name: "At the Restaurant", prompt: "You are a friendly restaurant waiter in Beijing. Start by welcoming the user." },
@@ -59,13 +61,22 @@ const getTextSystemPrompt = () => {
     - Do NOT include any other keys.`;
 };
 
+const getExploreSystemPrompt = () => {
+    return `És PingLee num modo "Explora": respondes em Português de Portugal a perguntas abertas sobre Mandarim, linguística ou cultura. Traz contexto e exemplos, e inclui caracteres/pinyin quando forem úteis, mas fala sempre em PT-PT. Devolve SEMPRE um único JSON com as chaves:
+- "translation": a tua resposta completa em PT-PT (pode incluir exemplos em chinês/pinyin, emojis ou bullets).
+- "chinese": opcional (frases curtas em chinês, caso faça sentido), caso contrário vazio.
+- "pinyin": opcional, caso contrário vazio.
+- "feedback": deixa vazio ("").
+Não peças confirmação para continuar; mantém o tom caloroso e curioso.`;
+};
+
 // --- Lógica Principal da API ---
 module.exports = async (req, res) => {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { message, mode = 'text', scenario: scenarioKey } = req.body;
+    const { message, mode = 'text', scenario: scenarioKey, variant } = req.body;
     let currentHistory, systemPrompt;
 
     if (mode === 'voice') {
@@ -84,6 +95,13 @@ module.exports = async (req, res) => {
             }
             currentHistory.push({ role: "user", content: message });
         }
+    } else if (variant === 'explora') {
+        currentHistory = exploreHistory;
+        if (currentHistory.length === 0) {
+            systemPrompt = getExploreSystemPrompt();
+            currentHistory.push({ role: "system", content: systemPrompt });
+        }
+        currentHistory.push({ role: "user", content: message });
     } else { 
         currentHistory = textChatHistory;
         if (currentHistory.length === 0) {
@@ -94,14 +112,34 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4-turbo",
-            messages: currentHistory,
-            response_format: { type: "json_object" },
-        });
-
-        const responseContent = completion.choices[0].message.content;
-        currentHistory.push({ role: "assistant", content: responseContent });
+        let responseContent;
+        if (variant === 'explora') {
+            if (!ANTHROPIC_KEY) throw new Error('Anthropic API key missing');
+            const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': ANTHROPIC_KEY,
+                    'anthropic-version': '2023-06-01'
+                },
+                body: JSON.stringify({
+                    model: 'claude-3-sonnet-20240229',
+                    max_tokens: 1000,
+                    messages: currentHistory
+                })
+            });
+            const anthropicData = await anthropicRes.json();
+            responseContent = anthropicData?.content?.[0]?.text || '{}';
+            currentHistory.push({ role: "assistant", content: responseContent });
+        } else {
+            const completion = await openai.chat.completions.create({
+                model: "gpt-4-turbo",
+                messages: currentHistory,
+                response_format: { type: "json_object" },
+            });
+            responseContent = completion.choices[0].message.content;
+            currentHistory.push({ role: "assistant", content: responseContent });
+        }
 
         if (currentHistory.length > 15) {
             currentHistory.splice(1, 2); 

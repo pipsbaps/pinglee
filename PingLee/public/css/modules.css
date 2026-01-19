@@ -1767,7 +1767,7 @@ body.modal-open {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.4rem 0 0.65rem;
+  padding: 0.6rem 0 0.65rem;
 }
 .lessons-header h2 {
   margin: 0.1rem 0 0;
@@ -1796,6 +1796,17 @@ body.modal-open {
   gap: 0.5rem;
   min-height: 60vh;
   padding-top: 0.35rem;
+}
+.lessons-search {
+  display: flex;
+  width: 100%;
+}
+.lessons-search input {
+  border: 1px solid var(--pill-border);
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+  background: var(--pill-bg);
 }
 .lessons-list {
   display: flex;
@@ -1873,10 +1884,8 @@ body.modal-open {
 }
 
 .lesson-modal {
-  background: var(--modal-bg);
-  border-radius: 20px;
-  padding: 1.1rem 1.2rem;
   max-width: 540px;
+  padding: 1.1rem 1.2rem;
 }
 .lesson-modal-header {
   display: flex;

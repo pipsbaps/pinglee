@@ -25,7 +25,11 @@
   transition: all 0.2s ease;
 }
 .chat-mode-switch .mode-btn.is-active {
-  background: linear-gradient(135deg, var(--pill-active-from) 0%, var(--pill-active-to) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--pill-active-from) 0%,
+    var(--pill-active-to) 100%
+  );
   border-color: var(--pill-active-border);
   color: var(--pill-active-text);
   box-shadow: 0 6px 16px rgba(0, 112, 243, 0.16);
@@ -558,7 +562,9 @@
   justify-content: stretch;
   width: 100%;
   height: 100%;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .scenario-button:hover {
   transform: translateY(-2px);
@@ -613,7 +619,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 22px rgba(0, 122, 255, 0.16), 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 10px 22px rgba(0, 122, 255, 0.16),
+    0 4px 10px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.12s ease,
     box-shadow 0.12s ease,
@@ -629,8 +637,12 @@
 }
 #role-play .mic-button.recording {
   background: transparent;
-  box-shadow: 0 14px 26px rgba(84, 201, 239, 0.35), 0 6px 12px rgba(0, 0, 0, 0.12);
-  animation: mic-pulse 1.1s ease-in-out infinite, ripple-once 0.6s ease-out 1;
+  box-shadow:
+    0 14px 26px rgba(84, 201, 239, 0.35),
+    0 6px 12px rgba(0, 0, 0, 0.12);
+  animation:
+    mic-pulse 1.1s ease-in-out infinite,
+    ripple-once 0.6s ease-out 1;
   isolation: isolate;
 }
 #role-play .mic-button.recording::after {
@@ -638,7 +650,11 @@
   position: absolute;
   inset: 2px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(84, 201, 239, 0.25) 0%, rgba(84, 201, 239, 0) 65%);
+  background: radial-gradient(
+    circle,
+    rgba(84, 201, 239, 0.25) 0%,
+    rgba(84, 201, 239, 0) 65%
+  );
   animation: recording-pulse 1.4s ease-in-out infinite;
 }
 
@@ -899,7 +915,9 @@
   background: #fff;
   cursor: pointer;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .panel-card.sub {
   background: #fff;
@@ -946,37 +964,85 @@
   color: #6b7280;
   font-weight: 400;
 }
-.cat-pessoas-e-corpo { background: linear-gradient(135deg, #6fa8e0, #8cc3f2); }
-.cat-pessoas-e-corpo.sub { background: linear-gradient(135deg, #87bcef, #a5d1fa); }
-.cat-pessoas-e-corpo.rad { background: linear-gradient(135deg, #a7d2f6, #c6e4fb); }
+.cat-pessoas-e-corpo {
+  background: linear-gradient(135deg, #6fa8e0, #8cc3f2);
+}
+.cat-pessoas-e-corpo.sub {
+  background: linear-gradient(135deg, #87bcef, #a5d1fa);
+}
+.cat-pessoas-e-corpo.rad {
+  background: linear-gradient(135deg, #a7d2f6, #c6e4fb);
+}
 
-.cat-mao-e-garras { background: linear-gradient(135deg, #67b3c4, #83cad7); }
-.cat-mao-e-garras.sub { background: linear-gradient(135deg, #7bc4d4, #9ad7e2); }
-.cat-mao-e-garras.rad { background: linear-gradient(135deg, #9fd8e4, #c1e9ef); }
+.cat-mao-e-garras {
+  background: linear-gradient(135deg, #67b3c4, #83cad7);
+}
+.cat-mao-e-garras.sub {
+  background: linear-gradient(135deg, #7bc4d4, #9ad7e2);
+}
+.cat-mao-e-garras.rad {
+  background: linear-gradient(135deg, #9fd8e4, #c1e9ef);
+}
 
-.cat-lugares-e-edificios { background: linear-gradient(135deg, #74b29d, #8ec7b4); }
-.cat-lugares-e-edificios.sub { background: linear-gradient(135deg, #8ac3b1, #a8d7c7); }
-.cat-lugares-e-edificios.rad { background: linear-gradient(135deg, #a7d7c5, #c6e8da); }
+.cat-lugares-e-edificios {
+  background: linear-gradient(135deg, #74b29d, #8ec7b4);
+}
+.cat-lugares-e-edificios.sub {
+  background: linear-gradient(135deg, #8ac3b1, #a8d7c7);
+}
+.cat-lugares-e-edificios.rad {
+  background: linear-gradient(135deg, #a7d7c5, #c6e8da);
+}
 
-.cat-localizacao-e-movimento { background: linear-gradient(135deg, #86c18a, #9ed49c); }
-.cat-localizacao-e-movimento.sub { background: linear-gradient(135deg, #9cd2a0, #b6e1b6); }
-.cat-localizacao-e-movimento.rad { background: linear-gradient(135deg, #b7e1b8, #d3f0d2); }
+.cat-localizacao-e-movimento {
+  background: linear-gradient(135deg, #86c18a, #9ed49c);
+}
+.cat-localizacao-e-movimento.sub {
+  background: linear-gradient(135deg, #9cd2a0, #b6e1b6);
+}
+.cat-localizacao-e-movimento.rad {
+  background: linear-gradient(135deg, #b7e1b8, #d3f0d2);
+}
 
-.cat-accoes-e-elementos { background: linear-gradient(135deg, #c7b473, #d8c58a); }
-.cat-accoes-e-elementos.sub { background: linear-gradient(135deg, #d7c48a, #e6d6a3); }
-.cat-accoes-e-elementos.rad { background: linear-gradient(135deg, #e6d6a5, #f2e6c0); }
+.cat-accoes-e-elementos {
+  background: linear-gradient(135deg, #c7b473, #d8c58a);
+}
+.cat-accoes-e-elementos.sub {
+  background: linear-gradient(135deg, #d7c48a, #e6d6a3);
+}
+.cat-accoes-e-elementos.rad {
+  background: linear-gradient(135deg, #e6d6a5, #f2e6c0);
+}
 
-.cat-natureza { background: linear-gradient(135deg, #f4c35a, #f7d27d); }
-.cat-natureza.sub { background: linear-gradient(135deg, #f7d17c, #f9dd9a); }
-.cat-natureza.rad { background: linear-gradient(135deg, #f9dea0, #fbe8b9); }
+.cat-natureza {
+  background: linear-gradient(135deg, #f4c35a, #f7d27d);
+}
+.cat-natureza.sub {
+  background: linear-gradient(135deg, #f7d17c, #f9dd9a);
+}
+.cat-natureza.rad {
+  background: linear-gradient(135deg, #f9dea0, #fbe8b9);
+}
 
-.cat-objectos { background: linear-gradient(135deg, #e58b86, #f0a5a2); }
-.cat-objectos.sub { background: linear-gradient(135deg, #f0a7a3, #f6bcb9); }
-.cat-objectos.rad { background: linear-gradient(135deg, #f6bebc, #f9d2d0); }
+.cat-objectos {
+  background: linear-gradient(135deg, #e58b86, #f0a5a2);
+}
+.cat-objectos.sub {
+  background: linear-gradient(135deg, #f0a7a3, #f6bcb9);
+}
+.cat-objectos.rad {
+  background: linear-gradient(135deg, #f6bebc, #f9d2d0);
+}
 
-.cat-oralidade { background: linear-gradient(135deg, #f180a3, #f59abd); }
-.cat-oralidade.sub { background: linear-gradient(135deg, #f59cc0, #f8b4d0); }
-.cat-oralidade.rad { background: linear-gradient(135deg, #f8b6d2, #fbd0e2); }
+.cat-oralidade {
+  background: linear-gradient(135deg, #f180a3, #f59abd);
+}
+.cat-oralidade.sub {
+  background: linear-gradient(135deg, #f59cc0, #f8b4d0);
+}
+.cat-oralidade.rad {
+  background: linear-gradient(135deg, #f8b6d2, #fbd0e2);
+}
 .fade-in {
   animation: fadeIn 0.25s ease;
 }
@@ -1088,7 +1154,9 @@
   padding: 0.95rem 1rem;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 .word-card:hover {
   transform: translateY(-1px);
@@ -1139,34 +1207,98 @@
 .tag.tag-hsk {
   border-color: transparent;
 }
-.tag.tag-hsk.hsk1 { background: var(--hsk1-bg); color: var(--hsk1-text); }
-.tag.tag-hsk.hsk2 { background: var(--hsk2-bg); color: var(--hsk2-text); }
-.tag.tag-hsk.hsk3 { background: var(--hsk3-bg); color: var(--hsk3-text); }
-.tag.tag-hsk.hsk4 { background: var(--hsk4-bg); color: var(--hsk4-text); }
-.tag.tag-hsk.hsk5 { background: var(--hsk5-bg); color: var(--hsk5-text); }
-.tag.tag-hsk.hsk6 { background: var(--hsk6-bg); color: var(--hsk6-text); }
-.tag.tag-pos { background: #f1f2f5; color: #4b5563; border-color: #e5e7eb; }
-.tag.tag-pos.pos-verbo { background: var(--pos-verbo-bg); color: var(--pos-verbo-text); }
-.tag.tag-pos.pos-substantivo { background: var(--pos-substantivo-bg); color: var(--pos-substantivo-text); }
+.tag.tag-hsk.hsk1 {
+  background: var(--hsk1-bg);
+  color: var(--hsk1-text);
+}
+.tag.tag-hsk.hsk2 {
+  background: var(--hsk2-bg);
+  color: var(--hsk2-text);
+}
+.tag.tag-hsk.hsk3 {
+  background: var(--hsk3-bg);
+  color: var(--hsk3-text);
+}
+.tag.tag-hsk.hsk4 {
+  background: var(--hsk4-bg);
+  color: var(--hsk4-text);
+}
+.tag.tag-hsk.hsk5 {
+  background: var(--hsk5-bg);
+  color: var(--hsk5-text);
+}
+.tag.tag-hsk.hsk6 {
+  background: var(--hsk6-bg);
+  color: var(--hsk6-text);
+}
+.tag.tag-pos {
+  background: #f1f2f5;
+  color: #4b5563;
+  border-color: #e5e7eb;
+}
+.tag.tag-pos.pos-verbo {
+  background: var(--pos-verbo-bg);
+  color: var(--pos-verbo-text);
+}
+.tag.tag-pos.pos-substantivo {
+  background: var(--pos-substantivo-bg);
+  color: var(--pos-substantivo-text);
+}
 .tag.tag-pos.pos-adjetivo,
-.tag.tag-pos.pos-adjectivo { background: var(--pos-adjetivo-bg); color: var(--pos-adjetivo-text); }
+.tag.tag-pos.pos-adjectivo {
+  background: var(--pos-adjetivo-bg);
+  color: var(--pos-adjetivo-text);
+}
 .tag.tag-pos.pos-advérbio,
-.tag.tag-pos.pos-adverbio { background: var(--pos-adverbio-bg); color: var(--pos-adverbio-text); }
+.tag.tag-pos.pos-adverbio {
+  background: var(--pos-adverbio-bg);
+  color: var(--pos-adverbio-text);
+}
 .tag.tag-pos.pos-preposicao,
-.tag.tag-pos.pos-preposição { background: var(--pos-preposicao-bg); color: var(--pos-preposicao-text); }
+.tag.tag-pos.pos-preposição {
+  background: var(--pos-preposicao-bg);
+  color: var(--pos-preposicao-text);
+}
 .tag.tag-pos.pos-particula,
-.tag.tag-pos.pos-partícula { background: var(--pos-particula-bg); color: var(--pos-particula-text); }
-.tag.tag-pos.pos-radical { background: var(--pos-radical-bg); color: var(--pos-radical-text); }
-.tag.tag-pos.pos-classificador { background: var(--pos-classificador-bg); color: var(--pos-classificador-text); }
+.tag.tag-pos.pos-partícula {
+  background: var(--pos-particula-bg);
+  color: var(--pos-particula-text);
+}
+.tag.tag-pos.pos-radical {
+  background: var(--pos-radical-bg);
+  color: var(--pos-radical-text);
+}
+.tag.tag-pos.pos-classificador {
+  background: var(--pos-classificador-bg);
+  color: var(--pos-classificador-text);
+}
 .tag.tag-pos.pos-conjuncao,
-.tag.tag-pos.pos-conjunção { background: var(--pos-conjuncao-bg); color: var(--pos-conjuncao-text); }
-.tag.tag-pos.pos-conector { background: var(--pos-conector-bg); color: var(--pos-conector-text); }
+.tag.tag-pos.pos-conjunção {
+  background: var(--pos-conjuncao-bg);
+  color: var(--pos-conjuncao-text);
+}
+.tag.tag-pos.pos-conector {
+  background: var(--pos-conector-bg);
+  color: var(--pos-conector-text);
+}
 .tag.tag-pos.pos-expressao,
-.tag.tag-pos.pos-expressão { background: var(--pos-expressao-bg); color: var(--pos-expressao-text); }
-.tag.tag-pos.pos-pronome { background: var(--pos-pronome-bg); color: var(--pos-pronome-text); }
+.tag.tag-pos.pos-expressão {
+  background: var(--pos-expressao-bg);
+  color: var(--pos-expressao-text);
+}
+.tag.tag-pos.pos-pronome {
+  background: var(--pos-pronome-bg);
+  color: var(--pos-pronome-text);
+}
 .tag.tag-pos.pos-interrogacao,
-.tag.tag-pos.pos-interrogação { background: var(--pos-interrogacao-bg); color: var(--pos-interrogacao-text); }
-.tag.tag-pos.pos-prefixo { background: var(--pos-prefixo-bg); color: var(--pos-prefixo-text); }
+.tag.tag-pos.pos-interrogação {
+  background: var(--pos-interrogacao-bg);
+  color: var(--pos-interrogacao-text);
+}
+.tag.tag-pos.pos-prefixo {
+  background: var(--pos-prefixo-bg);
+  color: var(--pos-prefixo-text);
+}
 .word-card-extended {
   max-height: 0;
   opacity: 0;
@@ -1228,7 +1360,10 @@
   color: #0f4ba7;
   font-weight: 600;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 .word-card-actions .word-action-btn:hover {
   transform: translateY(-1px);
@@ -1310,7 +1445,11 @@ body.modal-open {
 
 /* Word modal styling */
 .word-modal {
-  background: linear-gradient(180deg, rgba(232, 243, 255, 0.96) 0%, #ffffff 70%);
+  background: linear-gradient(
+    180deg,
+    rgba(232, 243, 255, 0.96) 0%,
+    #ffffff 70%
+  );
   border-radius: 22px;
   max-width: 520px;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
@@ -1497,7 +1636,9 @@ body.modal-open {
   animation-delay: 0.3s;
 }
 @keyframes dots-bounce {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0.7);
     opacity: 0.4;
   }
@@ -1513,7 +1654,11 @@ body.modal-open {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  background: linear-gradient(180deg, rgba(232, 243, 255, 0.92) 0%, #ffffff 70%);
+  background: linear-gradient(
+    180deg,
+    rgba(232, 243, 255, 0.92) 0%,
+    #ffffff 70%
+  );
   padding: 0.25rem 0;
 }
 .detail-heading {
@@ -1606,7 +1751,10 @@ body.modal-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 .icon-btn:hover {
   transform: translateY(-1px);
@@ -1616,7 +1764,6 @@ body.modal-open {
   color: #e96f70;
   border-color: #f6d6d6;
   background: #fff6f6;
-}
 }
 #word-form {
   display: flex;
@@ -1711,7 +1858,12 @@ body.modal-open {
   padding: 0.35rem 0 0.25rem;
   display: flex;
   justify-content: center;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.92) 60%, #fff 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.92) 60%,
+    #fff 100%
+  );
   z-index: 2;
 }
 
@@ -1782,7 +1934,7 @@ body.modal-open {
   display: none;
 }
 #role-play-modal .modal-content.role-modal {
-  background-image: url('/images/backg_roleplay.png');
+  background-image: url("/images/backg_roleplay.png");
   background-size: cover;
   background-position: center;
 }
@@ -1812,7 +1964,11 @@ body.modal-open {
 }
 .add-lesson-btn {
   border: none;
-  background: linear-gradient(135deg, var(--accent-orange-from), var(--accent-orange-to));
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange-from),
+    var(--accent-orange-to)
+  );
   color: #fff;
   padding: 0.6rem 1rem;
   border-radius: 12px;
@@ -1850,7 +2006,9 @@ body.modal-open {
   padding: 0.9rem 1rem;
   box-shadow: var(--shadow-soft);
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 .lesson-card:hover {
   transform: translateY(-1px);

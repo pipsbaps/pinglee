@@ -6,13 +6,10 @@ const RolePlay = {
     isRecording: false,
     isStarting: false,
     startSeq: 0,
-    exitButton: null,
-    scenarioModal: null,
-    scenarioModalTitle: null,
-    scenarioModalDesc: null,
-    scenarioModalStartBtn: null,
-    scenarioModalCancelBtn: null,
-    modalCloseBtn: null,
+    stage: null,
+    titleEl: null,
+    contextEl: null,
+    backBtn: null,
     micButton: null,
     audioSpeed: 1,
     micHandlers: {},
@@ -25,40 +22,27 @@ const RolePlay = {
         this.initialized = true;
 
         const scenarioButtons = document.querySelectorAll('.scenario-button');
-        this.messagesContainer = document.querySelector('#role-play-modal .chat-messages');
-        this.scenarioModal = document.querySelector('#role-play-modal');
-        this.scenarioModalTitle = document.querySelector('.role-modal-title');
-        this.scenarioModalDesc = document.querySelector('.role-modal-desc');
-        this.modalCloseBtn = document.querySelector('.role-modal-close');
-        this.micButton = document.querySelector('#role-play-modal .mic-button');
-        this.exitButton = this.modalCloseBtn; // reutiliza a lógica do botão de fechar
+        this.messagesContainer = document.querySelector('.roleplay-messages');
+        this.stage = document.getElementById('roleplay-stage');
+        this.titleEl = document.getElementById('roleplay-title');
+        this.contextEl = document.getElementById('roleplay-context');
+        this.micButton = document.querySelector('.roleplay-stage .mic-button');
+        this.backBtn = document.querySelector('.roleplay-back');
 
         scenarioButtons.forEach(button => {
             button.addEventListener('click', () => {
                 if (this.isStarting) return; // evita duplos
                 this.currentScenario = button.dataset.scenario;
                 this.messagesContainer.innerHTML = '';
-                this.showScenarioModal(button.dataset.scenario);
+                this.showStage(button.dataset.scenario);
                 this.setMicEnabled(false);
                 this.start();
                 this.scrollToBottomSmooth();
             });
         });
 
-        if (this.exitButton) {
-            this.exitButton.classList.add('hidden');
-            this.exitButton.addEventListener('click', () => {
-                if (this.currentAudio) {
-                    this.currentAudio.pause();
-                    this.currentAudio = null;
-                }
-                this.messagesContainer.innerHTML = '';
-                this.currentScenario = null;
-                this.isStarting = false;
-                this.setMicEnabled(false);
-                this.toggleExitButton(false);
-                this.hideScenarioModal();
-            });
+        if (this.backBtn) {
+            this.backBtn.addEventListener('click', () => this.resetStage());
         }
 
         if (this.micButton) {
@@ -78,7 +62,7 @@ const RolePlay = {
         this.isStarting = true;
         const seq = ++this.startSeq;
         this.activeStartSeq = seq;
-        this.toggleExitButton(true);
+        this.toggleStage(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
         this.scrollToBottomSmooth();
@@ -171,7 +155,7 @@ const RolePlay = {
     setRecordingState(isRecording) {
         this.isRecording = isRecording;
         const micBtn = this.micButton;
-        const indicator = document.querySelector('#role-play-modal .recording-indicator');
+        const indicator = this.stage?.querySelector('.recording-indicator');
         if (micBtn) micBtn.classList.toggle('recording', isRecording);
         if (indicator) indicator.classList.toggle('hidden', !isRecording);
     },
@@ -191,7 +175,7 @@ const RolePlay = {
 
     scrollToBottomSmooth() {
         if (!this.messagesContainer) return;
-        this.messagesContainer.scrollTo({ top: this.messagesContainer.scrollHeight, behavior: 'smooth' });
+        UI.scrollToBottom(this.messagesContainer);
     },
 
     attachMicEvents() {
@@ -220,24 +204,33 @@ const RolePlay = {
         }
     },
 
-    toggleExitButton(show) {
-        if (!this.exitButton) return;
-        this.exitButton.classList.toggle('hidden', !show);
+    toggleStage(show) {
+        if (!this.stage) return;
+        this.stage.classList.toggle('hidden', !show);
     },
 
-    showScenarioModal(scenarioKey) {
-        if (!this.scenarioModal) return;
-        const scenarioMeta = this.getScenarioMeta(scenarioKey);
-        if (this.scenarioModalTitle) this.scenarioModalTitle.textContent = scenarioMeta.title;
-        if (this.scenarioModalDesc) this.scenarioModalDesc.textContent = scenarioMeta.desc;
-        this.scenarioModal.classList.remove('hidden');
-        requestAnimationFrame(() => this.scenarioModal.classList.add('active'));
+    showStage(scenarioKey) {
+        const meta = this.getScenarioMeta(scenarioKey);
+        if (this.titleEl) this.titleEl.textContent = meta.title;
+        if (this.contextEl) this.contextEl.textContent = meta.desc;
+        this.toggleStage(true);
     },
 
-    hideScenarioModal() {
-        if (!this.scenarioModal) return;
-        this.scenarioModal.classList.remove('active');
-        setTimeout(() => this.scenarioModal.classList.add('hidden'), 180);
+    resetStage() {
+        this.handleMicRelease();
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio = null;
+        }
+        this.messagesContainer.innerHTML = '';
+        this.currentScenario = null;
+        this.isStarting = false;
+        this.activeStartSeq = 0;
+        this.setMicEnabled(false);
+        if (this.mediaRecorder?.stream) {
+            this.mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        }
+        this.toggleStage(false);
     },
 
     getScenarioMeta(key) {
@@ -247,7 +240,7 @@ const RolePlay = {
             introductions: { title: 'Apresentações', desc: 'Conheça novas pessoas e fale sobre si de forma simples.' },
             taxi: { title: 'Táxi', desc: 'Peça direções e explique ao motorista para onde quer ir.' }
         };
-        return map[key] || { title: 'Role-Play', desc: 'Pratique uma situação do dia a dia em Mandarim.' };
+        return map[key] || { title: 'Roleplay', desc: 'Pratique uma situação do dia a dia em Mandarim.' };
     },
 
     setMicEnabled(on) {

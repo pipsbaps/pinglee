@@ -66,10 +66,10 @@
                 </div>
             </section>
 
-            <!-- Módulo de Role-Play (Voz) -->
+            <!-- Módulo de Roleplay (Voz) -->
             <section id="role-play">
                 <div class="section-header">
-                    <h1>Role-Play</h1>
+                    <h1>Roleplay</h1>
                     <p class="section-sub">Prática de cenários reais com voz.</p>
                 </div>
                 <div class="scenario-list-container">
@@ -88,26 +88,32 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Modal de Role-Play (interação decorre aqui) -->
-                <div id="role-play-modal" class="modal-overlay hidden">
-                    <div class="modal-content role-modal">
-                        <div class="role-modal-header">
-                            <div></div>
-                            <div class="role-modal-actions">
-                                <button type="button" class="pill-toggle" id="roleplay-audio-slow-toggle"
-                                    aria-pressed="false" title="Modo áudio lento">🐌</button>
-                                <button class="role-modal-close" aria-label="Fechar role-play">✕</button>
-                            </div>
+                <div class="roleplay-stage hidden" id="roleplay-stage">
+                    <div class="roleplay-top">
+                        <button type="button" class="icon-pill roleplay-back" aria-label="Voltar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+                        </button>
+                        <div class="roleplay-info">
+                            <p class="eyebrow">Cenário</p>
+                            <h3 id="roleplay-title">—</h3>
+                            <p class="section-sub" id="roleplay-context"></p>
                         </div>
-                        <div class="role-modal-body">
-                            <div class="chat-messages role-modal-messages"></div>
-                            <div class="role-play-controls modal-controls">
-                                <button type="button" class="mic-button" aria-label="Gravar áudio">
-                                    <img src="/images/mic_icon.png" alt="" class="mic-icon" loading="lazy">
-                                    <div class="recording-indicator hidden"></div>
-                                </button>
-                            </div>
+                        <button type="button" class="icon-pill" id="roleplay-audio-slow-toggle" aria-pressed="false" title="Modo áudio lento">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M4 12a6 6 0 0 1 6-6h4a4 4 0 0 1 4 4v2a6 6 0 0 1-6 6H8a4 4 0 0 1-4-4Z"/>
+                                <path d="M14 6a2 2 0 1 1 4 0v1"/>
+                                <path d="M6 12a2 2 0 1 0 4 0"/>
+                                <path d="M10 14v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="roleplay-body">
+                        <div class="chat-messages roleplay-messages"></div>
+                        <div class="role-play-controls">
+                            <button type="button" class="mic-button" aria-label="Gravar áudio">
+                                <img src="/images/mic_icon.png" alt="" class="mic-icon" loading="lazy">
+                                <div class="recording-indicator hidden"></div>
+                            </button>
                         </div>
                     </div>
                 </div>

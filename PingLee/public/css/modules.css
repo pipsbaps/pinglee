@@ -173,6 +173,28 @@
 .message-tutor {
   align-self: flex-start;
 }
+.message-tutor.typing .bubble {
+  padding: 10px 12px;
+}
+.typing-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7f8590;
+  opacity: 0.6;
+  animation: typingBlink 1.2s infinite ease-in-out;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typingBlink {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
 .message-tutor .bubble {
   background-color: #f5fcf7;
   border-color: #d8eddf;
@@ -536,13 +558,42 @@
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
-.role-play-chat-container {
+.roleplay-stage {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 0.75rem;
+  background: #f4f7fb;
+  border: 1px solid #e5e9f2;
+  border-radius: 16px;
+  padding: 0.9rem;
+  box-shadow: var(--shadow-soft);
 }
-.role-play-exit {
-  display: none;
+.roleplay-top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.6rem;
+  align-items: center;
+}
+.roleplay-info h3 {
+  margin: 0.05rem 0;
+}
+.roleplay-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 360px;
+}
+.roleplay-messages {
+  background: #ffffff;
+  border: 1px solid #e3e7ee;
+  border-radius: 14px;
+  padding: 0.75rem;
+  min-height: 240px;
+  max-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 #role-play .role-play-controls {
   position: static;
@@ -1923,11 +1974,6 @@ button.metric-button:focus-visible {
 #role-play .chat-form-container {
   display: none;
 }
-#role-play-modal .modal-content.role-modal {
-  background-image: url("/images/backg_roleplay.png");
-  background-size: cover;
-  background-position: center;
-}
 #vocabulary .chat-form-container {
   display: none;
 }
@@ -2063,6 +2109,11 @@ button.metric-button:focus-visible {
 }
 .icon-pill svg {
   display: block;
+}
+.icon-pill.is-active-action {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 .tag-badge {
   display: inline-flex;

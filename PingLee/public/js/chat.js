@@ -3,6 +3,7 @@ const TextChat = {
     STORAGE_KEY_BASE: 'chat_history_v1',
     MODE_KEY: 'chat_mode_v1',
     mode: 'aulas',
+    modeHistories: {},
 
     init() {
         this.restoreMode();
@@ -24,10 +25,12 @@ const TextChat = {
         this.toggleSendButton(input, form?.querySelector('.send-button'));
 
         // Restaura histórico, se existir
-        const restored = this.restoreHistory(messagesContainer);
+        const restored = this.restoreHistory(messagesContainer, this.mode);
         if (!restored) {
             // Inicia a conversa e adiciona sugestões
             this.startConversation(messagesContainer, input);
+        } else {
+            this.modeHistories[this.mode] = [...this.history];
         }
 
         form.addEventListener('submit', async (e) => {
@@ -43,7 +46,7 @@ const TextChat = {
             this.toggleSendButton(input, form.querySelector('.send-button'));
 
             // 2. Mostra o indicador de "a escrever..."
-            const loadingElement = UI.addTutorMessage('', null, null, null, messagesContainer, true);
+            const typingEl = UI.addTypingIndicator(messagesContainer);
 
             try {
                 // 3. Envia a mensagem para a API
@@ -55,12 +58,12 @@ const TextChat = {
                 const data = await response.json();
 
                 // 4. Substitui a mensagem de loading pela resposta do tutor
-                loadingElement.remove();
+                UI.removeTypingIndicator(typingEl);
                 this.pushTutorMessage(data, messagesContainer);
 
             } catch (error) {
                 console.error('Text chat error:', error);
-                loadingElement.remove();
+                UI.removeTypingIndicator(typingEl);
                 this.pushTutorMessage({ chinese: 'Desculpe, ocorreu um erro ao contactar a API.' }, messagesContainer);
             }
         });
@@ -159,15 +162,16 @@ const TextChat = {
     persistHistory() {
         try {
             localStorage.setItem(this.storageKey(), JSON.stringify(this.history));
+            this.modeHistories[this.mode] = [...this.history];
         } catch (e) {
             console.warn('Não foi possível guardar histórico do chat', e);
         }
     },
 
-    restoreHistory(container) {
+    restoreHistory(container, mode = this.mode) {
         try {
-            const rawLegacy = localStorage.getItem(this.STORAGE_KEY_BASE); // legacy key
-            const raw = localStorage.getItem(this.storageKey()) || rawLegacy;
+            const rawLegacy = mode === 'aulas' ? localStorage.getItem(this.STORAGE_KEY_BASE) : null; // legacy key só para aulas
+            const raw = localStorage.getItem(this.storageKeyFor(mode)) || rawLegacy;
             if (!raw) return false;
             const parsed = JSON.parse(raw);
             if (!Array.isArray(parsed)) return false;
@@ -180,6 +184,7 @@ const TextChat = {
                 }
                 this.history.push(msg);
             });
+            this.modeHistories[mode] = [...this.history];
             return parsed.length > 0;
         } catch (e) {
             console.warn('Não foi possível restaurar histórico do chat', e);
@@ -189,7 +194,11 @@ const TextChat = {
     },
 
     storageKey() {
-        return `${this.STORAGE_KEY_BASE}_${this.mode}`;
+        return this.storageKeyFor(this.mode);
+    },
+
+    storageKeyFor(mode) {
+        return `${this.STORAGE_KEY_BASE}_${mode}`;
     },
 
     bindModeButtons(container, input) {
@@ -205,12 +214,18 @@ const TextChat = {
     },
 
     setMode(mode, container, input) {
+        this.cacheCurrentHistory();
         this.mode = mode;
         try { localStorage.setItem(this.MODE_KEY, mode); } catch (_) {}
-        this.history = [];
-        container.innerHTML = '';
         this.updateModeUI();
-        const restored = this.restoreHistory(container);
+        container.innerHTML = '';
+        const cached = this.modeHistories[this.mode];
+        if (cached?.length) {
+            this.history = [...cached];
+            this.renderHistory(container);
+            return;
+        }
+        const restored = this.restoreHistory(container, this.mode);
         if (!restored) this.startConversation(container, input);
     },
 
@@ -225,6 +240,7 @@ const TextChat = {
             const payload = this.buildLessonFromChat();
             if (!payload) return;
             window.Lessons?.addFromChat?.(payload);
+            this.flashAction(this.saveLessonBtn);
         });
     },
 
@@ -298,6 +314,7 @@ const TextChat = {
         try {
             localStorage.removeItem(this.storageKey());
         } catch (_) {}
+        this.modeHistories[this.mode] = [];
         if (input) {
             input.value = '';
             input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -319,6 +336,29 @@ const TextChat = {
             const saved = localStorage.getItem(this.MODE_KEY);
             if (saved) this.mode = saved;
         } catch (_) {}
+    },
+
+    cacheCurrentHistory() {
+        this.modeHistories[this.mode] = [...this.history];
+    },
+
+    renderHistory(container) {
+        if (!container) return;
+        container.innerHTML = '';
+        this.history.forEach(msg => {
+            if (msg.role === 'user') {
+                UI.addUserMessage(msg.text || '', container);
+            } else if (msg.role === 'tutor') {
+                UI.addTutorMessage(msg.chinese, msg.pinyin, msg.translation, msg.feedback, container);
+            }
+        });
+        UI.scrollToBottom(container);
+    },
+
+    flashAction(btn) {
+        if (!btn) return;
+        btn.classList.add('is-active-action');
+        setTimeout(() => btn.classList.remove('is-active-action'), 220);
     }
 };
 

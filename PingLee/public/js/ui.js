@@ -165,6 +165,28 @@ const UI = {
         }
     },
 
+    addTypingIndicator(container) {
+        if (!container) return null;
+        const el = document.createElement('div');
+        el.className = 'message message-tutor typing';
+        el.innerHTML = `
+          <div class="avatar"><img src="/images/pingicon.png" alt="PingLee"></div>
+          <div class="message-body">
+            <div class="author">PingLee</div>
+            <div class="bubble">
+              <span class="typing-dots"><span></span><span></span><span></span></span>
+            </div>
+          </div>
+        `;
+        container.appendChild(el);
+        this.scrollToBottom(container);
+        return el;
+    },
+
+    removeTypingIndicator(el) {
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+    },
+
     attachAudioSpeedToggle(selector, onChange, storageKey = null) {
         const toggle = document.querySelector(selector);
         if (!toggle) return;

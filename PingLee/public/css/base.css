@@ -32,11 +32,15 @@ body {
   background:
     radial-gradient(
       900px 380px at 50% -140px,
-      rgba(0, 122, 255, 0.1),
-      transparent 60%
-    ),
-    var(--app-bg);
+    rgba(0, 122, 255, 0.1),
+    transparent 60%
+  ),
+  var(--app-bg);
   color: var(--text-primary);
+}
+
+html {
+  overflow-x: hidden;
 }
 
 /* --- Layout Principal --- */

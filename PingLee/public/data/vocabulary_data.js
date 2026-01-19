@@ -4,10 +4,26 @@
 const VOCABULARY_DATA = {
   "categories": {
     "Pessoas e Corpo": {
-      "radicals": [
-        "Pessoa",
-        "Corpo"
-      ]
+      "radicals": {
+        "Pessoa": {
+          "radicals": ["亻人", "子"]
+        },
+        "Corpo": {
+          "radicals": [
+            "面",
+            "頁",
+            "目",
+            "着",
+            "眞",
+            "身",
+            "見",
+            "覺",
+            "心 忄",
+            "足 ⻊",
+            "辵 辶"
+          ]
+        }
+      }
     },
     "Mão e garras": {
       "radicals": [
@@ -105,10 +121,19 @@ const VOCABULARY_DATA = {
           "pinyin": "zuò",
           "meaning": "fazer; agir",
           "hsk": 1,
-          "type": [
-            "verbo"
+          "type": ["verbo"],
+          "radicalInfo": "乍Zhà",
+          "compounds": [
+            {
+              "char": "工作",
+              "pinyin": "gōngzuò",
+              "meaning": "trabalho; trabalhar",
+              "hsk": 1,
+              "type": ["verbo", "substantivo"],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -302,24 +327,22 @@ const VOCABULARY_DATA = {
           "pinyin": "měi",
           "meaning": "cada, todos",
           "hsk": 1,
-          "type": [
-            "adjectivo"
+          "type": ["adjectivo"],
+          "decomposition": "母 + 丶",
+          "compounds": [
+            {
+              "char": "每个人",
+              "pinyin": "měi gè rén",
+              "meaning": "cada pessoa",
+              "hsk": 1,
+              "type": ["pronome"],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": [
             "exige classificador quando modifica substantivos contáveis"
           ]
-        },
-        {
-          "char": "每个人",
-          "pinyin": "měi gè rén",
-          "meaning": "cada pessoa",
-          "hsk": 1,
-          "type": [
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
         },
         {
           "char": "今",

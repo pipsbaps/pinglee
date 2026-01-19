@@ -638,6 +638,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
 .visually-hidden {
   position: absolute;
@@ -656,6 +657,8 @@
   gap: 0.75rem;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--header-bg);
+  width: 100%;
+  box-sizing: border-box;
 }
 .breadcrumb-row {
   display: flex;
@@ -755,6 +758,8 @@
   grid-template-columns: 1fr auto auto;
   gap: 0.5rem;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 .vocab-filters input,
 .vocab-filters select {
@@ -773,9 +778,11 @@
 }
 .vocab-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 0.75rem;
   padding: 0.75rem 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 .stat-card {
   background: #fff;
@@ -807,6 +814,8 @@
   padding: 0.75rem 0 1.25rem;
   overflow-y: auto;
   max-height: calc(100vh - 240px);
+  width: 100%;
+  box-sizing: border-box;
 }
 .vocab-panel.grid-2 {
   display: grid;

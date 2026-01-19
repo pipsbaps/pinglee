@@ -62,6 +62,25 @@
   font-weight: 800;
 }
 
+/* Section headers (comuns aos módulos) */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.25rem 0 0.5rem;
+}
+.section-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.section-sub {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+}
+
 .toolbar-left {
   display: flex;
   align-items: center;
@@ -534,28 +553,44 @@
 /* --- Início: Módulos de Role-Play e Vocabulário (Estilos Originais Restaurados) --- */
 #role-play .scenario-list-container {
   padding: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
 }
 #role-play h2 {
   display: none;
 }
 .scenario-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  display: flex;
+  width: 100%;
   gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scroll-snap-type: x mandatory;
+}
+.scenario-list::-webkit-scrollbar {
+  height: 6px;
+}
+.scenario-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
 }
 .scenario-button {
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  width: 100%;
-  height: 100%;
+  display: block;
+  min-width: 132px;
+  max-width: 152px;
+  aspect-ratio: 5 / 3;
   transition:
     transform 0.15s,
     box-shadow 0.15s;
+  border-radius: 16px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 .scenario-button:hover {
   transform: translateY(-2px);
@@ -572,8 +607,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 540px) {
+  #role-play .scenario-list-container {
+    padding: 0.75rem 0.5rem;
+  }
+  .scenario-list {
+    gap: 0.55rem;
+  }
+  .scenario-button {
+    min-width: 118px;
+    max-width: 132px;
+    aspect-ratio: 5 / 3;
+  }
 }
 .role-play-chat-container {
   display: flex;

@@ -870,7 +870,6 @@ tradução`;
       this.clearFeedback();
       return;
     }
-    this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, true);
     const toAdd = [];
     const selectedIndexes = [];
     if (this.feedbackBox) {
@@ -880,7 +879,7 @@ tradução`;
     }
     const selectedSuggestions = suggestions.filter((_, idx) => selectedIndexes.includes(idx));
     if (!selectedSuggestions.length) {
-      this.renderFeedback('Seleciona pelo menos uma palavra.', suggestions, false, false);
+      alert('Seleciona pelo menos uma palavra.');
       return;
     }
     const baseWordRef = this.lastAddedWordRef || { id: this.formFields.id.value || '' };

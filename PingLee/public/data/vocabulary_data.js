@@ -222,19 +222,20 @@ const VOCABULARY_DATA = {
             "verbo"
           ],
           "radicalInfo": "乍Zhà",
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "工作",
-          "pinyin": "gōngzuò",
-          "meaning": "trabalho; trabalhar",
-          "hsk": 1,
-          "type": [
-            "verbo",
-            "substantivo"
+          "compounds": [
+            {
+              "char": "工作",
+              "pinyin": "gōngzuò",
+              "meaning": "trabalho; trabalhar",
+              "hsk": 1,
+              "type": [
+                "verbo",
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -270,19 +271,20 @@ const VOCABULARY_DATA = {
             "radical"
           ],
           "radicalInfo": "匕Bǐ",
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "变化",
-          "pinyin": "biànhuà",
-          "meaning": "mudança; transformação",
-          "hsk": null,
-          "type": [
-            "verbo",
-            "substantivo"
+          "compounds": [
+            {
+              "char": "变化",
+              "pinyin": "biànhuà",
+              "meaning": "mudança; transformação",
+              "hsk": null,
+              "type": [
+                "verbo",
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -304,18 +306,19 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "任何",
-          "pinyin": "rèn hé",
-          "meaning": "qualquer, seja qual for",
-          "hsk": 2,
-          "type": [
-            "pronome"
+          "compounds": [
+            {
+              "char": "任何",
+              "pinyin": "rèn hé",
+              "meaning": "qualquer, seja qual for",
+              "hsk": 2,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -326,38 +329,39 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "好像",
-          "pinyin": "hǎo xiàng",
-          "meaning": "parece que, ao que parece",
-          "hsk": 2,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "好像",
+              "pinyin": "hǎo xiàng",
+              "meaning": "parece que, ao que parece",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "像你一样",
+              "pinyin": "xiàng nǐ yī yàng",
+              "meaning": "como tu, igual a ti",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "真像",
+              "pinyin": "zhēn xiàng",
+              "meaning": "muito parecido",
+              "hsk": 2,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "像你一样",
-          "pinyin": "xiàng nǐ yī yàng",
-          "meaning": "como tu, igual a ti",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "真像",
-          "pinyin": "zhēn xiàng",
-          "meaning": "muito parecido",
-          "hsk": 2,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -368,29 +372,30 @@ const VOCABULARY_DATA = {
           "type": [
             "advérbio"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "随便",
-          "pinyin": "suí biàn",
-          "meaning": "tanto faz, à vontade",
-          "hsk": 2,
-          "type": [
-            "advérbio"
+          "compounds": [
+            {
+              "char": "随便",
+              "pinyin": "suí biàn",
+              "meaning": "tanto faz, à vontade",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "方便",
+              "pinyin": "fāng biàn",
+              "meaning": "conveniente",
+              "hsk": 1,
+              "type": [
+                "adjectivo"
+              ],
+              "compounds": [],
+              "notes": []
+            }
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "方便",
-          "pinyin": "fāng biàn",
-          "meaning": "conveniente",
-          "hsk": 1,
-          "type": [
-            "adjectivo"
-          ],
-          "compounds": [],
           "notes": []
         },
         {
@@ -401,16 +406,17 @@ const VOCABULARY_DATA = {
           "type": [
             "preposição"
           ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "从前",
-          "pinyin": "cóng qián",
-          "meaning": "antigamente, antes, outrora, no passado",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "从前",
+              "pinyin": "cóng qián",
+              "meaning": "antigamente, antes, outrora, no passado",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         },
         {
@@ -422,21 +428,22 @@ const VOCABULARY_DATA = {
             "adjectivo"
           ],
           "decomposition": "母 + 丶",
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "每个人",
+              "pinyin": "měi gè rén",
+              "meaning": "cada pessoa",
+              "hsk": 1,
+              "type": [
+                "pronome"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "exige classificador quando modifica substantivos contáveis"
           ]
-        },
-        {
-          "char": "每个人",
-          "pinyin": "měi gè rén",
-          "meaning": "cada pessoa",
-          "hsk": 1,
-          "type": [
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": []
         },
         {
           "char": "今",
@@ -448,43 +455,44 @@ const VOCABULARY_DATA = {
             "advérbio",
             "radical"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "今天",
+              "pinyin": "jīntiān",
+              "meaning": "hoje",
+              "hsk": 1,
+              "type": [
+                "substantivo"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "如今",
+              "pinyin": "rújīn",
+              "meaning": "atualmente, hoje em dia",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "至今",
+              "pinyin": "zhìjīn",
+              "meaning": "até agora",
+              "hsk": 2,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "funciona como âncora temporal"
           ]
-        },
-        {
-          "char": "今天",
-          "pinyin": "jīntiān",
-          "meaning": "hoje",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "如今",
-          "pinyin": "rújīn",
-          "meaning": "atualmente, hoje em dia",
-          "hsk": 2,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "至今",
-          "pinyin": "zhìjīn",
-          "meaning": "até agora",
-          "hsk": 2,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
         },
         {
           "char": "会",
@@ -494,31 +502,32 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "会不会",
+              "pinyin": "huì bù huì",
+              "meaning": "A estrutura 会不会 é uma pergunta A-不-A, usada para perguntar probabilidade / expectativa, não vontade.",
+              "hsk": null,
+              "type": [],
+              "compounds": [],
+              "notes": []
+            },
+            {
+              "char": "不会吧",
+              "pinyin": "bú huì ba",
+              "meaning": "não acredito; a sério? (surpresa)",
+              "hsk": 2,
+              "type": [
+                "expressão"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": [
             "competência adquirida, algo que vai acontecer ou um encontro humano organizado.",
             "Verbo modal - probabilidade"
           ]
-        },
-        {
-          "char": "会不会",
-          "pinyin": "huì bù huì",
-          "meaning": "A estrutura 会不会 é uma pergunta A-不-A, usada para perguntar probabilidade / expectativa, não vontade.",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "不会吧",
-          "pinyin": "bú huì ba",
-          "meaning": "não acredito; a sério? (surpresa)",
-          "hsk": 2,
-          "type": [
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
         },
         {
           "char": "了",
@@ -526,20 +535,21 @@ const VOCABULARY_DATA = {
           "meaning": "partícula de conclusão / mudança de estado",
           "hsk": null,
           "type": [],
-          "compounds": [],
+          "compounds": [
+            {
+              "char": "了不起",
+              "pinyin": "liǎo bù qǐ",
+              "meaning": "incrível, impressionante",
+              "hsk": 3,
+              "type": [
+                "advérbio"
+              ],
+              "compounds": [],
+              "notes": []
+            }
+          ],
           "notes": []
         },
-        {
-          "char": "了不起",
-          "pinyin": "liǎo bù qǐ",
-          "meaning": "incrível, impressionante",
-          "hsk": 3,
-          "type": [
-            "advérbio"
-          ],
-          "compounds": [],
-          "notes": []
-        }
       ]
     },
     "身": {

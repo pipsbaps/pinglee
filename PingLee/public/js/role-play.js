@@ -10,6 +10,7 @@ const RolePlay = {
     titleEl: null,
     contextEl: null,
     backBtn: null,
+    startBtn: null,
     micButton: null,
     audioSpeed: 1,
     micHandlers: {},
@@ -28,6 +29,8 @@ const RolePlay = {
         this.contextEl = document.getElementById('roleplay-context');
         this.micButton = document.querySelector('.roleplay-stage .mic-button');
         this.backBtn = document.querySelector('.roleplay-back');
+        this.startBtn = document.getElementById('roleplay-start-btn');
+        this.setStartIdle();
 
         scenarioButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -36,13 +39,16 @@ const RolePlay = {
                 this.messagesContainer.innerHTML = '';
                 this.showStage(button.dataset.scenario);
                 this.setMicEnabled(false);
-                this.start();
+                this.setStartReady();
                 this.scrollToBottomSmooth();
             });
         });
 
         if (this.backBtn) {
             this.backBtn.addEventListener('click', () => this.resetStage());
+        }
+        if (this.startBtn) {
+            this.startBtn.addEventListener('click', () => this.start());
         }
 
         if (this.micButton) {
@@ -65,6 +71,7 @@ const RolePlay = {
         this.toggleStage(true);
         this.messagesContainer.innerHTML = '';
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
+        this.setStartBusy();
         this.scrollToBottomSmooth();
         try {
             const response = await fetch('/api/chat', {
@@ -80,12 +87,14 @@ const RolePlay = {
             this.scrollToBottomSmooth();
             this.playTutorAudio(data.chinese);
             this.setMicEnabled(true);
+            this.setStartReady(true);
         } catch (error) {
             console.error('Role-play start error:', error);
             loadingElement.remove();
             UI.addTutorMessage('Não foi possível iniciar o cenário.', null, null, null, this.messagesContainer);
             this.scrollToBottomSmooth();
             this.setMicEnabled(true);
+            this.setStartReady();
         } finally {
             this.isStarting = false;
         }
@@ -214,6 +223,7 @@ const RolePlay = {
         if (this.titleEl) this.titleEl.textContent = meta.title;
         if (this.contextEl) this.contextEl.textContent = meta.desc;
         this.toggleStage(true);
+        this.setStartReady();
     },
 
     resetStage() {
@@ -231,6 +241,7 @@ const RolePlay = {
             this.mediaRecorder.stream.getTracks().forEach(t => t.stop());
         }
         this.toggleStage(false);
+        this.setStartIdle();
     },
 
     getScenarioMeta(key) {
@@ -249,6 +260,24 @@ const RolePlay = {
             this.micButton.disabled = !on;
             this.micButton.classList.toggle('is-disabled', !on);
         }
+    },
+
+    setStartReady(labelRestart = false) {
+        if (!this.startBtn) return;
+        this.startBtn.disabled = false;
+        this.startBtn.textContent = labelRestart ? 'Recomeçar' : 'Começar';
+    },
+
+    setStartBusy() {
+        if (!this.startBtn) return;
+        this.startBtn.disabled = true;
+        this.startBtn.textContent = 'A iniciar...';
+    },
+
+    setStartIdle() {
+        if (!this.startBtn) return;
+        this.startBtn.disabled = true;
+        this.startBtn.textContent = 'Começar';
     }
 };
 

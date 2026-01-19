@@ -517,14 +517,24 @@
 /* --- Início: Módulos de Role-Play e Vocabulário (Estilos Originais Restaurados) --- */
 #role-play .scenario-list-container {
   padding: 1.5rem;
+  overflow: hidden;
 }
 #role-play h2 {
   display: none;
 }
 .scenario-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  display: flex;
   gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scroll-snap-type: x mandatory;
+}
+.scenario-list::-webkit-scrollbar {
+  height: 6px;
+}
+.scenario-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
 }
 .scenario-button {
   background: transparent;
@@ -532,13 +542,16 @@
   padding: 0;
   cursor: pointer;
   display: block;
-  width: 100%;
-  height: 100%;
+  min-width: 140px;
+  max-width: 160px;
+  aspect-ratio: 4 / 5;
   transition:
     transform 0.15s,
     box-shadow 0.15s;
   border-radius: 16px;
   overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 .scenario-button:hover {
   transform: translateY(-2px);
@@ -562,12 +575,12 @@
     padding: 0.75rem 0.5rem;
   }
   .scenario-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.6rem;
+    gap: 0.55rem;
   }
-  .scenario-button img {
+  .scenario-button {
+    min-width: 120px;
+    max-width: 140px;
     aspect-ratio: 4 / 5;
-    height: auto;
   }
 }
 .roleplay-stage {

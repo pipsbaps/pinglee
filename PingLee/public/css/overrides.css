@@ -1,0 +1,22 @@
+/* overrides.css
+ * Hotfixes e ajustes rápidos: mobile, scroll, safe areas, conflitos entre tabs.
+ * Não adicionar estilos base ou novos componentes aqui.
+ */
+
+/* Tabs/sections: esconder por default e mostrar só a ativa */
+main section {
+  display: none;
+}
+main section.active,
+main section:target {
+  display: flex;
+}
+
+/* Scroll & layout fixes */
+#role-play.active {
+  overflow-y: auto;
+  min-height: 0;
+}
+.scenario-list {
+  -webkit-overflow-scrolling: touch;
+}

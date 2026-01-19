@@ -368,14 +368,22 @@ const TextChat = {
         if (!input || !messagesContainer) return;
 
         input.addEventListener('focus', () => {
-            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // iOS Safari específico
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
                 setTimeout(() => {
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                }, 400);
+                    input.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'end',
+                        inline: 'nearest'
+                    });
+                }, 400); // iOS precisa de mais delay
             } else {
                 setTimeout(() => {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    input.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 }, 300);
             }
         });

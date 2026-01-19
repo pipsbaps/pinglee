@@ -71,22 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const nav = document.querySelector('.mobile-nav');
             if (!nav) return;
 
-            const keyboardOpen =
-                getKeyboardOffsetPx() > 0 ||
-                ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
+            // Deteta se teclado está aberto
+            const isInputFocused = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
+            const keyboardOffset = getKeyboardOffsetPx();
+            const keyboardOpen = isInputFocused || keyboardOffset > 50; // threshold de 50px
 
+            // Esconde/mostra navegação
             nav.classList.toggle('hidden', keyboardOpen);
 
-            // Scroll para o input quando o teclado abre
-            if (keyboardOpen && document.activeElement) {
-                setTimeout(() => {
-                    document.activeElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }, 300);
-            }
-
+            // Atualiza CSS variable
             document.documentElement.style.setProperty(
                 '--nav-offset',
                 keyboardOpen ? '0px' : 'var(--nav-height)'

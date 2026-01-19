@@ -562,11 +562,11 @@
     padding: 0.75rem 0.5rem;
   }
   .scenario-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.45rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
   }
   .scenario-button img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
     height: auto;
   }
 }

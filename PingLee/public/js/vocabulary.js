@@ -12,6 +12,7 @@ const Vocabulary = {
     filterHSK: '',
     filterPOS: ''
   },
+  lastAddedWordRef: null,
 
   init() {
     if (this.initialized) return;
@@ -762,6 +763,7 @@ tradução`;
     } else {
       radEntry.characters.unshift(wordData);
     }
+    this.lastAddedWordRef = { id: wordData.id, radicalKey: targetRadical };
     this.state.selectedRadical = targetRadical;
     this.render();
     this.renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
@@ -834,7 +836,7 @@ tradução`;
     const suggestionLines = hasSuggestions
       ? filteredSuggestions.map((s, idx) => `<li>
             <label class="feedback-suggestion">
-              <input type="checkbox" class="suggestion-checkbox" data-suggest-idx="${idx}" checked>
+              <input type="checkbox" class="suggestion-checkbox" data-suggest-idx="${idx}">
               <span class="suggestion-label">${s.word} ${s.pinyin ? `(${s.pinyin})` : ''} - ${s.meaning || ''}</span>
             </label>
           </li>`).join('')
@@ -869,17 +871,6 @@ tradução`;
       return;
     }
     this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, true);
-    const targetRad = this.state.selectedRadical;
-    if (!targetRad) {
-      this.renderFeedback('Escolhe um radical para adicionar sugestões.', suggestions, false, false);
-      return;
-    }
-    const radEntry = VOCABULARY_DATA.radicals[targetRad];
-    if (!radEntry) {
-      this.renderFeedback('Radical não encontrado.', suggestions, false, false);
-      return;
-    }
-    if (!Array.isArray(radEntry.characters)) radEntry.characters = [];
     const toAdd = [];
     const selectedIndexes = [];
     if (this.feedbackBox) {
@@ -892,31 +883,44 @@ tradução`;
       this.renderFeedback('Seleciona pelo menos uma palavra.', suggestions, false, false);
       return;
     }
+    const baseWordRef = this.lastAddedWordRef || { id: this.formFields.id.value || '' };
+    const base = baseWordRef?.id ? this.findWordById(baseWordRef.id) : null;
+    const baseWord = base?.word || null;
+    if (!baseWord) {
+      this.renderFeedback('Não foi possível ligar sugestões à palavra base.', suggestions, false, false);
+      return;
+    }
+    if (!Array.isArray(baseWord.compounds)) baseWord.compounds = [];
+    const baseCompounds = baseWord.compounds;
+
     selectedSuggestions.forEach(s => {
-      const exists = radEntry.characters.find(w => w.char === s.word && w.pinyin === s.pinyin);
       const existsInAll = this.existsInVocabulary(s.word, s.pinyin);
-      if (exists || existsInAll) return;
-      toAdd.push({
+      const existsInCompounds = baseCompounds.find(c => c.char === s.word && (c.pinyin || '').toLowerCase() === (s.pinyin || '').toLowerCase());
+      if (existsInAll || existsInCompounds) return;
+      const newEntry = {
         id: `sug-${Date.now()}-${Math.random()}`,
         char: s.word,
         pinyin: s.pinyin || '',
         meaning: s.meaning || '',
         hsk: s.hsk || '',
         type: s.pos ? [s.pos] : [],
-        notes: [],
+        notes: s.notes ? [].concat(s.notes) : [],
         example: {
           zh: s.example_sentence || '',
           pinyin: s.example_pinyin || '',
           pt: s.example_translation || ''
         },
         compounds: Array.isArray(s.compounds) ? s.compounds : []
-      });
+      };
+      toAdd.push(newEntry);
     });
+
     if (!toAdd.length) {
       this.renderFeedback('Nenhuma nova palavra para adicionar.', suggestions, false, false);
       return;
     }
-    radEntry.characters = [...toAdd, ...radEntry.characters];
+
+    baseWord.compounds = [...toAdd, ...baseCompounds];
     this.render();
     this.renderFeedback('Sugestões adicionadas!', [], false, false);
   }

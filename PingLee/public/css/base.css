@@ -1,3 +1,42 @@
+/* Lato Regular */
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Lato Regular"),
+    local("Lato-Regular"),
+    url("https://static.zohocdn.com/webfonts/lato2regular/font.woff2")
+      format("woff2");
+}
+
+/* Lato Bold (menos “carregado” = podes usar 600 em vez de 700) */
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Lato Semibold"),
+    local("Lato-Semibold"),
+    url("https://static.zohocdn.com/webfonts/lato2semibold/font.woff2")
+      format("woff2");
+}
+
+/* Lato Light (opcional) */
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src:
+    local("Lato Light"),
+    local("Lato-Light"),
+    url("https://static.zohocdn.com/webfonts/lato2light/font.woff2")
+      format("woff2");
+}
+
 :root {
   --app-bg: #f7f8fa;
   --header-bg: #ffffff;
@@ -5,7 +44,7 @@
   --text-secondary: #6b6b6b;
   --border-color: #e9e9eb;
   --chat-bg: #ffffff;
-  --font-main: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-main: "Lato", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   --font-chinese: "PingFang SC", "Noto Sans SC", sans-serif;
 
   /* Cores da Navegação */
@@ -32,10 +71,10 @@ body {
   background:
     radial-gradient(
       900px 380px at 50% -140px,
-    rgba(0, 122, 255, 0.1),
-    transparent 60%
-  ),
-  var(--app-bg);
+      rgba(0, 122, 255, 0.1),
+      transparent 60%
+    ),
+    var(--app-bg);
   color: var(--text-primary);
 }
 

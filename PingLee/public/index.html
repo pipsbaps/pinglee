@@ -26,6 +26,7 @@
                 <div class="chat-toolbar">
                     <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false"
                         title="Modo áudio lento">🐌</button>
+                    <button type="button" class="pill-toggle reset-chat-btn" aria-label="Reiniciar chat">↺</button>
                 </div>
                 <div class="chat-messages"></div>
                 <div class="chat-form-container">
@@ -154,8 +155,17 @@
 
             <!-- Módulo de Aulas -->
             <section id="lessons">
-                <h2>Aulas</h2>
-                <p>Brevemente disponível.</p>
+                <div class="lessons-header">
+                    <div>
+                        <p class="eyebrow">Biblioteca</p>
+                        <h2>Aulas & Notas</h2>
+                    </div>
+                    <button type="button" class="add-lesson-btn" id="add-lesson-btn">+ Nova nota</button>
+                </div>
+                <div class="lessons-body">
+                    <div class="lessons-list" id="lessons-list"></div>
+                    <div class="lessons-empty" id="lessons-empty">Seleciona ou cria uma nota para rever o que aprendeste no chat ou no role-play.</div>
+                </div>
             </section>
         </main>
 
@@ -250,6 +260,54 @@
                 </div>
             </form>
             <div id="vocab-feedback"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Aulas/Notas -->
+    <div id="lesson-modal" class="modal-overlay hidden">
+        <div class="modal-content lesson-modal">
+            <div class="lesson-modal-header">
+                <div>
+                    <p class="eyebrow">Resumo</p>
+                    <h3 id="lesson-modal-title">Nova nota</h3>
+                </div>
+                <button type="button" class="lesson-close-btn" aria-label="Fechar">✕</button>
+            </div>
+            <form id="lesson-form">
+                <input type="hidden" id="lesson-id">
+                <div class="form-row double">
+                    <div class="form-group">
+                        <label for="lesson-title">Título</label>
+                        <input type="text" id="lesson-title" required placeholder="Ex: Apresentações básicas">
+                    </div>
+                    <div class="form-group">
+                        <label for="lesson-date">Data</label>
+                        <input type="date" id="lesson-date" required>
+                    </div>
+                </div>
+                <div class="form-row double">
+                    <div class="form-group">
+                        <label for="lesson-source">Origem</label>
+                        <select id="lesson-source">
+                            <option value="chat">Chat</option>
+                            <option value="role-play">Role-Play</option>
+                            <option value="manual">Notas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lesson-words">Palavras-chave</label>
+                        <input type="text" id="lesson-words" placeholder="Separadas por vírgula">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lesson-notes">Notas</label>
+                    <textarea id="lesson-notes" rows="6" placeholder="Resumo do que praticaste ou aprendeste."></textarea>
+                </div>
+                <div class="lesson-actions">
+                    <button type="button" class="lesson-btn ghost" id="lesson-cancel">Cancelar</button>
+                    <button type="submit" class="lesson-btn primary" id="lesson-save">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 

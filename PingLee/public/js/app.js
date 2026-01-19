@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chat: { path: '/js/chat.js', loaded: false, initialized: false, loading: null, initFn: () => window.TextChat?.init() },
             'role-play': { path: '/js/role-play.js', loaded: false, initialized: false, loading: null, initFn: () => window.RolePlay?.init() },
             vocabulary: { path: '/js/vocabulary.js', loaded: false, initialized: false, loading: null, initFn: () => window.Vocabulary?.init() },
+            lessons: { path: '/js/lessons.js', loaded: false, initialized: false, loading: null, initFn: () => window.Lessons?.init() },
         },
 
         init() {

@@ -10,7 +10,9 @@ const TextChat = {
         const input = document.querySelector('#chat .message-input');
         const messagesContainer = document.querySelector('#chat .chat-messages');
         this.modeButtons = document.querySelectorAll('.chat-mode-switch .mode-btn');
+        this.resetBtn = document.querySelector('#chat .reset-chat-btn');
         this.bindModeButtons(messagesContainer, input);
+        this.bindReset(messagesContainer, input);
         UI.attachAudioSpeedToggle('#audio-slow-toggle', (speed) => {
             UI.audioSpeed = speed;
         }, 'chat_audio_slow');
@@ -206,6 +208,24 @@ const TextChat = {
         this.updateModeUI();
         const restored = this.restoreHistory(container);
         if (!restored) this.startConversation(container, input);
+    },
+
+    bindReset(container, input) {
+        if (!this.resetBtn) return;
+        this.resetBtn.addEventListener('click', () => this.resetChat(container, input));
+    },
+
+    resetChat(container, input) {
+        this.history = [];
+        container.innerHTML = '';
+        try {
+            localStorage.removeItem(this.storageKey());
+        } catch (_) {}
+        if (input) {
+            input.value = '';
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        this.startConversation(container, input);
     },
 
     updateModeUI() {

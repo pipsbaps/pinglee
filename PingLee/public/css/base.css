@@ -201,9 +201,22 @@ section:target {
   padding: 8px 4px;
   padding-bottom: calc(8px + env(safe-area-inset-bottom));
   z-index: 100;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Esconde navegação quando teclado está aberto */
+.mobile-nav.hidden {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* iOS Safari: ajuste adicional */
+@supports (-webkit-touch-callout: none) {
+  .mobile-nav {
+    position: sticky; /* Muda para sticky no iOS */
+    bottom: 0;
+  }
 }
 
 .nav-item {

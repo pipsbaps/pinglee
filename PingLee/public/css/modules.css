@@ -1239,6 +1239,7 @@ body.modal-open {
   border-radius: 14px;
   padding: 0.65rem 0.75rem;
   font-size: 0.95rem;
+  max-width: -webkit-fill-available;
 }
 .word-modal form textarea {
   min-height: 120px;

@@ -38,6 +38,7 @@
 }
 
 :root {
+  --app-height: 100dvh;
   --app-bg: #f7f8fa;
   --header-bg: #ffffff;
   --text-primary: #333334;

@@ -10,12 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
             lessons: { path: '/js/lessons.js', loaded: false, initialized: false, loading: null, initFn: () => window.Lessons?.init() },
         },
 
+        disableAutocorrect() {
+            const attrs = {
+                autocorrect: 'off',
+                autocapitalize: 'none',
+                spellcheck: 'false'
+            };
+            document.querySelectorAll('input, textarea').forEach(el => {
+                Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+            });
+        },
+
         init() {
             this.setupNavigation();
             this.setupHashListener();
             this.showInitialSection();
             // Preload vocabulário para evitar atraso na primeira abertura
             this.ensureModule('vocabulary');
+            this.disableAutocorrect();
         },
 
         setupNavigation() {

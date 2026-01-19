@@ -158,8 +158,10 @@ const UI = {
     },
 
     scrollToBottom(container) {
-        if (container) {
-            container.scrollTop = container.scrollHeight;
+        if (!container) return;
+        const nearBottom = (container.scrollHeight - container.clientHeight - container.scrollTop) < 80;
+        if (nearBottom) {
+          container.scrollTop = container.scrollHeight;
         }
     },
 

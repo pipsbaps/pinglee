@@ -2,7 +2,7 @@
 #chat {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: var(--app-height);
   box-sizing: border-box;
   padding: 1rem 1rem calc(var(--chat-form-height) + var(--nav-height) + 16px);
   gap: 0.5rem;
@@ -37,6 +37,12 @@
   justify-content: flex-start;
   gap: 0.5rem;
   padding: 0.5rem 0.25rem;
+}
+.chat-form textarea.message-input {
+  width: 100%;
+  resize: none;
+  min-height: 44px;
+  line-height: 1.4;
 }
 .reset-chat-btn {
   font-weight: 800;
@@ -96,7 +102,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
@@ -1286,7 +1292,8 @@ body.modal-open {
   max-width: 520px;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
   padding: 1.25rem 1.25rem 1.5rem;
-  overflow: hidden;
+  max-height: 90vh;
+  overflow: auto;
 }
 .word-modal form {
   display: flex;
@@ -1886,6 +1893,8 @@ body.modal-open {
 .lesson-modal {
   max-width: 540px;
   padding: 1.1rem 1.2rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .lesson-modal-header {
   display: flex;

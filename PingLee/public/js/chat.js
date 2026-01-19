@@ -15,6 +15,9 @@ const TextChat = {
         this.bindModeButtons(messagesContainer, input);
         this.bindReset(messagesContainer, input);
         this.bindSaveLesson(messagesContainer);
+        this.bindViewportHeight();
+        this.bindScrollBlur(messagesContainer, input);
+        this.bindEnterBehavior(form, input);
         UI.attachAudioSpeedToggle('#audio-slow-toggle', (speed) => {
             UI.audioSpeed = speed;
         }, 'chat_audio_slow');
@@ -37,7 +40,6 @@ const TextChat = {
             // 1. Adiciona a mensagem do utilizador e foca o input
             this.pushUserMessage(message, messagesContainer);
             input.value = '';
-            input.focus(); // Garante que o foco regressa ao input
             this.toggleSendButton(input, form.querySelector('.send-button'));
 
             // 2. Mostra o indicador de "a escrever..."
@@ -223,6 +225,40 @@ const TextChat = {
             const payload = this.buildLessonFromChat();
             if (!payload) return;
             window.Lessons?.addFromChat?.(payload);
+        });
+    },
+
+    bindViewportHeight() {
+        const apply = () => {
+            const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+            document.documentElement.style.setProperty('--app-height', `${h}px`);
+        };
+        apply();
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', apply);
+        } else {
+            window.addEventListener('resize', apply);
+        }
+    },
+
+    bindScrollBlur(container, input) {
+        if (!container || !input) return;
+        const blurInput = () => input.blur();
+        container.addEventListener('touchmove', blurInput, { passive: true });
+        container.addEventListener('wheel', blurInput, { passive: true });
+        container.addEventListener('scroll', () => {
+            const nearBottom = (container.scrollHeight - container.clientHeight - container.scrollTop) < 80;
+            container.dataset.stickToBottom = nearBottom ? '1' : '0';
+        }, { passive: true });
+    },
+
+    bindEnterBehavior(form, input) {
+        if (!form || !input) return;
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                form.requestSubmit();
+            }
         });
     },
 

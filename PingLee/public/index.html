@@ -32,8 +32,8 @@
                 <div class="chat-messages"></div>
                 <div class="chat-form-container">
                     <form class="chat-form text-form">
-                        <input type="text" class="message-input" placeholder="Escreva a sua mensagem..."
-                            autocomplete="off" lang="zh-Hans" inputmode="text">
+                        <textarea class="message-input" rows="1" placeholder="Escreva a sua mensagem..."
+                            autocomplete="off" lang="zh-Hans" inputmode="text" autocorrect="off" autocapitalize="none" spellcheck="false"></textarea>
                         <button type="submit" class="send-button" aria-label="Enviar" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                                 <path
@@ -217,11 +217,11 @@
                 <div class="form-row triple">
                     <div class="form-group">
                         <label for="character-input">Caracteres</label>
-                        <input type="text" id="character-input" required lang="zh-Hans" inputmode="text">
+                        <input type="text" id="character-input" required lang="zh-Hans" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="pinyin-input">Pinyin</label>
-                        <input type="text" id="pinyin-input" required lang="en" inputmode="latin">
+                        <input type="text" id="pinyin-input" required lang="en" inputmode="latin" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group compact-action">
                         <label class="visually-hidden" for="ai-fill-btn">Auto</label>
@@ -232,33 +232,33 @@
                 <div class="form-row triple">
                     <div class="form-group">
                         <label for="translation-input">Significado</label>
-                        <input type="text" id="translation-input" required lang="pt" inputmode="text">
+                        <input type="text" id="translation-input" required lang="pt" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="hsk-input">HSK</label>
-                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text">
+                        <input type="text" id="hsk-input" placeholder="HSK1, HSK2, N/A..." lang="en" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="pos-input">Função</label>
                         <input type="text" id="pos-input" placeholder="Substantivo, Verbo..." lang="pt"
-                            inputmode="text">
+                            inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                 </div>
 
                 <div class="form-row double">
                     <div class="form-group">
                         <label for="example-chinese-input">Exemplo</label>
-                        <input type="text" id="example-chinese-input" lang="zh-Hans" inputmode="text">
+                        <input type="text" id="example-chinese-input" lang="zh-Hans" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="example-translation-input">Tradução</label>
-                        <input type="text" id="example-translation-input" lang="pt" inputmode="text">
+                        <input type="text" id="example-translation-input" lang="pt" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                 </div>
 
                 <div class="form-group notes-group">
                     <label for="notes-input" class="visually-hidden">Notas</label>
-                    <textarea id="notes-input" rows="2" placeholder="Notas"></textarea>
+                    <textarea id="notes-input" rows="2" placeholder="Notas" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"></textarea>
                 </div>
 
                 <div class="form-actions">
@@ -287,17 +287,17 @@
                 <div class="form-row double">
                     <div class="form-group">
                         <label for="lesson-title">Título</label>
-                        <input type="text" id="lesson-title" required placeholder="Ex: Apresentações básicas">
+                        <input type="text" id="lesson-title" required placeholder="Ex: Apresentações básicas" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="lesson-date">Data</label>
-                        <input type="date" id="lesson-date" required>
+                        <input type="date" id="lesson-date" required autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                 </div>
                 <div class="form-row double">
                     <div class="form-group">
                         <label for="lesson-source">Origem</label>
-                        <select id="lesson-source">
+                        <select id="lesson-source" autocomplete="off" autocorrect="off" autocapitalize="none">
                             <option value="chat">Chat</option>
                             <option value="role-play">Role-Play</option>
                             <option value="manual">Notas</option>
@@ -305,12 +305,12 @@
                     </div>
                     <div class="form-group">
                         <label for="lesson-words">Palavras-chave</label>
-                        <input type="text" id="lesson-words" placeholder="Separadas por vírgula">
+                        <input type="text" id="lesson-words" placeholder="Separadas por vírgula" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lesson-notes">Notas</label>
-                    <textarea id="lesson-notes" rows="6" placeholder="Resumo do que praticaste ou aprendeste."></textarea>
+                    <textarea id="lesson-notes" rows="6" placeholder="Resumo do que praticaste ou aprendeste." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"></textarea>
                 </div>
                 <div class="lesson-quiz"></div>
                 <div class="lesson-actions">

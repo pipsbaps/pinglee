@@ -468,7 +468,11 @@ const Vocabulary = {
     if (!radEntry?.characters) return;
     const confirmed = window.confirm(`Remover "${word.char}"?`);
     if (!confirmed) return;
-    radEntry.characters = radEntry.characters.filter(w => w.id === id ? false : this.buildWordId(radicalKey, w) !== id);
+    radEntry.characters = radEntry.characters.filter((w, idx) => {
+      if (w.id && w.id === id) return false;
+      const generatedId = this.buildWordId(radicalKey, w, idx);
+      return generatedId !== id;
+    });
     this.modalStack = [];
     this.closeDetailModal();
     this.render();
@@ -816,7 +820,10 @@ tradução`;
         return;
       }
       if (idExisting) {
-        const idx = radEntry.characters.findIndex(w => w.id === idExisting);
+        const idx = radEntry.characters.findIndex((w, i) => {
+          if (w.id && w.id === idExisting) return true;
+          return this.buildWordId(targetRadical, w, i) === idExisting;
+        });
         if (idx >= 0) radEntry.characters[idx] = { ...radEntry.characters[idx], ...wordData };
         else radEntry.characters.unshift(wordData);
       } else {

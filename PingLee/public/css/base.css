@@ -185,34 +185,6 @@ section:target {
   display: flex;
 }
 
-/* --- Header --- */
-.app-header {
-  background: url("/images/pingleeheader.png");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  color: var(--text-primary);
-  padding: calc(env(safe-area-inset-top) + 1rem) 1rem 1.25rem;
-  text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-  position: sticky;
-  top: 0;
-  min-height: 120px;
-}
-.app-header h1 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-@media (max-width: 720px) {
-  .app-header {
-    padding: calc(env(safe-area-inset-top) + 0.65rem) 0.8rem 0.85rem;
-    min-height: 96px;
-  }
-}
-
 /* --- BARRA DE NAVEGAÇÃO INFERIOR --- */
 .mobile-nav {
   position: fixed;

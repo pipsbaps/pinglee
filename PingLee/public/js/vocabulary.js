@@ -296,18 +296,15 @@ const Vocabulary = {
         <div class="word-tags">
           ${this.formatHSK(w.hsk) ? `<span class="tag tag-hsk">${this.formatHSK(w.hsk)}</span>` : ''}
           ${this.getTypes(w).map(t => `<span class="tag tag-pos">${t}</span>`).join('')}
+          ${this.renderCompoundTags(w)}
         </div>
-        <div class="word-compounds" data-word-idx="${idx}"></div>
       </div>
     `).join('');
 
     this.panelEl.innerHTML = html;
     const cards = this.panelEl.querySelectorAll('.word-card');
     cards.forEach(card => {
-      const idx = Number(card.dataset.wordIdx);
       card.addEventListener('click', () => this.openWord(card.dataset.id));
-      const compContainer = card.querySelector('.word-compounds');
-      this.renderCompoundChips(compContainer, words[idx], card);
     });
     this.updateFilterState(words.length);
   },
@@ -592,28 +589,22 @@ const Vocabulary = {
     return (suggestions || []).filter(s => s && s.word && !this.existsInVocabulary(s.word, s.pinyin));
   },
 
-  renderCompoundChips(container, word, cardEl) {
-    if (!container || !word) return;
-    const compounds = Array.isArray(word.compounds) ? word.compounds : [];
-    if (!compounds.length) {
-      container.remove();
-      return;
+  renderCompoundTags(word) {
+    const compounds = Array.isArray(word?.compounds) ? word.compounds : [];
+    if (!compounds.length) return '';
+    return compounds.map(c => `<span class="compound-chip">${c.char || ''}</span>`).join('');
+  },
+
+  setAiFillLoading(isLoading) {
+    if (!this.aiFillBtn) return;
+    this.aiFillBtn.disabled = isLoading;
+    if (isLoading) {
+      this.aiFillBtn.classList.add('is-loading');
+      this.aiFillBtn.innerHTML = '<span class="dots-loading"><span>.</span><span>.</span><span>.</span></span>';
+    } else {
+      this.aiFillBtn.classList.remove('is-loading');
+      this.aiFillBtn.textContent = 'Auto';
     }
-    container.innerHTML = '';
-    requestAnimationFrame(() => {
-      if (!container.isConnected) return;
-      const maxWidth = Math.max((cardEl?.clientWidth || container.clientWidth || 0) - 16, 0);
-      compounds.forEach(comp => {
-        const chip = document.createElement('span');
-        chip.className = 'compound-chip';
-        chip.textContent = comp.char || '';
-        container.appendChild(chip);
-        if (container.scrollWidth > maxWidth) {
-          container.removeChild(chip);
-        }
-      });
-      if (!container.childElementCount) container.remove();
-    });
   },
 
   applyFilters(words) {
@@ -693,14 +684,14 @@ nível de hsk
 frases exemplos + pinyin
 tradução`;
     try {
-      if (this.aiFillBtn) { this.aiFillBtn.disabled = true; this.aiFillBtn.textContent = 'A pesquisar...'; }
+      this.setAiFillLoading(true);
       const aiData = await this.lookupWordWithAI(prompt);
       this.applyAIData(aiData);
     } catch (e) {
       console.error(e);
       alert('Não foi possível obter dados da IA.');
     } finally {
-      if (this.aiFillBtn) { this.aiFillBtn.disabled = false; this.aiFillBtn.textContent = 'Auto'; }
+      this.setAiFillLoading(false);
     }
   },
 

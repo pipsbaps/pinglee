@@ -23,6 +23,7 @@ const TextChat = {
             UI.audioSpeed = speed;
         }, 'chat_audio_slow');
         this.toggleSendButton(input, form?.querySelector('.send-button'));
+        this.setupInputFocusScroll();
 
         // Restaura histórico, se existir
         const restored = this.restoreHistory(messagesContainer, this.mode);
@@ -359,6 +360,31 @@ const TextChat = {
         if (!btn) return;
         btn.classList.add('is-active-action');
         setTimeout(() => btn.classList.remove('is-active-action'), 220);
+    },
+
+    setupInputFocusScroll() {
+        const input = document.querySelector('#chat .message-input');
+        const messagesContainer = document.querySelector('#chat .chat-messages');
+        if (!input || !messagesContainer) return;
+
+        input.addEventListener('focus', () => {
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                setTimeout(() => {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }, 400);
+            } else {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+            }
+        });
+
+        input.addEventListener('blur', () => {
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        });
     }
 };
 

@@ -73,9 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const keyboardOpen =
                 getKeyboardOffsetPx() > 0 ||
-                ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '');
+                ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
 
             nav.classList.toggle('hidden', keyboardOpen);
+
+            // Scroll para o input quando o teclado abre
+            if (keyboardOpen && document.activeElement) {
+                setTimeout(() => {
+                    document.activeElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }, 300);
+            }
 
             document.documentElement.style.setProperty(
                 '--nav-offset',

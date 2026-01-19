@@ -137,35 +137,35 @@
 }
 
 .msg-chinese {
-  font-size: 0.98rem;
-  font-weight: 300;
+  font-family: var(--font-chinese);
+  font-size: 1.2rem;
+  font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0.01em;
-}
-.msg-chinese {
-  font-family: var(--font-chinese);
-  font-weight: 300;
-  font-size: 1.2rem;
 }
 .msg-pinyin,
 .msg-translation,
 .msg-feedback {
   font-family: var(--font-main);
-  font-size: 0.95rem;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid #e6e6e6;
 }
 .msg-pinyin {
-  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
   font-style: italic;
+  color: rgba(0, 0, 0, 0.65);
 }
+
 .msg-translation {
+  font-size: 0.9rem;
   color: #4f5563;
-  font-size: 0.95rem;
 }
+
 .msg-feedback {
+  font-size: 0.9rem;
   font-style: italic;
+  color: #6a6a6a;
 }
 .hidden {
   display: none;

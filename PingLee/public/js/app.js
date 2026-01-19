@@ -46,12 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
                 root.style.setProperty('--keyboard-offset', `${offset}px`);
             };
+            const toggleNav = this.toggleNavForKeyboard.bind(this);
             apply();
-            window.visualViewport.addEventListener('resize', apply);
-            window.visualViewport.addEventListener('scroll', apply);
-            window.addEventListener('focusin', this.toggleNavForKeyboard.bind(this));
-            window.addEventListener('focusout', this.toggleNavForKeyboard.bind(this));
-            this.toggleNavForKeyboard();
+            toggleNav();
+            window.visualViewport.addEventListener('resize', () => { apply(); toggleNav(); });
+            window.visualViewport.addEventListener('scroll', () => { apply(); toggleNav(); });
+            window.addEventListener('focusin', toggleNav);
+            window.addEventListener('focusout', toggleNav);
         },
 
         toggleNavForKeyboard() {
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return Number.isFinite(px) ? px : 0;
             }
 
-            const nav = document.querySelector('.bottom-nav');
+            const nav = document.querySelector('.mobile-nav');
             if (!nav) return;
 
             const keyboardOpen =

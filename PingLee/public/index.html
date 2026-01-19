@@ -114,9 +114,12 @@
                     </div>
 
                     <div class="vocab-filters">
-                        <input type="search" id="vocab-search"
-                            placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off"
-                            inputmode="search">
+                        <form id="vocab-search-form" class="vocab-search-form" role="search">
+                            <input type="search" id="vocab-search"
+                                placeholder="Procurar por caractere, pinyin ou significado..." autocomplete="off"
+                                inputmode="search">
+                            <button type="submit" hidden aria-hidden="true" tabindex="-1">Pesquisar</button>
+                        </form>
                         <select id="vocab-filter-hsk">
                             <option value="">HSK (filtrar)</option>
                             <option value="HSK1">HSK1</option>
@@ -176,7 +179,6 @@
     <div id="word-modal" class="modal-overlay hidden">
         <div class="modal-content word-modal">
             <div class="word-modal-header">
-                <button type="button" class="word-modal-close" aria-label="Fechar">✕</button>
             </div>
             <div id="word-modal-body"></div>
         </div>

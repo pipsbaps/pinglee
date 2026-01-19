@@ -989,6 +989,17 @@
   color: var(--text-primary);
   line-height: 1.4;
 }
+.feedback-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.feedback-suggestion input[type="checkbox"] {
+  accent-color: #1da8da;
+}
+.suggestion-label {
+  font-weight: 600;
+}
 .feedback-actions {
   display: flex;
   gap: 0.5rem;
@@ -1234,8 +1245,9 @@ body.modal-open {
   display: block;
 }
 .word-modal form input,
+.word-modal form select,
 .word-modal form textarea {
-  border: 1.5px solid #6a6f79;
+  border: 1.5px solid #b7bdc6;
   border-radius: 14px;
   padding: 0.65rem 0.75rem;
   font-size: 0.95rem;
@@ -1294,10 +1306,24 @@ body.modal-open {
   outline: 2px solid #54c9ef;
   outline-offset: 2px;
 }
+.word-form-close {
+  background: none;
+  border: none;
+  color: #1da8da;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.35rem;
+}
+.word-form-close:focus-visible {
+  outline: 2px solid #1da8da;
+  border-radius: 6px;
+}
 .word-modal form input,
 .word-modal form select,
 .word-modal form textarea {
   border-radius: 14px;
+  border-color: #b7bdc6;
 }
 .form-group-inline {
   display: flex;
@@ -1662,4 +1688,23 @@ body.modal-open {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+.word-compounds {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+  overflow: hidden;
+}
+.compound-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: #eef5ff;
+  color: #183c7a;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid #d8e7ff;
+  white-space: nowrap;
 }

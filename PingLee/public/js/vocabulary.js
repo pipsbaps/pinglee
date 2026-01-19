@@ -295,8 +295,8 @@ const Vocabulary = {
         <div class="word-title"><span class="word-char">${w.char}</span><span class="word-sep"> • </span><span class="word-py">${w.pinyin}</span></div>
         <div class="word-meaning">${w.meaning}</div>
         <div class="word-tags">
-          ${this.formatHSK(w.hsk) ? `<span class="tag tag-hsk">${this.formatHSK(w.hsk)}</span>` : ''}
-          ${this.getTypes(w).map(t => `<span class="tag tag-pos">${t}</span>`).join('')}
+          ${this.formatHSK(w.hsk) ? `<span class="tag tag-hsk ${this.getHSKClass(w.hsk)}">${this.formatHSK(w.hsk)}</span>` : ''}
+          ${this.getTypes(w).map(t => `<span class="tag tag-pos ${this.getPOSClass(t)}">${t}</span>`).join('')}
           ${this.renderCompoundTags(w)}
         </div>
       </div>
@@ -344,8 +344,8 @@ const Vocabulary = {
         </div>
         <div class="detail-meaning">${word.meaning || '—'}</div>
         <div class="word-tags">
-          ${this.formatHSK(word.hsk) ? `<span class="tag tag-hsk">${this.formatHSK(word.hsk)}</span>` : ''}
-          ${this.getTypes(word).map(t => `<span class="tag tag-pos">${t}</span>`).join('')}
+          ${this.formatHSK(word.hsk) ? `<span class="tag tag-hsk ${this.getHSKClass(word.hsk)}">${this.formatHSK(word.hsk)}</span>` : ''}
+          ${this.getTypes(word).map(t => `<span class="tag tag-pos ${this.getPOSClass(t)}">${t}</span>`).join('')}
         </div>
         ${formattedNotes}
         ${compoundLinks ? `<div class="related-links">${compoundLinks}</div>` : ''}
@@ -373,7 +373,7 @@ const Vocabulary = {
         btn.addEventListener('click', () => this.openWord(relId));
       } else if (compoundIdx) {
         const comp = (word.compounds || [])[Number(compoundIdx)];
-        if (comp) btn.addEventListener('click', () => this.openCompoundDetail(comp, id));
+        if (comp) btn.addEventListener('click', () => this.openCompoundDetail(comp, id, Number(compoundIdx)));
       }
     });
     const backBtn = body.querySelector('.detail-back');
@@ -401,11 +401,12 @@ const Vocabulary = {
     this.modalStack = [];
   },
 
-  openCompoundDetail(compound, sourceId = null) {
+  openCompoundDetail(compound, sourceId = null, compoundIndex = null) {
     const overlay = this.detailOverlay;
     const body = this.detailBody;
     if (!overlay || !body || !compound) return;
-    const pseudoId = compound.id || `compound::${compound.char || ''}::${compound.pinyin || ''}`;
+    if (!compound.id) compound.id = `compound-${Date.now()}-${Math.random()}`;
+    const pseudoId = compound.id;
     if (this.modalStack[this.modalStack.length - 1] !== pseudoId) this.modalStack.push(pseudoId);
 
     const titleEl = overlay.querySelector('#modal-title');
@@ -424,13 +425,16 @@ const Vocabulary = {
           <div class="detail-pinyin">${compound.pinyin || '—'}</div>
         </div>
         <div class="detail-meaning">${compound.meaning || '—'}</div>
-        ${this.formatHSK(compound.hsk) ? `<div class="word-tags"><span class="tag tag-hsk">${this.formatHSK(compound.hsk)}</span></div>` : ''}
-        ${compound.type?.length ? `<div class="word-tags">${compound.type.map(t => `<span class="tag tag-pos">${t}</span>`).join('')}</div>` : ''}
+        ${this.formatHSK(compound.hsk) ? `<div class="word-tags"><span class="tag tag-hsk ${this.getHSKClass(compound.hsk)}">${this.formatHSK(compound.hsk)}</span></div>` : ''}
+        ${compound.type?.length ? `<div class="word-tags">${compound.type.map(t => `<span class="tag tag-pos ${this.getPOSClass(t)}">${t}</span>`).join('')}</div>` : ''}
         ${formattedNotes}
         <div class="detail-actions">
           <div class="detail-actions-left">
             <button class="icon-btn ghost detail-back" aria-label="Voltar">
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="icon-btn detail-edit compound-edit" aria-label="Editar">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 17.25V20h2.75L17.81 8.94l-2.75-2.75L4 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.76 3.76 1.83-1.83z"/></svg>
             </button>
           </div>
         </div>
@@ -447,6 +451,10 @@ const Vocabulary = {
         this.closeDetailModal();
       }
     });
+    const editBtn = body.querySelector('.compound-edit');
+    if (editBtn) {
+      editBtn.addEventListener('click', () => this.openCompoundForm(compound, sourceId, compoundIndex));
+    }
 
     overlay.classList.remove('hidden');
     requestAnimationFrame(() => overlay.classList.add('active'));
@@ -543,6 +551,13 @@ const Vocabulary = {
     return `HSK${numeric}`;
   },
 
+  getHSKClass(hsk) {
+    const label = this.formatHSK(hsk);
+    const match = label.match(/HSK\s*([1-6])/i);
+    if (!match) return '';
+    return `hsk${match[1]}`;
+  },
+
   flattenWord(word) {
     if (!word) return [];
     const stack = [word];
@@ -566,7 +581,7 @@ const Vocabulary = {
     return this.flattenCharacters(characters).length;
   },
 
-  existsInVocabulary(char, pinyin = '') {
+  existsInVocabulary(char, pinyin = '', excludeId = null) {
     const targetChar = (char || '').trim();
     const targetPy = (pinyin || '').trim().toLowerCase();
     if (!targetChar) return false;
@@ -577,6 +592,7 @@ const Vocabulary = {
         if (found) return;
         this.flattenWord(w).forEach(item => {
           if (found) return;
+          if (excludeId && item.id && item.id === excludeId) return;
           const sameChar = (item.char || '').trim() === targetChar;
           const samePy = targetPy ? (item.pinyin || '').trim().toLowerCase() === targetPy : true;
           if (sameChar && samePy) found = true;
@@ -588,6 +604,11 @@ const Vocabulary = {
 
   filterNewSuggestions(suggestions = []) {
     return (suggestions || []).filter(s => s && s.word && !this.existsInVocabulary(s.word, s.pinyin));
+  },
+
+  getPOSClass(pos) {
+    if (!pos) return '';
+    return `pos-${this.slugify(pos)}`;
   },
 
   renderCompoundTags(word) {
@@ -637,6 +658,10 @@ const Vocabulary = {
 
   openFormModal(id = null) {
     if (!this.formModal) return;
+    this.formModal.dataset.mode = 'word';
+    this.formModal.dataset.parentId = '';
+    this.formModal.dataset.compoundIdx = '';
+    this.formModal.dataset.compoundId = '';
     if (!this.state.selectedRadical && !id) {
       alert('Escolhe um radical antes de adicionar.');
       return;
@@ -671,6 +696,29 @@ const Vocabulary = {
     if (!this.formModal) return;
     this.formModal.classList.remove('active');
     setTimeout(() => this.formModal.classList.add('hidden'), 150);
+  },
+
+  openCompoundForm(compound, parentId, compoundIndex = null) {
+    if (!this.formModal) return;
+    this.formModal.dataset.mode = 'compound';
+    this.formModal.dataset.parentId = parentId || '';
+    this.formModal.dataset.compoundIdx = compoundIndex !== null ? String(compoundIndex) : '';
+    const cid = compound.id || `compound-${Date.now()}-${Math.random()}`;
+    this.formModal.dataset.compoundId = cid;
+    if (this.wordForm) this.wordForm.reset();
+    this.formFields.id.value = cid;
+    this.formFields.character.value = compound.char || '';
+    this.formFields.pinyin.value = compound.pinyin || '';
+    this.formFields.meaning.value = compound.meaning || '';
+    this.formFields.hsk.value = compound.hsk || '';
+    this.formFields.type.value = Array.isArray(compound.type) ? compound.type.join(', ') : (compound.type || '');
+    this.formFields.exampleZh.value = compound.example?.zh || '';
+    this.formFields.examplePt.value = compound.example?.pt || '';
+    this.formFields.notes.value = (compound.notes || []).join(' ');
+    this.formModal.dataset.radical = this.state.selectedRadical || '';
+    if (this.formModalTitle) this.formModalTitle.textContent = 'Editar Palavra Relacionada';
+    this.formModal.classList.remove('hidden');
+    requestAnimationFrame(() => this.formModal.classList.add('active'));
   },
 
   async handleAiFill() {
@@ -721,13 +769,18 @@ tradução`;
 
   handleFormSubmit(e) {
     e.preventDefault();
+    const mode = this.formModal?.dataset.mode || 'word';
     const targetRadical = this.formModal?.dataset.radical || this.state.selectedRadical;
-    if (!targetRadical) { alert('Escolhe um radical antes de guardar.'); return; }
-    const radEntry = VOCABULARY_DATA.radicals[targetRadical];
-    if (!radEntry) { alert('Radical não encontrado.'); return; }
-    if (!Array.isArray(radEntry.characters)) radEntry.characters = [];
+    if (mode === 'word' && !targetRadical) { alert('Escolhe um radical antes de guardar.'); return; }
+    const radEntry = mode === 'word' ? VOCABULARY_DATA.radicals[targetRadical] : null;
+    if (mode === 'word' && !radEntry) { alert('Radical não encontrado.'); return; }
+    if (mode === 'word' && !Array.isArray(radEntry.characters)) radEntry.characters = [];
 
     const idExisting = this.formFields.id.value || null;
+    const isCompoundEdit = mode === 'compound';
+    const parentId = isCompoundEdit ? (this.formModal?.dataset.parentId || '') : '';
+    const compoundIdx = isCompoundEdit ? Number(this.formModal?.dataset.compoundIdx || -1) : -1;
+
     const wordData = {
       id: idExisting || `user-${Date.now()}`,
       char: this.formFields.character.value.trim(),
@@ -746,31 +799,64 @@ tradução`;
       alert('Caractere, Pinyin e Significado são obrigatórios.');
       return;
     }
-    const duplicate = radEntry.characters.find(w =>
-      w.id !== idExisting &&
-      w.char === wordData.char &&
-      w.pinyin.toLowerCase() === wordData.pinyin.toLowerCase() &&
-      w.meaning.toLowerCase() === wordData.meaning.toLowerCase()
-    );
-    if (duplicate) {
-      alert('Esta palavra já existe neste radical.');
-      return;
-    }
-    if (idExisting) {
-      const idx = radEntry.characters.findIndex(w => w.id === idExisting);
-      if (idx >= 0) radEntry.characters[idx] = { ...radEntry.characters[idx], ...wordData };
-      else radEntry.characters.unshift(wordData);
+
+    if (mode === 'word') {
+      const existingWord = idExisting ? radEntry.characters.find(w => w.id === idExisting) : null;
+      if (existingWord?.example?.pinyin && !wordData.example.pinyin) {
+        wordData.example.pinyin = existingWord.example.pinyin;
+      }
+      const duplicate = this.existsInVocabulary(wordData.char, wordData.pinyin, idExisting || null);
+      if (duplicate) {
+        alert('Esta palavra já existe.');
+        return;
+      }
+      if (idExisting) {
+        const idx = radEntry.characters.findIndex(w => w.id === idExisting);
+        if (idx >= 0) radEntry.characters[idx] = { ...radEntry.characters[idx], ...wordData };
+        else radEntry.characters.unshift(wordData);
+      } else {
+        radEntry.characters.unshift(wordData);
+      }
+      this.lastAddedWordRef = { id: wordData.id, radicalKey: targetRadical };
+      this.state.selectedRadical = targetRadical;
+      this.render();
+      this.renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
+      this.fetchSuggestionsFor(wordData.char).then(suggestions => {
+        if (suggestions?.length) this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, false);
+        else this.renderFeedback('✓ Palavra guardada com sucesso!', [], false, false);
+      });
     } else {
-      radEntry.characters.unshift(wordData);
+      const parent = parentId ? this.findWordById(parentId) : null;
+      const baseWord = parent?.word;
+      if (!baseWord) { alert('Palavra base não encontrada.'); return; }
+      if (!Array.isArray(baseWord.compounds)) baseWord.compounds = [];
+      const existingCompound = (compoundIdx >= 0 && baseWord.compounds[compoundIdx]) ? baseWord.compounds[compoundIdx] : null;
+      if (existingCompound?.example?.pinyin && !wordData.example.pinyin) {
+        wordData.example.pinyin = existingCompound.example.pinyin;
+      }
+      const duplicate = this.existsInVocabulary(wordData.char, wordData.pinyin, wordData.id);
+      const duplicateInCompounds = baseWord.compounds.some((c, idx) =>
+        idx !== compoundIdx &&
+        (c.char || '').trim() === wordData.char &&
+        (c.pinyin || '').trim().toLowerCase() === wordData.pinyin.toLowerCase()
+      );
+      if (duplicate || duplicateInCompounds) {
+        alert('Esta palavra já existe.');
+        return;
+      }
+      if (compoundIdx >= 0 && compoundIdx < baseWord.compounds.length) {
+        baseWord.compounds[compoundIdx] = { ...baseWord.compounds[compoundIdx], ...wordData };
+      } else {
+        baseWord.compounds.unshift(wordData);
+      }
+      this.render();
+      this.closeFormModal();
+      if (this.detailOverlay && !this.detailOverlay.classList.contains('hidden')) {
+        const idxToOpen = compoundIdx >= 0 ? compoundIdx : 0;
+        this.openCompoundDetail(baseWord.compounds[idxToOpen], parentId, idxToOpen);
+      }
+      this.renderFeedback('Palavra relacionada atualizada!', [], false, false);
     }
-    this.lastAddedWordRef = { id: wordData.id, radicalKey: targetRadical };
-    this.state.selectedRadical = targetRadical;
-    this.render();
-    this.renderFeedback('✓ Palavra guardada com sucesso!', [], true, false);
-    this.fetchSuggestionsFor(wordData.char).then(suggestions => {
-      if (suggestions?.length) this.renderFeedback('✓ Palavra guardada com sucesso!', suggestions, false, false);
-      else this.renderFeedback('✓ Palavra guardada com sucesso!', [], false, false);
-    });
   },
 
   findWordById(id) {
@@ -855,6 +941,9 @@ tradução`;
         </div>
       </div>
     `;
+    if (hasSuggestions && !loading && !adding) {
+      this.feedbackBox.querySelectorAll('.suggestion-checkbox').forEach(cb => { cb.checked = false; });
+    }
     const closeBtn = this.feedbackBox.querySelector('.close-feedback-btn');
     if (closeBtn) closeBtn.onclick = () => {
       this.clearFeedback();

@@ -1080,15 +1080,36 @@
   border: 1px solid transparent;
 }
 .tag.tag-hsk {
-  background: #e6f1ff;
-  color: #1f4eb8;
-  border-color: #d3e4ff;
+  border-color: transparent;
 }
-.tag.tag-pos {
-  background: #f1f2f5;
-  color: #4b5563;
-  border-color: #e5e7eb;
-}
+.tag.tag-hsk.hsk1 { background: #f28b82; color: #4a0f0c; }
+.tag.tag-hsk.hsk2 { background: #ef5350; color: #ffffff; }
+.tag.tag-hsk.hsk3 { background: #e53935; color: #ffffff; }
+.tag.tag-hsk.hsk4 { background: #c62828; color: #ffffff; }
+.tag.tag-hsk.hsk5 { background: #8e2420; color: #ffffff; }
+.tag.tag-hsk.hsk6 { background: #5c1a12; color: #ffffff; }
+.tag.tag-pos { background: #f1f2f5; color: #4b5563; border-color: #e5e7eb; }
+.tag.tag-pos.pos-verbo { background: #f2c94c; color: #5a4500; }
+.tag.tag-pos.pos-substantivo { background: #f7d774; color: #5a4500; }
+.tag.tag-pos.pos-adjetivo { background: #f9f871; color: #4a4a00; }
+.tag.tag-pos.pos-adjectivo { background: #f9f871; color: #4a4a00; }
+.tag.tag-pos.pos-advérbio,
+.tag.tag-pos.pos-adverbio { background: #b7e66a; color: #2e4a00; }
+.tag.tag-pos.pos-preposicao,
+.tag.tag-pos.pos-preposição { background: #9ee6b8; color: #0f3d2e; }
+.tag.tag-pos.pos-particula,
+.tag.tag-pos.pos-partícula { background: #9fe7e7; color: #0f3a3a; }
+.tag.tag-pos.pos-radical { background: #5dd6d6; color: #003d3d; }
+.tag.tag-pos.pos-classificador { background: #7fc8f8; color: #0a2e4a; }
+.tag.tag-pos.pos-conjuncao,
+.tag.tag-pos.pos-conjunção { background: #6bb6b6; color: #083333; }
+.tag.tag-pos.pos-conector { background: #7a9cc6; color: #0b2340; }
+.tag.tag-pos.pos-expressao,
+.tag.tag-pos.pos-expressão { background: #b7a7e8; color: #2a1a5e; }
+.tag.tag-pos.pos-pronome { background: #b983ff; color: #2d0a5e; }
+.tag.tag-pos.pos-interrogacao,
+.tag.tag-pos.pos-interrogação { background: #f39ac7; color: #5a1436; }
+.tag.tag-pos.pos-prefixo { background: #f6c1e6; color: #4a1f3f; }
 .word-card-extended {
   max-height: 0;
   opacity: 0;

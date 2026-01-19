@@ -35,6 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
 
+        setupKeyboardOffset() {
+            const root = document.documentElement;
+            if (!window.visualViewport) {
+                root.style.setProperty('--keyboard-offset', '0px');
+                return;
+            }
+            const apply = () => {
+                const vv = window.visualViewport;
+                const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+                root.style.setProperty('--keyboard-offset', `${offset}px`);
+            };
+            apply();
+            window.visualViewport.addEventListener('resize', apply);
+            window.visualViewport.addEventListener('scroll', apply);
+        },
+
         toggleNavForKeyboard() {
             const nav = document.querySelector('.mobile-nav');
             if (!nav) return;
@@ -50,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         init() {
             this.setAppHeight();
+            this.setupKeyboardOffset();
             this.setupNavigation();
             this.setupHashListener();
             this.showInitialSection();

@@ -54,6 +54,7 @@
   --nav-active-text: #007aff; /* Alterado para azul */
   --nav-inactive-text: #8e8e93;
   --nav-height: 78px;
+  --keyboard-offset: 0px;
   --chat-form-height: 74px;
   --chat-bottom-gap: clamp(9rem, 18vh, 14rem);
 
@@ -165,7 +166,8 @@ main {
   flex-grow: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 0 16px calc(var(--nav-offset, var(--nav-height)) + env(safe-area-inset-bottom));
+  padding: 0 16px
+    calc(var(--nav-offset, var(--nav-height)) + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -199,7 +201,9 @@ section:target {
   padding: 8px 4px;
   padding-bottom: calc(8px + env(safe-area-inset-bottom));
   z-index: 100;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav-item {

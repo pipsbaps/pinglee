@@ -62,6 +62,18 @@
   font-weight: 800;
 }
 
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.toolbar-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
 .pill-toggle {
   border: 1px solid #e1e1e1;
   background-color: #f3f3f3;
@@ -101,7 +113,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
@@ -172,28 +184,6 @@
 
 .message-tutor {
   align-self: flex-start;
-}
-.message-tutor.typing .bubble {
-  padding: 10px 12px;
-}
-.typing-dots {
-  display: inline-flex;
-  gap: 4px;
-}
-.typing-dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #7f8590;
-  opacity: 0.6;
-  animation: typingBlink 1.2s infinite ease-in-out;
-}
-.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes typingBlink {
-  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
-  40% { transform: scale(1); opacity: 1; }
 }
 .message-tutor .bubble {
   background-color: #f5fcf7;
@@ -377,6 +367,30 @@
   transform: translateY(-1px);
 }
 
+.suggestion-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 1rem;
+  justify-content: center;
+}
+.suggestion-chip {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+.suggestion-chip:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+}
+
 .chat-form-container {
   display: none;
   min-height: var(--chat-form-height);
@@ -414,12 +428,11 @@
   padding: 9px 14px;
   border: 1px solid #e0e0e0;
   border-radius: 999px;
-  font-size: 16px;
+  font-size: 0.7rem;
   background-color: #ffffff;
   transition: all 0.2s ease;
-  min-height: 46px;
-  max-height: 120px;
-  line-height: 1.3;
+  height: 44px;
+  line-height: 1.4;
 }
 .message-input:focus {
   outline: none;
@@ -470,12 +483,15 @@
   .chat-messages {
     padding: 0.4rem 0.6rem 0.9rem;
     scroll-padding-bottom: calc(
-      var(--chat-form-height) + var(--nav-height) + 12px
+      var(--chat-form-height) + var(--nav-height) + 12px +
+        var(--keyboard-offset, 0px)
     );
     min-height: 0;
   }
   .message:last-child {
-    margin-bottom: calc(var(--chat-form-height) + 16px);
+    margin-bottom: calc(
+      var(--chat-form-height) + 16px + var(--keyboard-offset, 0px)
+    );
   }
   .msg-chinese {
     font-size: 0.95rem;
@@ -517,41 +533,28 @@
 /* --- Início: Módulos de Role-Play e Vocabulário (Estilos Originais Restaurados) --- */
 #role-play .scenario-list-container {
   padding: 1.5rem;
-  overflow: hidden;
 }
 #role-play h2 {
   display: none;
 }
 .scenario-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 0.75rem;
-  overflow-x: auto;
-  padding-bottom: 0.25rem;
-  scroll-snap-type: x mandatory;
-}
-.scenario-list::-webkit-scrollbar {
-  height: 6px;
-}
-.scenario-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.12);
-  border-radius: 999px;
 }
 .scenario-button {
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  display: block;
-  min-width: 132px;
-  max-width: 152px;
-  aspect-ratio: 5 / 3;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  height: 100%;
   transition:
     transform 0.15s,
     box-shadow 0.15s;
-  border-radius: 16px;
-  overflow: hidden;
-  scroll-snap-align: start;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 .scenario-button:hover {
   transform: translateY(-2px);
@@ -568,80 +571,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-@media (max-width: 540px) {
-  #role-play .scenario-list-container {
-    padding: 0.75rem 0.5rem;
-  }
-  .scenario-list {
-    gap: 0.55rem;
-  }
-  .scenario-button {
-    min-width: 118px;
-    max-width: 132px;
-    aspect-ratio: 5 / 3;
-  }
-}
-.roleplay-stage {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  background: #f4f7fb;
-  border: 1px solid #e5e9f2;
   border-radius: 16px;
-  padding: 0.9rem;
-  box-shadow: var(--shadow-soft);
-  max-height: calc(100vh - 220px);
-  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
-.roleplay-top {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 0.6rem;
-  align-items: center;
-}
-.roleplay-info h3 {
-  margin: 0.05rem 0;
-}
-.roleplay-body {
+.role-play-chat-container {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  flex: 1;
-  min-height: 0;
+  height: 100%;
 }
-.roleplay-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-.roleplay-start-btn {
-  background: #1da8da;
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  padding: 0.55rem 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-}
-.roleplay-start-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-.roleplay-messages {
-  background: #ffffff;
-  border: 1px solid #e3e7ee;
-  border-radius: 14px;
-  padding: 0.75rem;
-  min-height: 200px;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+.role-play-exit {
+  display: none;
 }
 #role-play .role-play-controls {
   position: static;
@@ -755,10 +694,15 @@
   background: #ff3b30;
   border-radius: 50%;
 }
+/* --- Fim: Módulo de Roleplay --- */
 
+/* --- Início: Módulos Vocabulário --- */
 #vocabulary {
   padding: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
 }
 .visually-hidden {
@@ -1347,33 +1291,6 @@
   background: var(--pos-prefixo-bg);
   color: var(--pos-prefixo-text);
 }
-.train-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border: 1px solid #d7e0ef;
-  background: #f5f9ff;
-  color: #1a3f7a;
-  border-radius: 999px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: 700;
-}
-.train-toggle[aria-pressed="true"] {
-  background: #dcefff;
-  border-color: #badcff;
-}
-.train-flag {
-  display: inline-block;
-  margin-top: 0.35rem;
-  padding: 4px 10px;
-  border-radius: 10px;
-  background: #e8f6ff;
-  color: #0f4ba7;
-  font-weight: 700;
-  font-size: 0.8rem;
-  border: 1px solid #c6e4ff;
-}
 .word-card-extended {
   max-height: 0;
   opacity: 0;
@@ -1767,17 +1684,6 @@ body.modal-open {
   flex-wrap: wrap;
   align-items: center;
 }
-button.metric-button {
-  border: none;
-  background: transparent;
-  padding: 0;
-  text-align: left;
-  cursor: pointer;
-}
-button.metric-button:focus-visible {
-  outline: 2px solid #1da8da;
-  outline-offset: 2px;
-}
 .word-notes {
   margin: 0.15rem 0 0;
   color: #4b5563;
@@ -2019,6 +1925,11 @@ button.metric-button:focus-visible {
 #role-play .chat-form-container {
   display: none;
 }
+#role-play-modal .modal-content.role-modal {
+  background-image: url("/images/backg_roleplay.png");
+  background-size: cover;
+  background-position: center;
+}
 #vocabulary .chat-form-container {
   display: none;
 }
@@ -2061,10 +1972,8 @@ button.metric-button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-height: 0;
+  min-height: 60vh;
   padding-top: 0.35rem;
-  flex: 1 1 auto;
-  overflow: hidden;
 }
 .lessons-search {
   display: flex;
@@ -2081,9 +1990,6 @@ button.metric-button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding-right: 2px;
 }
 .lesson-card {
   background: var(--card-bg);
@@ -2154,11 +2060,6 @@ button.metric-button:focus-visible {
 }
 .icon-pill svg {
   display: block;
-}
-.icon-pill.is-active-action {
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-  transform: translateY(-1px);
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 .tag-badge {
   display: inline-flex;
@@ -2340,16 +2241,4 @@ button.metric-button:focus-visible {
   padding: 0.55rem 0.75rem;
   min-width: 220px;
   background: var(--pill-bg);
-}
-.section-header {
-  padding: 0.6rem 0 0.4rem;
-}
-.section-header h1 {
-  margin: 0;
-  font-size: 1.4rem;
-}
-.section-sub {
-  margin: 0.15rem 0 0;
-  color: var(--muted-text);
-  font-size: 0.95rem;
 }

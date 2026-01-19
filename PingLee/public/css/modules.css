@@ -1251,6 +1251,33 @@
   background: var(--pos-prefixo-bg);
   color: var(--pos-prefixo-text);
 }
+.train-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #d7e0ef;
+  background: #f5f9ff;
+  color: #1a3f7a;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.train-toggle[aria-pressed="true"] {
+  background: #dcefff;
+  border-color: #badcff;
+}
+.train-flag {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: #e8f6ff;
+  color: #0f4ba7;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: 1px solid #c6e4ff;
+}
 .word-card-extended {
   max-height: 0;
   opacity: 0;
@@ -1643,6 +1670,17 @@ body.modal-open {
   gap: 0.35rem;
   flex-wrap: wrap;
   align-items: center;
+}
+button.metric-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+button.metric-button:focus-visible {
+  outline: 2px solid #1da8da;
+  outline-offset: 2px;
 }
 .word-notes {
   margin: 0.15rem 0 0;

@@ -42,6 +42,7 @@ const Vocabulary = {
     this.filterPOSSelect = this.vocabSection.querySelector('#vocab-filter-pos');
     this.metricTotal = this.vocabSection.querySelector('#metric-total');
     this.metricTrain = this.vocabSection.querySelector('#metric-train');
+    this.metricTrainBtn = document.getElementById('metric-train-btn');
     this.addBtn = document.getElementById('open-add-word');
     this.formModal = document.getElementById('word-form-modal');
     this.formModalTitle = document.getElementById('form-modal-title');
@@ -100,6 +101,7 @@ const Vocabulary = {
     if (this.formClose) this.formClose.addEventListener('click', () => this.closeFormModal());
     if (this.aiFillBtn) this.aiFillBtn.addEventListener('click', () => this.handleAiFill());
     if (this.wordForm) this.wordForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
+    if (this.metricTrainBtn) this.metricTrainBtn.addEventListener('click', () => this.showTrainingList());
 
     const observer = new MutationObserver((mutations) => {
       if (mutations.some(m => m.attributeName === 'class')) {
@@ -212,7 +214,7 @@ const Vocabulary = {
 
   renderMetrics() {
     if (this.metricTotal) this.metricTotal.textContent = this.getAllWords().length;
-    if (this.metricTrain) this.metricTrain.textContent = '0';
+    if (this.metricTrain) this.metricTrain.textContent = this.getTrainingWords().length;
   },
 
   renderCategories() {
@@ -280,8 +282,13 @@ const Vocabulary = {
 
   renderWords() {
     this.setPanelLayout('list');
-    const radicalData = VOCABULARY_DATA.radicals[this.state.selectedRadical];
-    let words = radicalData.characters || [];
+    let words = [];
+    if (this.state.showingTrain) {
+      words = this.getTrainingWords().map(item => ({ ...item }));
+    } else {
+      const radicalData = VOCABULARY_DATA.radicals[this.state.selectedRadical];
+      words = radicalData.characters || [];
+    }
 
     words = this.applyFilters(words);
 
@@ -299,6 +306,7 @@ const Vocabulary = {
           ${this.getTypes(w).map(t => `<span class="tag tag-pos ${this.getPOSClass(t)}">${t}</span>`).join('')}
           ${this.renderCompoundTags(w)}
         </div>
+        ${w.train ? '<div class="train-flag" aria-label="Marcada para treinar">Treinar</div>' : ''}
       </div>
     `).join('');
 
@@ -331,11 +339,17 @@ const Vocabulary = {
         return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.char} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
       }
       if (c && typeof c === 'object') {
-        const label = `${c.char || ''}${c.pinyin ? ` (${c.pinyin})` : ''}`;
-        return `<button class="link-rel" data-compound-idx="${idx}">${label}</button>`;
-      }
-      return '';
-    }).join('');
+      const label = `${c.char || ''}${c.pinyin ? ` (${c.pinyin})` : ''}`;
+      return `<button class="link-rel" data-compound-idx="${idx}">${label}</button>`;
+    }
+    return '';
+  }).join('');
+    const trainBtn = `
+      <button class="train-toggle" data-id="${id}" aria-pressed="${word.train ? 'true' : 'false'}">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span>${word.train ? 'Marcada para treinar' : 'Marcar para treinar'}</span>
+      </button>
+    `;
     body.innerHTML = `
       <div class="word-detail">
         <div class="detail-main">
@@ -347,6 +361,7 @@ const Vocabulary = {
           ${this.formatHSK(word.hsk) ? `<span class="tag tag-hsk ${this.getHSKClass(word.hsk)}">${this.formatHSK(word.hsk)}</span>` : ''}
           ${this.getTypes(word).map(t => `<span class="tag tag-pos ${this.getPOSClass(t)}">${t}</span>`).join('')}
         </div>
+        ${trainBtn}
         ${formattedNotes}
         ${compoundLinks ? `<div class="related-links">${compoundLinks}</div>` : ''}
         ${word.example ? `<div class="detail-example"><div>${word.example.zh || ''}</div><div class="detail-example-py">${word.example.pinyin || ''}</div><div class="detail-example-pt">${word.example.pt || ''}</div></div>` : ''}
@@ -390,6 +405,8 @@ const Vocabulary = {
     if (editBtn) editBtn.addEventListener('click', () => this.openFormModal(id));
     const delBtn = body.querySelector('.detail-delete');
     if (delBtn) delBtn.addEventListener('click', () => this.handleDeleteWord(id));
+    const trainToggle = body.querySelector('.train-toggle');
+    if (trainToggle) trainToggle.addEventListener('click', () => this.toggleTrain(id));
     overlay.classList.remove('hidden');
     requestAnimationFrame(() => overlay.classList.add('active'));
   },
@@ -399,6 +416,7 @@ const Vocabulary = {
     this.detailOverlay.classList.remove('active');
     setTimeout(() => this.detailOverlay.classList.add('hidden'), 150);
     this.modalStack = [];
+    this.state.showingTrain = false;
   },
 
   openCompoundDetail(compound, sourceId = null, compoundIndex = null) {
@@ -458,6 +476,17 @@ const Vocabulary = {
 
     overlay.classList.remove('hidden');
     requestAnimationFrame(() => overlay.classList.add('active'));
+  },
+
+  toggleTrain(id) {
+    const found = this.findWordById(id);
+    if (!found) return;
+    const { word } = found;
+    word.train = !word.train;
+    this.renderMetrics();
+    const message = word.train ? 'Palavra marcada para treinar.' : 'Palavra removida de treino.';
+    this.renderFeedback(message, [], false, false);
+    if (this.state.showingTrain) this.showTrainingList();
   },
 
   handleDeleteWord(id) {
@@ -521,6 +550,7 @@ const Vocabulary = {
     if (!this.panelEl) return;
     this.panelEl.classList.toggle('grid-2', mode === 'grid');
     this.panelEl.classList.toggle('list', mode === 'list');
+    this.state.showingTrain = false;
   },
 
   updateFilterState(count = 0) {
@@ -585,6 +615,22 @@ const Vocabulary = {
     return this.flattenCharacters(characters).length;
   },
 
+  getTrainingWords() {
+    const list = [];
+    Object.entries(VOCABULARY_DATA.radicals).forEach(([key, data]) => {
+      (data.characters || []).forEach((w, idx) => {
+        if (w.train) list.push({ ...w, _radical: key, _idx: idx });
+      });
+    });
+    return list;
+  },
+
+  showTrainingList() {
+    this.state.showingTrain = true;
+    this.setPanelLayout('list');
+    this.renderWords();
+  },
+
   existsInVocabulary(char, pinyin = '', excludeId = null) {
     const targetChar = (char || '').trim();
     const targetPy = (pinyin || '').trim().toLowerCase();
@@ -596,7 +642,10 @@ const Vocabulary = {
         if (found) return;
         this.flattenWord(w).forEach(item => {
           if (found) return;
-          if (excludeId && item.id && item.id === excludeId) return;
+          if (excludeId) {
+            const genId = this.buildWordId(key, item, idx);
+            if ((item.id && item.id === excludeId) || genId === excludeId) return;
+          }
           const sameChar = (item.char || '').trim() === targetChar;
           const samePy = targetPy ? (item.pinyin || '').trim().toLowerCase() === targetPy : true;
           if (sameChar && samePy) found = true;
@@ -814,7 +863,7 @@ tradução`;
       if (existingWord?.example?.pinyin && !wordData.example.pinyin) {
         wordData.example.pinyin = existingWord.example.pinyin;
       }
-      const duplicate = this.existsInVocabulary(wordData.char, wordData.pinyin, idExisting || null);
+      const duplicate = this.isDuplicateWord(wordData.char, wordData.pinyin, idExisting || null);
       if (duplicate) {
         alert('Esta palavra já existe.');
         return;
@@ -902,6 +951,25 @@ tradução`;
     const safeChar = word.char || 'char';
     const safePy = word.pinyin || '';
     return `${safeRad}::${safeChar}::${safePy}`;
+  },
+
+  isDuplicateWord(char, pinyin, excludeId = null) {
+    const targetChar = (char || '').trim();
+    const targetPy = (pinyin || '').trim().toLowerCase();
+    if (!targetChar) return false;
+    let duplicate = false;
+    Object.entries(VOCABULARY_DATA.radicals).forEach(([key, data]) => {
+      if (duplicate) return;
+      (data.characters || []).forEach((w, idx) => {
+        if (duplicate) return;
+        const genId = this.buildWordId(key, w, idx);
+        if (excludeId && ((w.id && w.id === excludeId) || genId === excludeId)) return;
+        const sameChar = (w.char || '').trim() === targetChar;
+        const samePy = targetPy ? (w.pinyin || '').trim().toLowerCase() === targetPy : true;
+        if (sameChar && samePy) duplicate = true;
+      });
+    });
+    return duplicate;
   },
 
   getTypes(word) {

@@ -26,6 +26,7 @@
                 <div class="chat-toolbar">
                     <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false"
                         title="Modo áudio lento">🐌</button>
+                    <button type="button" class="pill-toggle save-lesson-btn" aria-label="Guardar como nota">✎</button>
                     <button type="button" class="pill-toggle reset-chat-btn" aria-label="Reiniciar chat">↺</button>
                 </div>
                 <div class="chat-messages"></div>
@@ -160,7 +161,12 @@
                         <p class="eyebrow">Biblioteca</p>
                         <h2>Aulas & Notas</h2>
                     </div>
-                    <button type="button" class="add-lesson-btn" id="add-lesson-btn">+ Nova nota</button>
+                    <div class="lessons-actions">
+                        <div class="lessons-search">
+                            <input type="search" id="lessons-search" placeholder="Procurar notas, títulos ou palavras-chave...">
+                        </div>
+                        <button type="button" class="add-lesson-btn" id="add-lesson-btn">+ Nova nota</button>
+                    </div>
                 </div>
                 <div class="lessons-body">
                     <div class="lessons-list" id="lessons-list"></div>
@@ -271,7 +277,10 @@
                     <p class="eyebrow">Resumo</p>
                     <h3 id="lesson-modal-title">Nova nota</h3>
                 </div>
-                <button type="button" class="lesson-close-btn" aria-label="Fechar">✕</button>
+                <div class="lesson-modal-actions">
+                    <button type="button" class="lesson-edit-btn" aria-label="Editar nota">✎</button>
+                    <button type="button" class="lesson-close-btn" aria-label="Fechar">✕</button>
+                </div>
             </div>
             <form id="lesson-form">
                 <input type="hidden" id="lesson-id">

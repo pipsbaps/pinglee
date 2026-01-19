@@ -11,8 +11,10 @@ const TextChat = {
         const messagesContainer = document.querySelector('#chat .chat-messages');
         this.modeButtons = document.querySelectorAll('.chat-mode-switch .mode-btn');
         this.resetBtn = document.querySelector('#chat .reset-chat-btn');
+        this.saveLessonBtn = document.querySelector('#chat .save-lesson-btn');
         this.bindModeButtons(messagesContainer, input);
         this.bindReset(messagesContainer, input);
+        this.bindSaveLesson(messagesContainer);
         UI.attachAudioSpeedToggle('#audio-slow-toggle', (speed) => {
             UI.audioSpeed = speed;
         }, 'chat_audio_slow');
@@ -213,6 +215,45 @@ const TextChat = {
     bindReset(container, input) {
         if (!this.resetBtn) return;
         this.resetBtn.addEventListener('click', () => this.resetChat(container, input));
+    },
+
+    bindSaveLesson(container) {
+        if (!this.saveLessonBtn) return;
+        this.saveLessonBtn.addEventListener('click', () => {
+            const payload = this.buildLessonFromChat();
+            if (!payload) return;
+            window.Lessons?.addFromChat?.(payload);
+        });
+    },
+
+    buildLessonFromChat() {
+        if (!this.history.length) {
+            alert('Ainda não tens mensagens para guardar.');
+            return null;
+        }
+        const lastTutor = [...this.history].reverse().find(m => m.role === 'tutor');
+        const lastUser = [...this.history].reverse().find(m => m.role === 'user');
+        const title = lastUser ? lastUser.text.slice(0, 40) : 'Chat note';
+        const summary = lastTutor
+            ? `${lastTutor.chinese || ''} ${lastTutor.translation || ''}`.trim()
+            : 'Resumo do chat';
+        const keywords = this.extractKeywords(summary);
+        return {
+            title: title || 'Nota do chat',
+            notes: summary,
+            source: 'chat',
+            words: keywords.join(', ')
+        };
+    },
+
+    extractKeywords(text) {
+        const words = (text || '')
+            .toLowerCase()
+            .replace(/[^a-zà-ú0-9\s]/gi, ' ')
+            .split(/\s+/)
+            .filter(w => w.length > 3);
+        const unique = [...new Set(words)];
+        return unique.slice(0, 6);
     },
 
     resetChat(container, input) {

@@ -15,8 +15,8 @@
   padding: 0.25rem 0.25rem 0.5rem;
 }
 .chat-mode-switch .mode-btn {
-  border: 1px solid #dce3ef;
-  background: #f6f8fb;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
   color: #1e365a;
   padding: 0.45rem 0.9rem;
   border-radius: 12px;
@@ -25,9 +25,9 @@
   transition: all 0.2s ease;
 }
 .chat-mode-switch .mode-btn.is-active {
-  background: linear-gradient(135deg, #cfe4ff 0%, #a8cffd 100%);
-  border-color: #8fbbf3;
-  color: #0f2e63;
+  background: linear-gradient(135deg, var(--pill-active-from) 0%, var(--pill-active-to) 100%);
+  border-color: var(--pill-active-border);
+  color: var(--pill-active-text);
   box-shadow: 0 6px 16px rgba(0, 112, 243, 0.16);
 }
 
@@ -39,6 +39,9 @@
   padding: 0.5rem 0.25rem;
 }
 .reset-chat-btn {
+  font-weight: 800;
+}
+.save-lesson-btn {
   font-weight: 800;
 }
 
@@ -1107,34 +1110,34 @@
 .tag.tag-hsk {
   border-color: transparent;
 }
-.tag.tag-hsk.hsk1 { background: #f28b82; color: #4a0f0c; }
-.tag.tag-hsk.hsk2 { background: #ef5350; color: #ffffff; }
-.tag.tag-hsk.hsk3 { background: #e53935; color: #ffffff; }
-.tag.tag-hsk.hsk4 { background: #c62828; color: #ffffff; }
-.tag.tag-hsk.hsk5 { background: #8e2420; color: #ffffff; }
-.tag.tag-hsk.hsk6 { background: #5c1a12; color: #ffffff; }
+.tag.tag-hsk.hsk1 { background: var(--hsk1-bg); color: var(--hsk1-text); }
+.tag.tag-hsk.hsk2 { background: var(--hsk2-bg); color: var(--hsk2-text); }
+.tag.tag-hsk.hsk3 { background: var(--hsk3-bg); color: var(--hsk3-text); }
+.tag.tag-hsk.hsk4 { background: var(--hsk4-bg); color: var(--hsk4-text); }
+.tag.tag-hsk.hsk5 { background: var(--hsk5-bg); color: var(--hsk5-text); }
+.tag.tag-hsk.hsk6 { background: var(--hsk6-bg); color: var(--hsk6-text); }
 .tag.tag-pos { background: #f1f2f5; color: #4b5563; border-color: #e5e7eb; }
-.tag.tag-pos.pos-verbo { background: #f2c94c; color: #5a4500; }
-.tag.tag-pos.pos-substantivo { background: #f7d774; color: #5a4500; }
-.tag.tag-pos.pos-adjetivo { background: #f9f871; color: #4a4a00; }
-.tag.tag-pos.pos-adjectivo { background: #f9f871; color: #4a4a00; }
+.tag.tag-pos.pos-verbo { background: var(--pos-verbo-bg); color: var(--pos-verbo-text); }
+.tag.tag-pos.pos-substantivo { background: var(--pos-substantivo-bg); color: var(--pos-substantivo-text); }
+.tag.tag-pos.pos-adjetivo,
+.tag.tag-pos.pos-adjectivo { background: var(--pos-adjetivo-bg); color: var(--pos-adjetivo-text); }
 .tag.tag-pos.pos-advérbio,
-.tag.tag-pos.pos-adverbio { background: #b7e66a; color: #2e4a00; }
+.tag.tag-pos.pos-adverbio { background: var(--pos-adverbio-bg); color: var(--pos-adverbio-text); }
 .tag.tag-pos.pos-preposicao,
-.tag.tag-pos.pos-preposição { background: #9ee6b8; color: #0f3d2e; }
+.tag.tag-pos.pos-preposição { background: var(--pos-preposicao-bg); color: var(--pos-preposicao-text); }
 .tag.tag-pos.pos-particula,
-.tag.tag-pos.pos-partícula { background: #9fe7e7; color: #0f3a3a; }
-.tag.tag-pos.pos-radical { background: #5dd6d6; color: #003d3d; }
-.tag.tag-pos.pos-classificador { background: #7fc8f8; color: #0a2e4a; }
+.tag.tag-pos.pos-partícula { background: var(--pos-particula-bg); color: var(--pos-particula-text); }
+.tag.tag-pos.pos-radical { background: var(--pos-radical-bg); color: var(--pos-radical-text); }
+.tag.tag-pos.pos-classificador { background: var(--pos-classificador-bg); color: var(--pos-classificador-text); }
 .tag.tag-pos.pos-conjuncao,
-.tag.tag-pos.pos-conjunção { background: #6bb6b6; color: #083333; }
-.tag.tag-pos.pos-conector { background: #7a9cc6; color: #0b2340; }
+.tag.tag-pos.pos-conjunção { background: var(--pos-conjuncao-bg); color: var(--pos-conjuncao-text); }
+.tag.tag-pos.pos-conector { background: var(--pos-conector-bg); color: var(--pos-conector-text); }
 .tag.tag-pos.pos-expressao,
-.tag.tag-pos.pos-expressão { background: #b7a7e8; color: #2a1a5e; }
-.tag.tag-pos.pos-pronome { background: #b983ff; color: #2d0a5e; }
+.tag.tag-pos.pos-expressão { background: var(--pos-expressao-bg); color: var(--pos-expressao-text); }
+.tag.tag-pos.pos-pronome { background: var(--pos-pronome-bg); color: var(--pos-pronome-text); }
 .tag.tag-pos.pos-interrogacao,
-.tag.tag-pos.pos-interrogação { background: #f39ac7; color: #5a1436; }
-.tag.tag-pos.pos-prefixo { background: #f6c1e6; color: #4a1f3f; }
+.tag.tag-pos.pos-interrogação { background: var(--pos-interrogacao-bg); color: var(--pos-interrogacao-text); }
+.tag.tag-pos.pos-prefixo { background: var(--pos-prefixo-bg); color: var(--pos-prefixo-text); }
 .word-card-extended {
   max-height: 0;
   opacity: 0;
@@ -1764,7 +1767,7 @@ body.modal-open {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.25rem 0 0.5rem;
+  padding: 0.4rem 0 0.65rem;
 }
 .lessons-header h2 {
   margin: 0.1rem 0 0;
@@ -1779,12 +1782,12 @@ body.modal-open {
 }
 .add-lesson-btn {
   border: none;
-  background: linear-gradient(135deg, #ff9f43, #ff6b3d);
+  background: linear-gradient(135deg, var(--accent-orange-from), var(--accent-orange-to));
   color: #fff;
   padding: 0.6rem 1rem;
   border-radius: 12px;
   font-weight: 800;
-  box-shadow: 0 10px 24px rgba(255, 114, 67, 0.28);
+  box-shadow: var(--accent-orange-shadow);
   cursor: pointer;
 }
 .lessons-body {
@@ -1792,6 +1795,7 @@ body.modal-open {
   flex-direction: column;
   gap: 0.5rem;
   min-height: 60vh;
+  padding-top: 0.35rem;
 }
 .lessons-list {
   display: flex;
@@ -1799,11 +1803,11 @@ body.modal-open {
   gap: 0.75rem;
 }
 .lesson-card {
-  background: #f8f9fb;
-  border: 1px solid #e3e7ee;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 18px;
   padding: 0.9rem 1rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-soft);
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
@@ -1815,7 +1819,7 @@ body.modal-open {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  color: #6b7280;
+  color: var(--muted-2);
   font-size: 0.9rem;
   margin-bottom: 0.35rem;
 }
@@ -1826,17 +1830,35 @@ body.modal-open {
   font-size: 1rem;
 }
 .lesson-preview {
-  color: #4b5563;
+  color: var(--muted-text);
   font-size: 0.94rem;
   line-height: 1.45;
+}
+.lesson-keywords {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.keyword-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #0f2e63;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid #d6e4ff;
 }
 .tag-badge {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
   border-radius: 999px;
-  background: #e5edff;
-  color: #1f4eb8;
+  background: var(--badge-bg);
+  color: var(--badge-text);
   font-weight: 700;
   font-size: 0.8rem;
 }
@@ -1845,13 +1867,13 @@ body.modal-open {
   border: 1px dashed #d7dce6;
   border-radius: 14px;
   padding: 0.9rem 1rem;
-  color: #4b5563;
+  color: var(--muted-text);
   background: #fbfcfe;
   text-align: center;
 }
 
 .lesson-modal {
-  background: #f9fbff;
+  background: var(--modal-bg);
   border-radius: 20px;
   padding: 1.1rem 1.2rem;
   max-width: 540px;
@@ -1874,10 +1896,52 @@ body.modal-open {
   cursor: pointer;
   font-size: 1.1rem;
 }
+.lesson-modal-actions {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+.lesson-edit-btn {
+  background: none;
+  border: 1px solid #d7dce6;
+  border-radius: 10px;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
 .lesson-modal form {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+}
+.lesson-modal form.is-view input,
+.lesson-modal form.is-view textarea,
+.lesson-modal form.is-view select {
+  background: #f6f7fb;
+  pointer-events: none;
+}
+.lesson-modal .lesson-quiz {
+  margin-top: 0.25rem;
+  padding: 0.8rem;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #fff;
+}
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+.quiz-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.muted {
+  color: var(--muted-2);
+  margin: 0;
 }
 .lesson-modal .form-group label {
   font-weight: 700;
@@ -1886,8 +1950,8 @@ body.modal-open {
 .lesson-modal input,
 .lesson-modal textarea,
 .lesson-modal select {
-  border: 1px solid #d1d7e2;
-  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
   padding: 0.65rem 0.75rem;
   font-size: 0.95rem;
 }
@@ -1956,4 +2020,16 @@ body.modal-open {
   font-size: 0.82rem;
   border: 1px solid #d8e7ff;
   white-space: nowrap;
+}
+.lessons-actions {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.lessons-search input {
+  border: 1px solid var(--pill-border);
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem;
+  min-width: 220px;
+  background: var(--pill-bg);
 }

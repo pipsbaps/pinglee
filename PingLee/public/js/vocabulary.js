@@ -305,9 +305,16 @@ const Vocabulary = {
     const titleEl = overlay.querySelector('#modal-title');
     if (titleEl) titleEl.textContent = word.meaning || 'Detalhe';
     if (this.modalStack[this.modalStack.length - 1] !== id) this.modalStack.push(id);
-    const relatedLinks = (word.compounds || []).map(cid => {
-      const rel = this.findWordById(cid)?.word;
-      return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.char} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
+    const compoundLinks = (word.compounds || []).map((c, idx) => {
+      if (typeof c === 'string') {
+        const rel = this.findWordById(c)?.word;
+        return rel ? `<button class="link-rel" data-id="${rel.id}">${rel.char} ${rel.pinyin ? `(${rel.pinyin})` : ''}</button>` : '';
+      }
+      if (c && typeof c === 'object') {
+        const label = `${c.char || ''}${c.pinyin ? ` (${c.pinyin})` : ''}`;
+        return `<button class="link-rel" data-compound-idx="${idx}">${label}</button>`;
+      }
+      return '';
     }).join('');
     body.innerHTML = `
       <div class="word-detail">
@@ -321,7 +328,7 @@ const Vocabulary = {
           ${this.getTypes(word).map(t => `<span class="tag tag-pos">${t}</span>`).join('')}
         </div>
         ${word.notes?.length ? `<p class="word-notes">${word.notes.join(' ')}</p>` : ''}
-        ${relatedLinks ? `<div class="related-links">${relatedLinks}</div>` : ''}
+        ${compoundLinks ? `<div class="related-links">${compoundLinks}</div>` : ''}
         ${word.example ? `<div class="detail-example"><div>${word.example.zh || ''}</div><div class="detail-example-py">${word.example.pinyin || ''}</div><div class="detail-example-pt">${word.example.pt || ''}</div></div>` : ''}
         <div class="detail-actions">
           <div class="detail-actions-left">
@@ -341,7 +348,13 @@ const Vocabulary = {
       </div>
     `;
     body.querySelectorAll('.link-rel').forEach(btn => {
-      btn.addEventListener('click', () => this.openWord(btn.dataset.id));
+      const { id: relId, compoundIdx } = btn.dataset;
+      if (relId) {
+        btn.addEventListener('click', () => this.openWord(relId));
+      } else if (compoundIdx) {
+        const comp = (word.compounds || [])[Number(compoundIdx)];
+        if (comp) btn.addEventListener('click', () => this.openCompoundDetail(comp, id));
+      }
     });
     const backBtn = body.querySelector('.detail-back');
     if (backBtn) backBtn.addEventListener('click', () => {
@@ -362,6 +375,47 @@ const Vocabulary = {
     this.detailOverlay.classList.remove('active');
     setTimeout(() => this.detailOverlay.classList.add('hidden'), 150);
     this.modalStack = [];
+  },
+
+  openCompoundDetail(compound, sourceId = null) {
+    const overlay = this.detailOverlay;
+    const body = this.detailBody;
+    if (!overlay || !body || !compound) return;
+    const pseudoId = compound.id || `compound::${compound.char || ''}::${compound.pinyin || ''}`;
+    if (this.modalStack[this.modalStack.length - 1] !== pseudoId) this.modalStack.push(pseudoId);
+
+    const titleEl = overlay.querySelector('#modal-title');
+    if (titleEl) titleEl.textContent = compound.char || 'Detalhe';
+
+    body.innerHTML = `
+      <div class="word-detail">
+        <div class="detail-main">
+          <div class="detail-char">${compound.char || ''}</div>
+          <div class="detail-pinyin">${compound.pinyin || '—'}</div>
+        </div>
+        <div class="detail-meaning">${compound.meaning || '—'}</div>
+        ${compound.hsk ? `<div class="word-tags"><span class="tag tag-hsk">${compound.hsk}</span></div>` : ''}
+        ${compound.type?.length ? `<div class="word-tags">${compound.type.map(t => `<span class="tag tag-pos">${t}</span>`).join('')}</div>` : ''}
+        ${compound.notes?.length ? `<p class="word-notes">${compound.notes.join(' ')}</p>` : ''}
+        <div class="detail-actions">
+          <div class="detail-actions-left">
+            <button class="icon-btn ghost detail-back" ${this.modalStack.length <= 1 ? 'disabled' : ''} aria-label="Voltar">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 5l-7 7 7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const backBtn = body.querySelector('.detail-back');
+    if (backBtn) backBtn.addEventListener('click', () => {
+      this.modalStack.pop();
+      const prev = this.modalStack.pop();
+      if (prev) this.openWord(prev);
+    });
+
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => overlay.classList.add('active'));
   },
 
   handleDeleteWord(id) {

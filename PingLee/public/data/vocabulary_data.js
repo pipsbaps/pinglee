@@ -5,9 +5,31 @@ const VOCABULARY_DATA = {
   "categories": {
     "Pessoas e Corpo": {
       "radicals": [
-        "Pessoa",
+        "亻人",
         "Corpo"
-      ]
+      ],
+      "subcategories": {
+        "Pessoa": {
+          "radicals": [
+            "亻人"
+          ]
+        },
+        "Corpo": {
+          "radicals": [
+            "面",
+            "頁",
+            "目",
+            "着",
+            "眞",
+            "身",
+            "見",
+            "覺",
+            "心 忄",
+            "足 ⻊",
+            "辵 辶 龰"
+          ]
+        }
+      }
     },
     "Mão e garras": {
       "radicals": [
@@ -16,6 +38,13 @@ const VOCABULARY_DATA = {
         "𠂇",
         "又",
         "手"
+      ],
+      "radicalVariants": [
+        "力",
+        "扌攴攵",
+        "𠂇",
+        "又",
+        "手 龵 扌"
       ]
     },
     "Lugares e edifícios": {
@@ -34,6 +63,12 @@ const VOCABULARY_DATA = {
         "下",
         "彳",
         "辶"
+      ],
+      "radicalVariants": [
+        "上",
+        "下",
+        "彳",
+        "辶 辵 龰"
       ]
     },
     "Acções e Elementos": {
@@ -54,14 +89,49 @@ const VOCABULARY_DATA = {
       "radicals": [
         "Plantas,",
         "Animais",
-        "Elementos",
-        "日曰",
-        "田",
-        "月",
-        "雨",
-        "土",
-        "久"
-      ]
+        "Elementos"
+      ],
+      "subcategories": {
+        "Plantas, Alimentos": {
+          "radicals": [
+            "禾",
+            "米",
+            "木",
+            "本",
+            "杯",
+            "机",
+            "椅",
+            "概",
+            "来",
+            "飠饣",
+            "艹"
+          ]
+        },
+        "Animais": {
+          "radicals": [
+            "鸟",
+            "马"
+          ]
+        },
+        "Elementos": {
+          "radicals": [
+            "水 氵",
+            "冫冰",
+            "干",
+            "王 玉",
+            "理",
+            "气",
+            "白",
+            "钅",
+            "日曰",
+            "田",
+            "月",
+            "雨",
+            "土",
+            "久"
+          ]
+        }
+      }
     },
     "Objectos": {
       "radicals": [
@@ -70,6 +140,13 @@ const VOCABULARY_DATA = {
         "衣",
         "纟",
         "竹"
+      ],
+      "radicalVariants": [
+        "刀刂",
+        "匕",
+        "衣",
+        "纟",
+        "竹 ⺮"
       ]
     },
     "Oralidade": {
@@ -81,13 +158,16 @@ const VOCABULARY_DATA = {
     }
   },
   "radicals": {
-    "Pessoa": {
-      "char": "Pessoa",
-      "pinyin": "- **亻人 𠂉**",
-      "meaning": "rén",
-      "hsk": null,
-      "type": [],
+    "亻人": {
+      "char": "亻人 𠂉",
+      "pinyin": "rén",
+      "meaning": "Pessoa",
+      "hsk": 1,
+      "type": [
+        "radical"
+      ],
       "category": "Pessoas e Corpo",
+      "subcategory": "Pessoa",
       "characters": [
         {
           "char": "做",
@@ -97,6 +177,7 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
+          "radicalInfo": "攴攵Pū",
           "compounds": [],
           "notes": []
         },
@@ -108,6 +189,7 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
+          "radicalInfo": "乍Zhà",
           "compounds": [],
           "notes": []
         },
@@ -131,6 +213,7 @@ const VOCABULARY_DATA = {
           "type": [
             "verbo"
           ],
+          "radicalInfo": "左Zuǒ",
           "compounds": [],
           "notes": []
         },
@@ -148,12 +231,13 @@ const VOCABULARY_DATA = {
         {
           "char": "化",
           "pinyin": "huà",
-          "meaning": "transformar, mudar （estado ou direcção)",
+          "meaning": "transformar, mudar (estado ou direcção)",
           "hsk": 1,
           "type": [
             "verbo",
             "radical"
           ],
+          "radicalInfo": "匕Bǐ",
           "compounds": [],
           "notes": []
         },
@@ -226,7 +310,7 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "像你一样",
-          "pinyin": "xiàng nǐ yí yàng",
+          "pinyin": "xiàng nǐ yī yàng",
           "meaning": "como tu, igual a ti",
           "hsk": null,
           "type": [],
@@ -305,6 +389,7 @@ const VOCABULARY_DATA = {
           "type": [
             "adjectivo"
           ],
+          "decomposition": "母 + 丶",
           "compounds": [],
           "notes": [
             "exige classificador quando modifica substantivos contáveis"
@@ -385,7 +470,7 @@ const VOCABULARY_DATA = {
         },
         {
           "char": "会不会",
-          "pinyin": "“será que…?”",
+          "pinyin": "huì bù huì",
           "meaning": "A estrutura 会不会 é uma pergunta A-不-A, usada para perguntar probabilidade / expectativa, não vontade.",
           "hsk": null,
           "type": [],
@@ -421,101 +506,7 @@ const VOCABULARY_DATA = {
             "advérbio"
           ],
           "compounds": [],
-          "notes": [
-            "criança, ser pequeno, nascer, algo derivado #Radical",
-            "Sufixo nominal para objectos do dia a dia, corpo, pessoas ou grupos. Se a palavra soa demasiado curta ou rígida."
-          ]
-        },
-        {
-          "char": "名字",
-          "pinyin": "míngzi",
-          "meaning": "nome",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
           "notes": []
-        },
-        {
-          "char": "字",
-          "pinyin": "zì",
-          "meaning": "carácter, letra",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "孩子",
-          "pinyin": "háizi",
-          "meaning": "criança, filho",
-          "hsk": 1,
-          "type": [
-            "substantivo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "了解",
-          "pinyin": "liǎojiě",
-          "meaning": "compreender, entender",
-          "hsk": 2,
-          "type": [
-            "verbo"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "完了",
-          "pinyin": "wán le",
-          "meaning": "acabou, deu errado",
-          "hsk": 2,
-          "type": [
-            "expressão"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "女",
-          "pinyin": "mulher",
-          "meaning": "- **如**",
-          "hsk": null,
-          "type": [],
-          "compounds": [],
-          "notes": [
-            "como, tal como #HSK2 #Preposição #Conjunção"
-          ]
-        },
-        {
-          "char": "如果",
-          "pinyin": "rú guǒ",
-          "meaning": "se, caso",
-          "hsk": 2,
-          "type": [
-            "conjunção"
-          ],
-          "compounds": [],
-          "notes": []
-        },
-        {
-          "char": "己",
-          "pinyin": "jǐ",
-          "meaning": "si próprio",
-          "hsk": 1,
-          "type": [
-            "partícula",
-            "pronome"
-          ],
-          "compounds": [],
-          "notes": [
-            "identidade, consciência e ação voltada para si"
-          ]
         }
       ]
     },
@@ -6121,5 +6112,3 @@ if (typeof window !== 'undefined') {
   window.VocabularyAPI = VocabularyAPI;
   window.VOCABULARY_DATA = VOCABULARY_DATA;
 }
-
-

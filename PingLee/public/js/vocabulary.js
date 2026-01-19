@@ -303,7 +303,7 @@ const Vocabulary = {
     const overlay = this.detailOverlay;
     if (!word || !body || !overlay) return;
     const titleEl = overlay.querySelector('#modal-title');
-    if (titleEl) titleEl.textContent = word.char;
+    if (titleEl) titleEl.textContent = word.meaning || 'Detalhe';
     if (this.modalStack[this.modalStack.length - 1] !== id) this.modalStack.push(id);
     const relatedLinks = (word.compounds || []).map(cid => {
       const rel = this.findWordById(cid)?.word;
@@ -311,7 +311,6 @@ const Vocabulary = {
     }).join('');
     body.innerHTML = `
       <div class="word-detail">
-        <h4 class="detail-heading">${word.char}</h4>
         <div class="detail-main">
           <div class="detail-char">${word.char}</div>
           <div class="detail-pinyin">${word.pinyin || '—'}</div>

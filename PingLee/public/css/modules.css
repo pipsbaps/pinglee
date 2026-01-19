@@ -401,7 +401,8 @@
   left: 16px;
   right: 16px;
   bottom: calc(
-    var(--nav-offset, var(--nav-height)) + env(safe-area-inset-bottom)
+    var(--nav-offset, var(--nav-height)) + env(safe-area-inset-bottom) +
+      var(--keyboard-offset, 0px)
   );
   z-index: 5;
   display: flex;

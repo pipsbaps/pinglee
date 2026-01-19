@@ -21,7 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         },
 
+        setAppHeight() {
+            const apply = () => {
+                const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+                document.documentElement.style.setProperty('--app-height', `${h}px`);
+            };
+            apply();
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', apply);
+            } else {
+                window.addEventListener('resize', apply);
+            }
+        },
+
         init() {
+            this.setAppHeight();
             this.setupNavigation();
             this.setupHashListener();
             this.showInitialSection();

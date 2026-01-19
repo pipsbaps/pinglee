@@ -1,0 +1,20 @@
+{
+  "name": "PingLee",
+  "short_name": "PingLee",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fa",
+  "theme_color": "#007aff",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

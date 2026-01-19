@@ -19,6 +19,10 @@
         <main>
             <!-- Módulo de Chat Principal (Texto) -->
             <section id="chat">
+                <div class="chat-mode-switch" role="group" aria-label="Modo de chat">
+                    <button type="button" class="mode-btn is-active" data-mode="aulas" aria-pressed="true">Aulas</button>
+                    <button type="button" class="mode-btn" data-mode="explora" aria-pressed="false">Explora</button>
+                </div>
                 <div class="chat-toolbar">
                     <button type="button" class="pill-toggle" id="audio-slow-toggle" aria-pressed="false"
                         title="Modo áudio lento">🐌</button>

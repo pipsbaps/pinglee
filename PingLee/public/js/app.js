@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const stored = localStorage.getItem('activeSection');
             const initialSection = window.location.hash.substring(1) || stored || 'chat';
             this.showSection(initialSection);
-            document.querySelectorAll('.modal-overlay').forEach(modal => this.setupModalTrap(modal));
+            document.querySelectorAll('.modal-overlay').forEach(modal => this.setupModal(modal));
         },
 
         async ensureModule(targetId) {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
 
-        setupModalTrap(modal) {
+        setupModal(modal) {
             if (modal.dataset.trapInit === '1') return;
             modal.dataset.trapInit = '1';
             modal.addEventListener('keydown', (e) => {
@@ -131,6 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
                 );
                 if (firstFocusable) firstFocusable.focus();
+            });
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.classList.add('hidden'), 150);
+                    const evt = new CustomEvent('modal:closed', { detail: { id: modal.id, reason: 'backdrop' } });
+                    modal.dispatchEvent(evt);
+                }
             });
         }
     };

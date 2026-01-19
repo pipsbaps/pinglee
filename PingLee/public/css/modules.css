@@ -8,6 +8,28 @@
   gap: 0.5rem;
   background: transparent;
 }
+.chat-mode-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.25rem 0.5rem;
+}
+.chat-mode-switch .mode-btn {
+  border: 1px solid #dce3ef;
+  background: #f6f8fb;
+  color: #1e365a;
+  padding: 0.45rem 0.9rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.chat-mode-switch .mode-btn.is-active {
+  background: linear-gradient(135deg, #cfe4ff 0%, #a8cffd 100%);
+  border-color: #8fbbf3;
+  color: #0f2e63;
+  box-shadow: 0 6px 16px rgba(0, 112, 243, 0.16);
+}
 
 .chat-toolbar {
   display: flex;
@@ -1722,6 +1744,11 @@ body.modal-open {
 }
 #role-play .chat-form-container {
   display: none;
+}
+#role-play-modal .modal-content.role-modal {
+  background-image: url('/images/backg_roleplay.png');
+  background-size: cover;
+  background-position: center;
 }
 #vocabulary .chat-form-container {
   display: none;

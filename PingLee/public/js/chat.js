@@ -1,11 +1,16 @@
 const TextChat = {
     history: [],
-    STORAGE_KEY: 'chat_history_v1',
+    STORAGE_KEY_BASE: 'chat_history_v1',
+    MODE_KEY: 'chat_mode_v1',
+    mode: 'aulas',
 
     init() {
+        this.restoreMode();
         const form = document.querySelector('#chat .chat-form');
         const input = document.querySelector('#chat .message-input');
         const messagesContainer = document.querySelector('#chat .chat-messages');
+        this.modeButtons = document.querySelectorAll('.chat-mode-switch .mode-btn');
+        this.bindModeButtons(messagesContainer, input);
         UI.attachAudioSpeedToggle('#audio-slow-toggle', (speed) => {
             UI.audioSpeed = speed;
         }, 'chat_audio_slow');
@@ -39,7 +44,7 @@ const TextChat = {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message, mode: 'text' })
+                    body: JSON.stringify({ message: message, mode: 'text', variant: this.mode })
                 });
                 const data = await response.json();
 
@@ -88,11 +93,15 @@ const TextChat = {
 
         const emptyEl = document.createElement('div');
         emptyEl.className = 'empty-state';
+        const isExplore = this.mode === 'explora';
         emptyEl.innerHTML = `
-            <div class="empty-copy">Comece a conversa ou escolha uma sugestão:</div>
+            <div class="empty-copy">${isExplore ? 'Conversa livre. Pergunta o que quiseres:' : 'Comece a conversa ou escolha uma sugestão:'}</div>
             <div class="empty-suggestions">
-                <button type="button" class="suggestion-btn">你好吗？</button>
-                <button type="button" class="suggestion-btn">我们可以练习机场对话吗？</button>
+                ${isExplore
+                    ? `<button type="button" class="suggestion-btn">Como se diz "internet" em chinês?</button>
+                       <button type="button" class="suggestion-btn">Podes explicar um provérbio chinês?</button>`
+                    : `<button type="button" class="suggestion-btn">你好吗？</button>
+                       <button type="button" class="suggestion-btn">我们可以练习机场对话吗？</button>`}
             </div>
         `;
 
@@ -143,7 +152,7 @@ const TextChat = {
 
     persistHistory() {
         try {
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.history));
+            localStorage.setItem(this.storageKey(), JSON.stringify(this.history));
         } catch (e) {
             console.warn('Não foi possível guardar histórico do chat', e);
         }
@@ -151,7 +160,8 @@ const TextChat = {
 
     restoreHistory(container) {
         try {
-            const raw = localStorage.getItem(this.STORAGE_KEY);
+            const rawLegacy = localStorage.getItem(this.STORAGE_KEY_BASE); // legacy key
+            const raw = localStorage.getItem(this.storageKey()) || rawLegacy;
             if (!raw) return false;
             const parsed = JSON.parse(raw);
             if (!Array.isArray(parsed)) return false;
@@ -170,6 +180,48 @@ const TextChat = {
             this.history = [];
             return false;
         }
+    },
+
+    storageKey() {
+        return `${this.STORAGE_KEY_BASE}_${this.mode}`;
+    },
+
+    bindModeButtons(container, input) {
+        if (!this.modeButtons?.length) return;
+        this.modeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const selected = btn.dataset.mode;
+                if (!selected || selected === this.mode) return;
+                this.setMode(selected, container, input);
+            });
+        });
+        this.updateModeUI();
+    },
+
+    setMode(mode, container, input) {
+        this.mode = mode;
+        try { localStorage.setItem(this.MODE_KEY, mode); } catch (_) {}
+        this.history = [];
+        container.innerHTML = '';
+        this.updateModeUI();
+        const restored = this.restoreHistory(container);
+        if (!restored) this.startConversation(container, input);
+    },
+
+    updateModeUI() {
+        if (!this.modeButtons?.length) return;
+        this.modeButtons.forEach(btn => {
+            const isActive = btn.dataset.mode === this.mode;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+    },
+
+    restoreMode() {
+        try {
+            const saved = localStorage.getItem(this.MODE_KEY);
+            if (saved) this.mode = saved;
+        } catch (_) {}
     }
 };
 

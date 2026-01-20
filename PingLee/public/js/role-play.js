@@ -23,12 +23,12 @@ const RolePlay = {
         this.initialized = true;
 
         const scenarioButtons = document.querySelectorAll('.scenario-button');
-        this.messagesContainer = document.querySelector('.roleplay-messages');
         this.stage = document.getElementById('roleplay-stage');
+        this.messagesContainer = this.stage?.querySelector('.roleplay-messages');
         this.titleEl = document.getElementById('roleplay-title');
         this.contextEl = document.getElementById('roleplay-context');
-        this.micButton = document.querySelector('.roleplay-stage .mic-button');
-        this.backBtn = document.querySelector('.roleplay-back');
+        this.micButton = this.stage?.querySelector('.mic-button');
+        this.backBtn = this.stage?.querySelector('.roleplay-back');
         this.startBtn = document.getElementById('roleplay-start-btn');
         this.setStartIdle();
 
@@ -39,7 +39,7 @@ const RolePlay = {
                 this.messagesContainer.innerHTML = '';
                 this.showStage(button.dataset.scenario);
                 this.setMicEnabled(false);
-                this.setStartReady();
+                this.setStartReady(false);
                 this.scrollToBottomSmooth();
             });
         });
@@ -223,7 +223,7 @@ const RolePlay = {
         if (this.titleEl) this.titleEl.textContent = meta.title;
         if (this.contextEl) this.contextEl.textContent = meta.desc;
         this.toggleStage(true);
-        this.setStartReady();
+        this.setStartReady(false);
     },
 
     resetStage() {
@@ -241,7 +241,6 @@ const RolePlay = {
             this.mediaRecorder.stream.getTracks().forEach(t => t.stop());
         }
         this.toggleStage(false);
-        this.setStartIdle();
     },
 
     getScenarioMeta(key) {

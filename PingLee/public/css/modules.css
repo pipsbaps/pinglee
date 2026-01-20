@@ -1,11 +1,10 @@
 /* --- Chat --- */
 #chat {
-  position: relative;
   display: flex;
   flex-direction: column;
-  height: var(--app-height);
+  height: 100%;
   box-sizing: border-box;
-  padding: 1rem 1rem calc(var(--chat-form-height) + var(--nav-height) + 16px);
+  padding: 1rem 1rem calc(var(--nav-height) + var(--chat-form-height) + 16px);
   gap: 0.5rem;
   background: transparent;
 }
@@ -126,13 +125,12 @@
   min-height: 0;
   overflow-y: auto;
   padding: 0.5rem 1rem 1rem;
-  scroll-padding-bottom: calc(var(--chat-form-height) + var(--nav-height) + 20px);
-  margin-bottom: env(safe-area-inset-bottom, 0);
+  padding-bottom: calc(var(--chat-form-height) + var(--nav-height) + 20px);
   background-color: transparent;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
@@ -416,10 +414,10 @@
 }
 
 #chat.active .chat-form-container {
-  position: absolute;
+  position: fixed;
   left: 16px;
   right: 16px;
-  bottom: 0;
+  bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
   z-index: 5;
   display: flex;
   align-items: center;
@@ -427,17 +425,14 @@
   min-height: var(--chat-form-height);
   pointer-events: none;
   background: transparent;
+  transition: bottom 0.3s ease;
 }
 
-@supports (-webkit-touch-callout: none) {
-  #chat.active .chat-form-container {
-    position: sticky;
-    bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0));
-  }
-  .chat-messages {
-    -webkit-overflow-scrolling: touch;
-  }
+/* Quando navegação esconde, input sobe */
+.mobile-nav.hidden ~ main #chat.active .chat-form-container {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
 }
+
 .chat-form {
   display: flex;
   width: 100%;

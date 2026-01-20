@@ -365,30 +365,40 @@ const TextChat = {
     setupInputFocusScroll() {
         const input = document.querySelector('#chat .message-input');
         const messagesContainer = document.querySelector('#chat .chat-messages');
+        const formContainer = document.querySelector('#chat .chat-form-container');
+
         if (!input || !messagesContainer) return;
 
+        let focusTimeout;
+
         input.addEventListener('focus', () => {
-            // iOS Safari específico
-            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                setTimeout(() => {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    input.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'end',
-                        inline: 'nearest'
-                    });
-                }, 400); // iOS precisa de mais delay
-            } else {
-                setTimeout(() => {
-                    input.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }, 300);
-            }
+            clearTimeout(focusTimeout);
+
+            focusTimeout = setTimeout(() => {
+                // Scroll container para o fundo
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                // iOS precisa de scroll extra
+                if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                    // Garante que o form fica visível
+                    if (formContainer) {
+                        formContainer.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest',
+                            inline: 'nearest'
+                        });
+                    }
+
+                    // Scroll adicional para iOS
+                    setTimeout(() => {
+                        window.scrollBy(0, 50);
+                    }, 100);
+                }
+            }, 350); // Delay para o teclado abrir completamente
         });
 
         input.addEventListener('blur', () => {
+            clearTimeout(focusTimeout);
             setTimeout(() => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 100);

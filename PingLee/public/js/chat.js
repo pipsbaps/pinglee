@@ -51,10 +51,11 @@ const TextChat = {
 
             try {
                 // 3. Envia a mensagem para a API
+                const history = this.getHistoryForApi();
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message, mode: 'text', variant: this.mode })
+                    body: JSON.stringify({ message: message, mode: 'text', variant: this.mode, history })
                 });
                 const data = await response.json();
 
@@ -131,6 +132,25 @@ const TextChat = {
     clearEmptyState(container) {
         const emptyEl = container.querySelector('.empty-state');
         if (emptyEl) emptyEl.remove();
+    },
+
+    getHistoryForApi() {
+        return this.history.map(msg => {
+            if (msg.role === 'user') {
+                return { role: 'user', content: msg.text };
+            } else if (msg.role === 'tutor') {
+                return {
+                    role: 'assistant',
+                    content: JSON.stringify({
+                        chinese: msg.chinese,
+                        pinyin: msg.pinyin,
+                        translation: msg.translation,
+                        feedback: msg.feedback
+                    })
+                };
+            }
+            return null;
+        }).filter(Boolean);
     },
 
     pushUserMessage(text, container) {

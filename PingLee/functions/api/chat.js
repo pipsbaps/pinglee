@@ -5,9 +5,6 @@ const scenarios = {
   taxi: { name: "Taking a Taxi", prompt: "You are a taxi driver in Guangzhou. Start by asking where the user wants to go." }
 };
 
-const textChatHistory = [];
-const voiceChatHistory = [];
-
 const jsonResponse = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), {
     status,
@@ -91,44 +88,35 @@ export async function onRequest(context) {
     return jsonResponse({ error: "Server missing OPENAI_API_KEY" }, 500);
   }
 
-  const { message, mode = "text", scenario: scenarioKey } = body;
+  const { message, mode = "text", scenario: scenarioKey, history = [] } = body;
 
-  let currentHistory;
+  let messages = [];
   let systemPrompt;
 
   if (mode === "voice") {
-    currentHistory = voiceChatHistory;
     if (message === "##START_SCENARIO##") {
-      voiceChatHistory.splice(0, voiceChatHistory.length);
       systemPrompt = getInitialVoiceSystemPrompt(scenarioKey);
-      currentHistory.push({ role: "system", content: systemPrompt });
-      currentHistory.push({ role: "user", content: `Start the role-play for ${scenarios[scenarioKey]?.name}.` });
+      messages.push({ role: "system", content: systemPrompt });
+      messages.push({ role: "user", content: `Start the role-play for ${scenarios[scenarioKey]?.name}.` });
     } else {
       systemPrompt = getVoiceSystemPrompt(scenarioKey, message);
-      if (currentHistory.length > 0 && currentHistory[0].role === "system") {
-        currentHistory[0].content = systemPrompt;
-      } else {
-        currentHistory.unshift({ role: "system", content: systemPrompt });
+      messages.push({ role: "system", content: systemPrompt });
+      if (Array.isArray(history)) {
+        messages = messages.concat(history);
       }
-      currentHistory.push({ role: "user", content: message });
+      messages.push({ role: "user", content: message });
     }
   } else {
-    currentHistory = textChatHistory;
-    if (currentHistory.length === 0) {
-      systemPrompt = getTextSystemPrompt();
-      currentHistory.push({ role: "system", content: systemPrompt });
+    systemPrompt = getTextSystemPrompt();
+    messages.push({ role: "system", content: systemPrompt });
+    if (Array.isArray(history)) {
+      messages = messages.concat(history);
     }
-    currentHistory.push({ role: "user", content: message });
+    messages.push({ role: "user", content: message });
   }
 
   try {
-    const responseContent = await callOpenAIChat(env, currentHistory);
-    currentHistory.push({ role: "assistant", content: responseContent });
-
-    if (currentHistory.length > 15) {
-      currentHistory.splice(1, 2);
-    }
-
+    const responseContent = await callOpenAIChat(env, messages);
     const responseJson = JSON.parse(responseContent);
     return jsonResponse(responseJson);
   } catch (error) {

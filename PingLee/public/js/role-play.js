@@ -17,6 +17,7 @@ const RolePlay = {
     recordingStartedAt: 0,
     recordingTimeoutId: null,
     micEnabled: false,
+    history: [],
 
     init() {
         if (this.initialized) return;
@@ -73,16 +74,29 @@ const RolePlay = {
         const loadingElement = UI.addTutorMessage('...', null, null, null, this.messagesContainer, true);
         this.setStartBusy();
         this.scrollToBottomSmooth();
+        this.history = []; // Reset history
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 // Envia o cenário de forma estruturada
-                body: JSON.stringify({ message: '##START_SCENARIO##', scenario: this.currentScenario, mode: 'voice' })
+                body: JSON.stringify({ message: '##START_SCENARIO##', scenario: this.currentScenario, mode: 'voice', history: [] })
             });
             const data = await response.json();
             if (this.activeStartSeq !== seq) return;
             loadingElement.remove();
+
+            // Add initial response to history
+            this.history.push({
+                role: 'assistant',
+                content: JSON.stringify({
+                    chinese: data.chinese,
+                    pinyin: data.pinyin,
+                    translation: data.translation,
+                    feedback: data.feedback
+                })
+            });
+
             UI.addTutorMessage(data.chinese, data.pinyin, data.translation, data.feedback, this.messagesContainer);
             this.scrollToBottomSmooth();
             this.playTutorAudio(data.chinese);
@@ -149,8 +163,37 @@ const RolePlay = {
                 userMsgElement.classList.remove('loading');
                 this.scrollToBottomSmooth();
 
-            const chatResponse = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: sttData.transcription, scenario: this.currentScenario, mode: 'voice' }) });
+            // Add user message to history
+            this.history.push({ role: 'user', content: sttData.transcription });
+
+            const chatResponse = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: sttData.transcription,
+                    scenario: this.currentScenario,
+                    mode: 'voice',
+                    history: this.history.slice(0, -1) // Send history excluding the new message which is sent in 'message' field?
+                                                       // Actually, the server appends 'message' to history.
+                                                       // So we should send history without the new message, OR change server to not append if present.
+                                                       // Standard convention: client sends 'messages' array including the new one.
+                                                       // But the server logic we planned is: receive history, append message.
+                                                       // So here we send history up to the previous turn.
+                })
+            });
             const chatData = await chatResponse.json();
+
+            // Add assistant response to history
+            this.history.push({
+                role: 'assistant',
+                content: JSON.stringify({
+                    chinese: chatData.chinese,
+                    pinyin: chatData.pinyin,
+                    translation: chatData.translation,
+                    feedback: chatData.feedback
+                })
+            });
+
             UI.addTutorMessage(chatData.chinese, chatData.pinyin, chatData.translation, chatData.feedback, this.messagesContainer);
             this.scrollToBottomSmooth();
             this.playTutorAudio(chatData.chinese);

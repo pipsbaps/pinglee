@@ -3,12 +3,7 @@ const OpenAI = require("openai");
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
-const ANTHROPIC_KEY = process.env.VITE_ANTHROPIC_API_KEY;
-
-// Históricos de conversa separados
-let textChatHistory = [];
-let voiceChatHistory = [];
-let exploreHistory = [];
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTHROPIC_API_KEY;
 
 const scenarios = {
     restaurant: { name: "At the Restaurant", prompt: "You are a friendly restaurant waiter in Beijing. Start by welcoming the user." },
@@ -76,39 +71,43 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { message, mode = 'text', scenario: scenarioKey, variant } = req.body;
-    let currentHistory, systemPrompt;
+    const { message, mode = 'text', scenario: scenarioKey, variant, history = [] } = req.body;
+
+    // We expect history to be an array of { role, content } objects from the client.
+    // We will build `messages` for the API call.
+    let messages = [];
+    let systemPrompt;
 
     if (mode === 'voice') {
-        currentHistory = voiceChatHistory;
         if (message === '##START_SCENARIO##') {
-            voiceChatHistory.splice(0, voiceChatHistory.length); 
-            systemPrompt = getInitialVoiceSystemPrompt(scenarioKey); // Usar o novo prompt inicial
-            currentHistory.push({ role: "system", content: systemPrompt });
-            currentHistory.push({ role: "user", content: `Start the role-play for ${scenarios[scenarioKey]?.name}.` });
+            // New scenario, ignore provided history
+            systemPrompt = getInitialVoiceSystemPrompt(scenarioKey);
+            messages.push({ role: "system", content: systemPrompt });
+            messages.push({ role: "user", content: `Start the role-play for ${scenarios[scenarioKey]?.name}.` });
         } else {
+            // Continue scenario
             systemPrompt = getVoiceSystemPrompt(scenarioKey, message);
-            if (currentHistory.length > 0 && currentHistory[0].role === 'system') {
-                currentHistory[0].content = systemPrompt; 
-            } else {
-                currentHistory.unshift({ role: "system", content: systemPrompt });
+            messages.push({ role: "system", content: systemPrompt });
+            if (Array.isArray(history)) {
+                messages = messages.concat(history);
             }
-            currentHistory.push({ role: "user", content: message });
+            messages.push({ role: "user", content: message });
         }
     } else if (variant === 'explora') {
-        currentHistory = exploreHistory;
-        if (currentHistory.length === 0) {
-            systemPrompt = getExploreSystemPrompt();
-            currentHistory.push({ role: "system", content: systemPrompt });
+        systemPrompt = getExploreSystemPrompt();
+        messages.push({ role: "system", content: systemPrompt });
+        if (Array.isArray(history)) {
+            messages = messages.concat(history);
         }
-        currentHistory.push({ role: "user", content: message });
+        messages.push({ role: "user", content: message });
     } else { 
-        currentHistory = textChatHistory;
-        if (currentHistory.length === 0) {
-            systemPrompt = getTextSystemPrompt();
-            currentHistory.push({ role: "system", content: systemPrompt });
+        // Standard text chat
+        systemPrompt = getTextSystemPrompt();
+        messages.push({ role: "system", content: systemPrompt });
+        if (Array.isArray(history)) {
+            messages = messages.concat(history);
         }
-        currentHistory.push({ role: "user", content: message });
+        messages.push({ role: "user", content: message });
     }
 
     try {
@@ -125,25 +124,22 @@ module.exports = async (req, res) => {
                 body: JSON.stringify({
                     model: 'claude-3-sonnet-20240229',
                     max_tokens: 1000,
-                    messages: currentHistory
+                    messages: messages // Anthropic expects {role, content}
                 })
             });
             const anthropicData = await anthropicRes.json();
             responseContent = anthropicData?.content?.[0]?.text || '{}';
-            currentHistory.push({ role: "assistant", content: responseContent });
         } else {
             const completion = await openai.chat.completions.create({
                 model: "gpt-4-turbo",
-                messages: currentHistory,
+                messages: messages,
                 response_format: { type: "json_object" },
             });
             responseContent = completion.choices[0].message.content;
-            currentHistory.push({ role: "assistant", content: responseContent });
         }
 
-        if (currentHistory.length > 15) {
-            currentHistory.splice(1, 2); 
-        }
+        // We do not maintain server-side history anymore.
+        // Client is responsible for managing history.
 
         const responseJson = JSON.parse(responseContent);
         res.status(200).json(responseJson);
